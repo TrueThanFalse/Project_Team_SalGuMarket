@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<th:block th:fragment="setFragment(content)">
+<head>
+<meta charset="UTF-8">
+<title>살구마켓</title>
+<!-- <!-- Bootstrap(문서) : 외부 링크에 의존하지 않고 Project 내부에 파일을 가지고 있으면 js와 css의 지속성이 보장된다. -->
+<!-- <link rel="stylesheet" th:href="@{/bootstrap_5.3.1_dist/css/bootstrap.min.css}">
+<script type="text/javascript" th:src="@{/bootstrap_5.3.1_dist/js/bootstrap.min.js}"></script> -->
+<!-- Bootstrap(아이콘) : 외부 이미지 방식 활용 --> -->
+</head>
+<body>
+
+	<!-- header Line -->
+	<!-- 템플릿 정해지면 만들것 -->
+	
+	<!-- content Line -->
+	<div>
+		<th:block th:replace="${content}"></th:block>
+	</div>
+	
+	<!-- footer Line -->
+	<div class="container-fluid">
+		<h1>footer</h1>
+		<h1>My Spring Boot Project</h1>
+	</div>
+
+</body>
+</th:block>
+</html>

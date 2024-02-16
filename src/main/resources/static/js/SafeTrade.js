@@ -390,14 +390,17 @@ document.getElementById('sellerCancel').addEventListener('click', async () => {
 });
 
 async function getLoginUserWalletAddress(account) {
-    const url = '/smartContract/getLoginUserWalletAddres';
+    const url = '/smartContract/getLoginUserWalletAddress';
     const config = {
         method: 'POST',
-        body: account
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: JSON.stringify({account})
     };
 
     const response = await fetch(url, config);
-    const result = response.text();
+    const result = await response.text();
     console.log("getLoginUserWalletAddress => ", result);
     return result;
 }

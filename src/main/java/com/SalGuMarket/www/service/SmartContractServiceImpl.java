@@ -17,13 +17,13 @@ public class SmartContractServiceImpl implements SmartContractService{
 
 	private final SmartContractMapper smartContractMapper;
 
-	@Override
-	public int getLoginUserWalletAddress(String account) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String loginUserEamil = authentication.getName();
-		
-		MemberVO user = new MemberVO(loginUserEamil, account);
-		int isOK = smartContractMapper.getLoginUserWalletAddress(user);
-		return 0;
-	}
+//	@Override
+//	public int getLoginUserWalletAddress(String account) {
+//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//		String loginUserEamil = authentication.getName();
+//		
+//		MemberVO user = new MemberVO(loginUserEamil, account);
+//		int isOK = smartContractMapper.getLoginUserWalletAddress(user);
+//		return 0;
+//	}
 }

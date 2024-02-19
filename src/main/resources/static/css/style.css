@@ -1355,7 +1355,7 @@ ol {
 	max-width: 100%;
 }
 
-.product__discount__slider.owl-carousel .owl-dots {
+.product__discount__slider.owl-carousel .owl-ts {
 	text-align: center;
 	margin-top: 30px;
 }

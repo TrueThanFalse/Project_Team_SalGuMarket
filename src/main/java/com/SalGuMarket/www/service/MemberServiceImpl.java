@@ -13,12 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
 
-	private final MemberMapper mm;
+	private final MemberMapper memberMapper;
 
 	@Override
 	public int insert(MemberVO mvo) {
 		// TODO Auto-generated method stub
-		int isOK = mm.insert(mvo);
-		return mm.insertAuthinit(mvo.getEmail());
+		int isOK = memberMapper.insert(mvo);
+		return memberMapper.insertAuthinit(mvo.getEmail());
 	}
 }

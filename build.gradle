@@ -57,7 +57,7 @@ dependencies {
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
 	
 	// 4. Spring Security 라이브러리 (추후 필요할 때 적용)
-	// implementation "org.springframework.boot:spring-boot-starter-security"
+	implementation "org.springframework.boot:spring-boot-starter-security"
 	
 }
 

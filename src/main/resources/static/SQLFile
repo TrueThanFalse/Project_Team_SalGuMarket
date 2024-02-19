@@ -1,0 +1,12 @@
+----------Member Table-------------
+create table member(
+email varchar(200) not null,
+wallet_address varchar(200),
+pwd varchar(1000) not null,
+nick_name varchar(100) not null,
+reg_at datetime default now(),
+last_login datetime default now(),
+phone_num varchar(100),
+stop char(1) default 'n',
+report int default 0,
+primary key(email));

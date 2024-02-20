@@ -23,4 +23,5 @@ public class MemberVO {
 		this.email = email;
 		this.walletAddress = walletAddress;
 	}
+
 }

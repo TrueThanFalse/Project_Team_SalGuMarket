@@ -16,6 +16,6 @@ import lombok.ToString;
 public class NoticeDTO {
 	
 	private NoticeVO novo;
-	private List<FileVO> flist;S
+	private List<FileVO> flist;
 
 }

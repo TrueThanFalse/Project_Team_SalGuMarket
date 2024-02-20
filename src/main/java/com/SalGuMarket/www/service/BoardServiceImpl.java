@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.SalGuMarket.www.domain.BoardDTO;
 import com.SalGuMarket.www.domain.BoardVO;
+import com.SalGuMarket.www.domain.FileVO;
 import com.SalGuMarket.www.domain.PagingVO;
 import com.SalGuMarket.www.repository.BoardMapper;
 
@@ -20,7 +21,7 @@ public class BoardServiceImpl implements BoardService{
 
 private final BoardMapper bm;
 	
-	//private final FileMapper fm;
+	private final FileMapper fm;
 
 	@Transactional
 	@Override

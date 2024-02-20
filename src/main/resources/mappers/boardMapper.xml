@@ -14,11 +14,11 @@
 	</select>
   
   	
-  	<select id="list" resultType="com.example.demo.domain.BoardVO">
+  	<select id="list" resultType="com.SalGuMarket.www.domain.BoardVO">
   		select * from board <include refid="search"/> order by bno desc limit #{pageStart},#{qty}
   	</select>
   
-  	<select id="selectOne" resultType="com.example.demo.domain.BoardVO">
+  	<select id="selectOne" resultType="com.SalGuMarket.www.domain.BoardVO">
   		select * from board where bno=#{bno}
   	</select>
   

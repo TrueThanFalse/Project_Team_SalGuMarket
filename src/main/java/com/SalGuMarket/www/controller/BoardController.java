@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.SalGuMarket.www.domain.BoardDTO;
 import com.SalGuMarket.www.domain.BoardVO;
+import com.SalGuMarket.www.domain.FileVO;
 import com.SalGuMarket.www.domain.PagingVO;
+import com.SalGuMarket.www.handler.FileHandler;
 import com.SalGuMarket.www.handler.PagingHandler;
 import com.SalGuMarket.www.service.BoardService;
 
@@ -36,7 +39,7 @@ public class BoardController {
 		List<FileVO> flist = null;
 		if(files[0].getSize()>0|| files!= null) {
 			//파일 핸들러 작업
-			flist = fh.uploadFiles(files);
+			flist = fh.uploadFile(files);
 		}
 		bsv.register(new BoardDTO(bvo, flist));
 		return "index";
@@ -64,7 +67,7 @@ public class BoardController {
 	public String modify(BoardVO bvo, @RequestParam(name="files", required = false)MultipartFile[] files) {
 		List<FileVO> flist = null;
 		if(files[0].getSize()>0||files != null) {
-			flist = fh.uploadFiles(files);
+			flist = fh.uploadFile(files);
 		}
 		bsv.modify(new BoardDTO(bvo,flist));
 		return "redirect:/board/detail?bno="+bvo.getBno();

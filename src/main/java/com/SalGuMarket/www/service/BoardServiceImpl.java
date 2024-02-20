@@ -10,6 +10,7 @@ import com.SalGuMarket.www.domain.BoardVO;
 import com.SalGuMarket.www.domain.FileVO;
 import com.SalGuMarket.www.domain.PagingVO;
 import com.SalGuMarket.www.repository.BoardMapper;
+import com.SalGuMarket.www.repository.FileMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService{
 
-private final BoardMapper bm;
+	private final BoardMapper bm;
 	
 	private final FileMapper fm;
 

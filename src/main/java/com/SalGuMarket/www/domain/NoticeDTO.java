@@ -1,7 +1,8 @@
 package com.SalGuMarket.www.domain;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,10 +11,11 @@ import lombok.ToString;
 @Setter
 @Getter
 @ToString
-@NoArgsConstructor
 @AllArgsConstructor
-public class BoardVO {
+@NoArgsConstructor
+public class NoticeDTO {
+	
+	private NoticeVO novo;
+	private List<FileVO> flist;
 
-	private long bno;
-	private String title, writer, content, regAt, modAt;
 }

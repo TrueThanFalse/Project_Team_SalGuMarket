@@ -1,11 +1,14 @@
-package com.SalGuMarket.www.service;
+package com.SalGuMarket.www.repository;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 
 import com.SalGuMarket.www.domain.FileVO;
 import com.SalGuMarket.www.domain.ProductVO;
 
-public interface ProductService {
+@Mapper
+public interface ProductMapper {
 
 	List<FileVO> getCategoriesSliderImegeList10Imege();
 	

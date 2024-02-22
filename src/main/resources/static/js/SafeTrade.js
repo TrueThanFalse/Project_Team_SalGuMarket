@@ -326,7 +326,7 @@ document.getElementById('createProduct').addEventListener('click', async () => {
 
 	// 웹사이트 로그인 사용자의 지갑 주소가 현재 MetaMask의 지갑 주소와 동일한지 확인
 	if(loginUserWalletAddress == account){ 
-		const price = web3.utils.toWei(document.getElementById('createProductVal').value, 'ether');
+		const price = web3.utils.toWei(document.getElementById('createProductValue').value, 'ether');
 		// 사용자의 입력을 받아야 함
 
 		contract.methods.createProduct(price).send({ from: account })
@@ -348,7 +348,7 @@ document.getElementById('purchaseProduct').addEventListener('click', async () =>
     const account = await getAccount();
 	
 	if(loginUserWalletAddress == account){
-		const productId = document.getElementById('purchaseProductVal').value;
+		const productId = document.getElementById('purchaseProductValue').value;
 		const price = web3.utils.toWei(document.getElementById('purchaseProductPrice').value, 'ether');
 		// 제품 번호와 가격 정보가 HTML에 전송되어 있어야 함
 		
@@ -367,7 +367,7 @@ document.getElementById('confirmPurchase').addEventListener('click', async () =>
     const account = await getAccount();
 
 	if(loginUserWalletAddress == account){
-		const productId = document.getElementById('confirmPurchaseVal').value;
+		const productId = document.getElementById('confirmPurchaseValue').value;
 		contract.methods.confirmPurchase(productId).send({ from: account })
 			.on('receipt', function(receipt){
 				console.log('Purchase confirmed:', receipt);
@@ -383,7 +383,7 @@ document.getElementById('requestCancel').addEventListener('click', async () => {
     const account = await getAccount();
 
 	if(loginUserWalletAddress == account){
-		const productId = document.getElementById('requestCancelVal').value;
+		const productId = document.getElementById('requestCancelValue').value;
 		contract.methods.requestCancel(productId).send({ from: account })
 			.on('receipt', function(receipt){
 				console.log('Cancellation requested:', receipt);
@@ -399,7 +399,7 @@ document.getElementById('approveCancel').addEventListener('click', async () => {
     const account = await getAccount();
 	
 	if(loginUserWalletAddress == account){
-		const productId = document.getElementById('approveCancelVal').value;
+		const productId = document.getElementById('approveCancelValue').value;
 		contract.methods.approveCancel(productId).send({ from: account })
 			.on('receipt', function(receipt){
 				console.log('Cancellation approved:', receipt);
@@ -415,7 +415,7 @@ document.getElementById('sellerCancel').addEventListener('click', async () => {
     const account = await getAccount();
 
 	if(loginUserWalletAddress == account){
-		const productId = document.getElementById('sellerCancelVal').value;
+		const productId = document.getElementById('sellerCancelValue').value;
         contract.methods.sellerCancel(productId).send({ from: account })
         .on('receipt', function(receipt){
             console.log('Cancellation approved:', receipt);

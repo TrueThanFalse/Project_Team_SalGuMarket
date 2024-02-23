@@ -5,18 +5,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import com.SalGuMarket.www.repository.MemberMapper;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class CustomUserService implements UserDetailsService{
 	
-	
+	@Autowired
+	private MemberMapper memberMapper;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		return null;
+		log.info(">>>>>>>>>>>>>>>>"+username);
+		MemberVO mvo = memberMapper.selectEmail(username);
+		mvo.setAuthList(memberMapper.selectAuths(username));
+		return new AuthMember(mvo);
 	}
-	
-	//이후 시큐리티 추가 예쩡
 }

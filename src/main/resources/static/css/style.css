@@ -459,7 +459,7 @@ ol {
 	display: inline-block;
 	margin-right: 15px;
 	font-size: 16px;
- 	 font-weight: 500;
+ 	 font-weight: 700;
   	font-style: normal;
 	 font-family: "IBM Plex Sans KR", sans-serif;
 }
@@ -684,7 +684,7 @@ ol {
 }
 
 .hero__item {
-	height: 431px;
+	height: 265px;
 	display: flex;
 	align-items: center;
 	padding-left: 75px;

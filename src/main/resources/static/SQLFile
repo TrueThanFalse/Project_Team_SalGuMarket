@@ -10,3 +10,12 @@ phone_num varchar(100),
 stop char(1) default 'n',
 report int default 0,
 primary key(email));
+
+-----------Auth Table--------------
+create table auth_member(
+email varchar(200) not null,
+auth varchar(100) not null,
+foreign key (email) references member(email));
+
+alter table auth_member add constraint fk_auth foreign key(email) references member(email);
+

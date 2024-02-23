@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class FileSweeper {
 
-	private final String BASE_PATH = "C:\\\\SalGuMarketUploadFile";
+	private final String BASE_PATH = "C:\\SalGuMarketUploadFile\\";
 	private final FileMapper fileMapper;
 	
 	//초 분 시 일 월 요일 년도(생략가능)

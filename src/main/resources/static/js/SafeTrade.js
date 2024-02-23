@@ -333,6 +333,8 @@ document.getElementById('createProduct').addEventListener('click', async () => {
 			.on('receipt', function(receipt){
 				// 성공 상황
 				console.log('Product created:', receipt);
+
+				document.getElementById('createProductForm').submit();
 			})
 			.on('error', function(error) {
 				// 에러 상황

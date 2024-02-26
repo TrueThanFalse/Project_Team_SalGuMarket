@@ -3,9 +3,11 @@ package com.SalGuMarket.www.controller;
 import java.security.Principal;
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -28,6 +30,26 @@ public class MemberController {
 	
 	private final MemberService memberService;
 	
+	private final PasswordEncoder passwordEncoder;
+	
+	@GetMapping("/login")
+	public void login() {}
+	
+	
+	@GetMapping("/register")
+	public void register() {}
+	
+	@PostMapping("/register")
+	public String register(MemberVO mvo) {
+		log.info(">>>> mvo >>> " + mvo);
+		mvo.setPwd(passwordEncoder.encode(mvo.getPwd()));
+		int isOK = memberService.insert(mvo);
+		return isOK>0? "/index":"/member/register";
+	}
+	
+	@GetMapping("/mypage")
+	public void mypage() {}
+	
 	@GetMapping("/list")
 	public void list (Model m, PagingVO pgvo) {
 	    // 새로운 PagingVO 객체를 생성하고 qty를 9로 설정
@@ -40,9 +62,6 @@ public class MemberController {
 		m.addAttribute("pgvo", pgvo);
 		m.addAttribute("ph", ph);
 		}
-	
-	@GetMapping("/mypage")
-	public void mypage () {}
 	
 //	관리자가 회원 탈퇴
 	@GetMapping("/remove")

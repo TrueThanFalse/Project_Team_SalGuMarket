@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+section {
+    border-radius: 5px;
+    box-shadow: 0 0 10px #FFAC6D;
+    width: 53%;
+    margin: 0 auto 30px;
+	padding: 0;
+}
+.profile-image-display {
+    max-width: 100%;
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+	display: block;
+	float: left;
+	margin-bottom: 30px;
+}
+.mypage label, .mypage span {
+    display: block;
+    margin-bottom: 10px;
+}
+.col-lg-9 label{
+	margin-top: 40px;
+	font-size: 24px;
+}
+input[type="file"] {
+    margin-top: 135px;
+}
+.col-lg-9{
+	max-width: 95%;
+	margin-top: 30px;
+	height: auto;
+}
+.col-lg-9 span{
+	font-size: 18px;
+}
+.profile-image-box{
+	height: 237px;
+}
+h2:after {
+   left: 0;
+   bottom: 680px;
+   right: 0;
+   height: 4px;
+   width: 80px;
+   background: #FFAC6D;
+   content: "";
+   margin: 0 auto;
+   display: block;
+}
+.favorite, .myPost{
+	font-size: 18px;
+	padding-top: 12px;
+}

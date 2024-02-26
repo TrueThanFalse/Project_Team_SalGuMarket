@@ -36,4 +36,7 @@ public class MemberController {
 		int isOK = memberService.insert(mvo);
 		return isOK>0? "/index":"/member/register";
 	}
+	
+	@GetMapping("/mypage")
+	public void mypage() {}
 }

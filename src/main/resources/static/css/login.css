@@ -11,7 +11,7 @@
  
  .hero__search__form form button{
  	top: 55px;
- 	right: 85px;
+ 	right: 75px;
  	border-radius: 5px;
  }
  
@@ -32,4 +32,25 @@
 
 .col-lg-9{
 	height: 400px;
+}
+
+h2 {
+	font-family: "Do Hyeon", sans-serif;
+}
+
+.site-btn {
+	font-weight: 400;
+	font-size: 18px;
+}
+
+.container h2:after {
+   left: 0;
+   bottom: 680px;
+   right: 0;
+   height: 4px;
+   width: 80px;
+   background: #FFAC6D;
+   content: "";
+   margin: 0 auto;
+   display: block;
 }

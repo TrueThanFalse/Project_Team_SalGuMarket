@@ -17,5 +17,4 @@ email varchar(200) not null,
 auth varchar(100) not null,
 foreign key (email) references member(email));
 
-alter table auth_member add constraint fk_auth foreign key(email) references member(email);
-
+alter table auth_member add constraint fk_auth foreign key(email) references member(email) on delete cascade;

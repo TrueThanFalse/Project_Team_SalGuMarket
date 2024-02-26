@@ -43,6 +43,25 @@ public class PagingHandler {
 		this.next = this.endPage < realEndPage;
 	}
 	
+	//memberList 페이징네이션
+	public PagingHandler(PagingVO pgvo, int totalCount, int qty) {
+		this.pgvo = new PagingVO(pgvo.getPageNo(), qty);
+		this.totalCount = totalCount;
+		
+		this.endPage = (int)Math.ceil(pgvo.getPageNo() / 10.0) * 10;
+		this.startPage = endPage - 9;
+		
+		// 실제 마지막 페이지
+		int realEndPage = (int)Math.ceil(totalCount / (double)pgvo.getQty());
+		
+		if(realEndPage < endPage) {
+			this.endPage = realEndPage;
+		}
+		
+		this.prev = this.startPage > 1;
+		this.next = this.endPage < realEndPage;
+	}
+	
 	// 댓글 더보기 버튼에 사용되는 생성자 (cmtList를 세팅할 수 있는 생성자)
 	public PagingHandler(PagingVO pgvo, int totalCount, List<CommentVO> cmtList) {
 		this(pgvo, totalCount);

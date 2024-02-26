@@ -1,0 +1,56 @@
+@charset "UTF-8";
+.hero__search__form form input {
+ 	display: block;
+ 	border: 1px solid #ebebeb;
+ }
+ 
+ .hero__search__form form input:last-of-type {
+ 	margin-top: 8px;
+ 	margin-bottom: 8px;
+ }
+ 
+ .hero__search__form form button{
+ 	top: 55px;
+ 	right: 75px;
+ 	border-radius: 5px;
+ }
+ 
+ .hero__search__form {
+ 	margin-top: 100px;
+ 	height: 120px;
+ 	border: none;
+ }
+ 
+ .k_login {
+ 	margin-top: 0px;
+ }
+ 
+.hero__search {
+	width: 610px;
+	height: 300px;
+}
+
+.col-lg-9{
+	height: 400px;
+}
+
+h2 {
+	font-family: "Do Hyeon", sans-serif;
+}
+
+.site-btn {
+	font-weight: 400;
+	font-size: 18px;
+}
+
+.container h2:after {
+   left: 0;
+   bottom: 680px;
+   right: 0;
+   height: 4px;
+   width: 80px;
+   background: #FFAC6D;
+   content: "";
+   margin: 0 auto;
+   display: block;
+}

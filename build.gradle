@@ -59,6 +59,16 @@ dependencies {
 	// 4. Spring Security 라이브러리 (추후 필요할 때 적용)
 	implementation "org.springframework.boot:spring-boot-starter-security"
 	
+	// WebSocket 에 필요한 라이브러리들 ---------
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	// stomp
+	implementation 'org.webjars:stomp-websocket:2.3.4'
+	// sockjs
+	implementation 'org.webjars:sockjs-client:1.5.1'
+	// gson
+	implementation 'com.google.code.gson:gson:2.10.1'
+	// -------------------
+	
 }
 
 tasks.named('test') {

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout :: setFragment(~{this::content})}">
+<th:block th:fragment="content">
+
+<div class="container">
+<form action="/chat/createRoom" method="post">
+    <input type="text" name="userEmail" placeholder="유저이름">
+    <input type="text" name="name" placeholder="채팅방 이름">
+    <button type="submit" >방 만들기</button>
+</form>
+
+<table>
+    <tr th:each="room : ${roomList}" >
+        <td>
+            <a th:href="@{chatRoom(name=${room.name} )}"
+               th:text="${room.name}"></a>
+        </td>
+    </tr>
+</table>
+    </div>
+
+</th:block>
+</th:block>

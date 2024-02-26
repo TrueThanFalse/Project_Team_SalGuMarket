@@ -21,4 +21,11 @@ public class MemberServiceImpl implements MemberService{
 		int isOK = memberMapper.insert(mvo);
 		return memberMapper.insertAuthinit(mvo.getEmail());
 	}
+
+	@Override
+	public MemberVO selectUser(String email) {
+		MemberVO member = new MemberVO();
+		member.setEmail(email);
+		return member;
+	}
 }

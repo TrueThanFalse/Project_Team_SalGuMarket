@@ -5,5 +5,7 @@ import com.SalGuMarket.www.security.MemberVO;
 public interface MemberService {
 
 	int insert(MemberVO mvo);
+
+	MemberVO selectUser(String email);
 	
 }

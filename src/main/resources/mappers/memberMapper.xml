@@ -18,5 +18,43 @@
   	<insert id="insertAuthinit">
   		insert into auth_member values (#{email}, 'ROLE_USER')
   	</insert>
+  	
+  	
+  	<!-- 민지 -->
+  	<select id="getList" resultType="com.SalGuMarket.www.security.MemberVO">
+  		select * from member <include refid="search"></include> limit #{pageStart}, #{qty}
+  	</select>
+  	
+  	<select id="getTotalCount" resultType="int">
+		select count(email) from member
+	</select>
+	
+	<delete id="remove">
+		delete from member where email = #{email}
+	</delete>
+	
+	<delete id="delete">
+		delete from member where email = #{email}
+	</delete>
+	
+	
+	<sql id="search">
+		<if test="type!=null">
+			<trim prefix="order by" prefixOverrides="or">
+				<foreach collection="typeToArray" item="type">
+					<trim prefix="or">
+						<choose>
+							<when test="type=='l'.toString()">
+									reg_at desc
+							</when>
+							<when test="type=='r'.toString()"> 
+									report desc
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
 
 </mapper>

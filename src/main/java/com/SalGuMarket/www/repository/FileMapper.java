@@ -11,4 +11,8 @@ public interface FileMapper {
 
 	List<FileVO> selectListAllFile();
 
+	int insertFile(FileVO fvo);
+
+	List<FileVO> getFileList(long bno);
+
 }

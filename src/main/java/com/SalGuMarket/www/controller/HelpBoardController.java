@@ -15,8 +15,14 @@ public class HelpBoardController {
 	
 	//1:1 문의 게시판 컨트롤러
 	
-	private final HelpBoardService hbsv;
+	private final HelpBoardService helpBoardService;
 	
-	@GetMapping("/register")
-	public void register() {}
+	@GetMapping("/helpRegister")
+	public void helpRegister() {}
+	
+	@GetMapping("/helpList")
+	public void helpList() {}
+	
+	@GetMapping("/helpDetail")
+	public void helpDetail() {}
 }

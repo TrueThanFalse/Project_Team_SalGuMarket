@@ -3,6 +3,7 @@
 <th:block th:replace="~{/layout :: setFragment(~{this::content})}">
 <th:block th:fragment="content">
 <link rel="stylesheet" type="text/css" href="/css/login.css">
+<link rel="stylesheet" type="text/css" href="/css/register.css">
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js"
   integrity="sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9GhUIs3/z8" crossorigin="anonymous"></script>
 <script>
@@ -11,27 +12,28 @@
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
   <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
   
-  
   <section class="hero">
-        <div class="container">
-  			<h2>회원가입</h2>
-			<form action="/member/register" method="post">
+        <div class="container md" style="margin-top: 40px;">
+  			<h2 style=" text-align: center;">회원가입</h2>
+  			<div class="col-lg-9">
+			<form class="register-form" action="/member/register" method="post">
 				<div class="mb-3">
-				  <label for="email" class="form-label">이메일 : </label>
+				  <label for="email" class="form-label">이메일</label>
 				  <input type="email" name="email" class="form-control" id="email" placeholder="example@text.com">
 				</div>
 				<div class="mb-3">
-				  <label for="password" class="form-label">비밀번호 : </label>
+				  <label for="password" class="form-label">비밀번호</label>
 				  <input type="password" name="pwd" class="form-control" id="pwd" placeholder="Enter Password">
 				</div>
 				<div class="mb-3">
-				  <label for="nickName" class="form-label">닉네임 : </label>
+				  <label for="nickName" class="form-label">닉네임</label>
 				  <input type="text" name="nickName" class="form-control" id="nickName" placeholder="Enter Nickname">
 				</div>
 				
-				<button type="submit" class="btn btn-primary" id="regBtn">전송</button>
+				<button type="submit" class="btn" id="regBtn">회원가입</button>
 			
 			</form>
+			</div>
 			</div>
 			</section>
   

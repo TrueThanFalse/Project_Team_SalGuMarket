@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layout :: setFragment(~{this::content})}">
+<th:block th:fragment="content">
+<link rel="stylesheet" type="text/css" href="/css/help.css">
+
+    <!-- Featured Section Begin -->
+    <section class="table">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="featured__controls">
+						<table class="table">
+							<thead>
+								<tr>
+							      <th scope="col">글번호: 1</th>
+							      <th scope="col">제목: 살구가 상했어요... 환불 되나요?</th>
+							      <th scope="col">작성일: 2024-02-25</th>
+							    </tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td rowspan="10" colspan="3">질문이랑 답변 넣을자리</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+    </section>
+    <!-- Featured Section End -->
+        
+    <!-- Pagination Section Begin-->
+    <section class="button-area">
+	    <div class="container">
+		    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+			  <a href="/help/helpList"><button class="btn" type="button">목록</button></a>
+			  <a href="/help/helpModify"><button class="btn" type="button">수정</button></a>
+			</div>
+	    </div>
+    </section>
+	<br><br><br>
+	<!-- Pagination Section End-->
+	
+	
+</th:block>
+</th:block>

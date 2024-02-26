@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService{
 
-private final BoardMapper bm;
+	private final BoardMapper bm;
 	
 	private final FileMapper fm;
 

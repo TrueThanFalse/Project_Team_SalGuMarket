@@ -19,6 +19,11 @@ public class PagingVO {
 		this.pageNo = 1;
 		this.qty = 10;
 	}
+
+	public PagingVO(int pageNo, int qty) {
+		this.pageNo=1;
+		this.qty=9;
+	}
 	
 	public int getPageStart() {
 		return (this.pageNo-1) * qty;

@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -70,5 +71,12 @@ public class ProductController {
 	}
 	
 	@GetMapping("/productSale")
-	public void transferProductSale() {}
+	public void sendProductSale() {}
+	
+	@PostMapping("/productSale")
+	public String saveProduct(ProductVO pvo) {
+		log.info(">>> pvo >>>", pvo);
+		int isOK = productService.saveProduct(pvo);
+		return "/";
+	}
 }

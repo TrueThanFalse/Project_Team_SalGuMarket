@@ -312,11 +312,21 @@ const contractABI = [
 // 스마트 계약 인스턴스 생성
 const contract = new web3.eth.Contract(contractABI, contractAddress);
 
-// MetaMask와 연동된 계정 요청 함수
+// MetaMask와 연동된 계정 가져오기 함수
 async function getAccount() {
     const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-    return accounts[0]; // 현재 내 계정을 반환
+	// 영단어들을 소문자로 인식하여 반환한다.
+    return accounts[0]; // 현재 MetaMask에서 선택되어 있는 계정을 반환
 }
+
+// 대문자를 소문자로 치환하는 함수
+function CustomToLowerCase(text){
+	return text.replace(/[A-Z]/g, function(match){
+		return match.toLowerCase();
+	});
+};
+loginUserWalletAddress = CustomToLowerCase(loginUserWalletAddress);
+console.log('loginUserWalletAddress CustomToLowerCase >>> ', loginUserWalletAddress);
 
 // 참고 사항 : 모든 거래 단위는 ether 단위로 통일
 
@@ -346,6 +356,8 @@ if(isCreateProductButton){ // 만약 id가 createProduct인 요소가 있다면.
 				});
 		}else{
 			alert("MetaMask의 지갑 주소가 로그인 사용자의 지갑 주소와 일치하지 않습니다.");
+			console.log('loginUserWalletAddress >>>', loginUserWalletAddress);
+			console.log('account >>>', account);
 		}
 	});
 };

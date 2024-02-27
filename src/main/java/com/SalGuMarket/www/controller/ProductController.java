@@ -6,12 +6,14 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.SalGuMarket.www.domain.FileVO;
 import com.SalGuMarket.www.domain.ProductVO;
@@ -64,7 +66,7 @@ public class ProductController {
 	@GetMapping("/productDetail")
 	public String transferProductDetail(@RequestParam("pno") Long pno, Model model) {
 		ProductVO pvo = productService.getProductById(pno);
-		log.info(">>> pvo >>>", pvo);
+		log.info(">>> pvo >>> {}", pvo);
 		
 		model.addAttribute(pvo);
 		return "productDetail";
@@ -74,9 +76,19 @@ public class ProductController {
 	public void sendProductSale() {}
 	
 	@PostMapping("/productSale")
-	public String saveProduct(ProductVO pvo) {
-		log.info(">>> pvo >>>", pvo);
+	public String saveProduct(ProductVO pvo, RedirectAttributes re, Authentication authentication) {
+		log.info(">>> pvo >>> {}", pvo);
+		if(pvo.getCategory().equals("free")) {
+			pvo.setSell("n");
+		}else {
+			pvo.setSell("y");
+		}
+		String SellerEmail = authentication.getName();
+		pvo.setSellerEmail(SellerEmail);
+		
 		int isOK = productService.saveProduct(pvo);
-		return "/";
+		
+		re.addFlashAttribute("saveProduct", isOK);
+		return "redirect:/";
 	}
 }

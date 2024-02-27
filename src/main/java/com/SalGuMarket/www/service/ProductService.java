@@ -11,4 +11,6 @@ public interface ProductService {
 	
 	ProductVO getProductById(Long pno);
 
+	int saveProduct(ProductVO pvo);
+
 }

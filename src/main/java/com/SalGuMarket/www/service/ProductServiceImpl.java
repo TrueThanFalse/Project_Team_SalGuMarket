@@ -2,6 +2,7 @@ package com.SalGuMarket.www.service;
 
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.SalGuMarket.www.domain.FileVO;
@@ -26,5 +27,10 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public List<FileVO> getCategoriesSliderImegeList10Imege() {
 		return productMapper.getCategoriesSliderImegeList10Imege();
+	}
+
+	@Override
+	public int saveProduct(ProductVO pvo) {
+		return productMapper.saveProduct(pvo);
 	}
 }

@@ -12,12 +12,12 @@
         <div class="container">
             <div class="checkout__form">
                 <h4>판매 등록</h4>
-                <form action="product/productSale" id="createProductForm">
+                <form action="/product/productSale" method="post" id="createProductForm">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                             <div class="checkout__input">
                                 <p>제목</p>
-                                <input type="text" style="color: black;">
+                                <input type="text" name="title" style="color: black;">
                             </div>
                             
                             <div class="checkout__input">
@@ -68,7 +68,7 @@
                             
                             <div class="checkout__input">
                                 <p>내용</p>
-                                <textarea rows="5" cols="" style="width: 100%;" placeholder="제품 상세 설명"></textarea>
+                                <textarea rows="5" cols="" name="content" style="width: 100%;" placeholder="제품 상세 설명"></textarea>
                             </div>
                             
                             <div class="checkout__input">
@@ -122,7 +122,7 @@
     <!-- Checkout Section End -->
     
     <script type="text/javascript" th:inline="javascript">
-    	const loginUserWalletAddress = [[${#authentication.principal.mvo.walletAddress}]];
+    	let loginUserWalletAddress = [[${#authentication.principal.mvo.walletAddress}]];
     	// principal은 AuthMember 객체이다.
     	console.log("살구마켓 로그인 사용자의 지갑 주소 >>> ", loginUserWalletAddress);
 	</script>

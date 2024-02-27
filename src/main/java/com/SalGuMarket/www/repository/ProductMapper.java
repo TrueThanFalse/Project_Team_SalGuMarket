@@ -14,4 +14,6 @@ public interface ProductMapper {
 	
 	ProductVO getProductById(Long pno);
 
+	int saveProduct(ProductVO pvo);
+
 }

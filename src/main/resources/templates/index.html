@@ -219,6 +219,13 @@
         </div>
     </section>
     <!-- Featured Section End -->
-		
+	
+	<script type="text/javascript" th:inline="javascript">
+		let saveProduct = [[${saveProduct}]];
+		if(saveProduct > 0){
+			alert("판매 등록 성공!");
+		}
+	</script>
+	
 </th:block>
 </th:block>

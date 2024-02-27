@@ -9,7 +9,7 @@ if (typeof window.ethereum !== 'undefined') { // MetaMask 연동 확인
 }
 
 const web3 = new Web3(window.ethereum); // MetaMask와 상호작용하는 Web3 객체 생성
-const contractAddress = "0xafD6F07b7Fee71B0A1d05643a3e440ac1b9147Fb";
+const contractAddress = "0x6314Bf93f66f0110e6B8247F643d8020C1040d86";
 // 이더리움 네트워크에 배포된 스마트 계약의 주소
 // <<< 주의 사항 >>> : Ganache에서 새로운 Workspace에 스마트 계약을 배포할 때마다 값을 수정해야 함
 const contractABI = [

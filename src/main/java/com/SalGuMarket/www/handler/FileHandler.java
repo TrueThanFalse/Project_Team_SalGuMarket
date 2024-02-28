@@ -74,6 +74,46 @@ public class FileHandler {
 		}
 		return flist;
 	}
+	
+	public FileVO uploadProfile(String nick, MultipartFile profile_image){
+		String profile = "profile";
+		
+		File folders = new File(DIR, profile);
+		
+		//실제 폴더 생성
+		if(!folders.exists()) {
+			folders.mkdirs();
+		}
+		
+		//FileVO설정
+		//for(MultipartFile file : profile_image) {
+		FileVO fvo = new FileVO();
+		fvo.setSaveDir(profile);
+		fvo.setFileSize(profile_image.getSize());
+		fvo.setFileName(profile);
+		
+		//디스크 저장 파일 생성
+		String fullFileName = nick+"_"+profile;
+		File storeFile = new File(folders, fullFileName);
+		
+		try {
+			//원본파일
+			profile_image.transferTo(storeFile);
+			//file=type 이미지 파일이면 1 아니면 0
+			if(isImageFile(storeFile)) {
+				fvo.setFileType(1);
+				File thumbnail = new File(folders, nick+"_th_"+profile);
+				//이미지만 썸네일 가능 (썸네일 사이즈는 다시 정해야함)
+				Thumbnails.of(storeFile).size(80,80).toFile(thumbnail);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.info("파일 저장 오류");
+		}
+	
+		//}
+		return fvo;
+	}
 
 	private boolean isImageFile(File file) throws IOException {
 		String mimeType = new Tika().detect(file);

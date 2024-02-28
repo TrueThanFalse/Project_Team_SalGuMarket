@@ -12,6 +12,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.SalGuMarket.www.security.CustomUserService;
+import com.SalGuMarket.www.security.MemberVO;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Configuration
 @EnableWebSecurity
@@ -28,9 +32,11 @@ public class SecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		return http.csrf(csrf-> csrf.disable())
 				.authorizeHttpRequests(authorize -> authorize
-						.requestMatchers("/**")
+						.requestMatchers(
+								"/**"/* ,"/js/**","/css/**","/img/**","/fonts/**" */)
 						.permitAll()
 				.requestMatchers("/member/list").hasAnyRole("ADMIN")
+				.requestMatchers("/member/list").hasAnyRole("STOP_USER")
 				.anyRequest().authenticated())
 				.formLogin(login -> login
 						.usernameParameter("email")

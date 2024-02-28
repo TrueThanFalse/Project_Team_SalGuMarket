@@ -37,7 +37,7 @@
     <p class="card-text" >가입날짜 : [[${mvo.regAt}]]</p>
     <p class="card-text" >마지막 로그인 : [[${mvo.lastLogin }]]</p>
     <p class="card-text" >경고 누적 : [[${mvo.report }]]</p>
-<a href="/member/mypage"><button type="button"class="btn btn-outline-warning" style=" margin-left:50px; margin-right:5px; font-size: 15px;">회원정보</button></a>
+<a th:href="@{/member/mypage(email=${mvo.email })}"><button type="button"class="btn btn-outline-warning" style=" margin-left:50px; margin-right:5px; font-size: 15px;">회원정보</button></a>
 <a><button type="button" th:attr="data-email=${mvo.email}"  class="btn btn-outline-danger remove" style="  font-size: 15px;">회원탈퇴</button></a>
   </div>
 </div>

@@ -22,6 +22,7 @@ public class FileVO {
 	private long qBno; //1:1문의
 	private long fileSize; //파일 사이즈
 	private String regAt; //등록날짜
+	private String Email;
 
 }
 

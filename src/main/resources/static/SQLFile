@@ -10,7 +10,7 @@ last_login datetime default now(),
 phone_num varchar(100),
 stop char(1) default 'n',
 report int default 0,
-like bigint,
+heart bigint,
 primary key(email));
 
 -----------auth_member Table--------------

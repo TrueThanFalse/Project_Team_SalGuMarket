@@ -3,7 +3,7 @@
 section {
     border-radius: 5px;
     box-shadow: 0 0 10px #FFAC6D;
-    width: 53%;
+    width: 37%;
     margin: 0 auto 30px;
 	padding: 0;
 }
@@ -13,8 +13,10 @@ section {
     width: 200px;
     border-radius: 50%;
 	display: block;
-	float: left;
-	margin-bottom: 30px;
+	margin: auto;
+}
+.profile-image-display:hover{
+	
 }
 .mypage label, .mypage span {
     display: block;
@@ -24,7 +26,7 @@ section {
 	margin-top: 40px;
 	font-size: 24px;
 }
-input[type="file"] {
+.image-file {
     margin-top: 135px;
 }
 .col-lg-9{
@@ -52,4 +54,13 @@ h2:after {
 .favorite, .myPost{
 	font-size: 18px;
 	padding-top: 12px;
+}
+.image-file {
+	display: none;
+}
+.profile_submit{
+	display: none;
+}
+.profile-email{
+	display: none;
 }

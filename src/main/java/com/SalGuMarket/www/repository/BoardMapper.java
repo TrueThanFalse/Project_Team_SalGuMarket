@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.SalGuMarket.www.domain.BoardVO;
 import com.SalGuMarket.www.domain.PagingVO;
 
+
 @Mapper
 public interface BoardMapper {
 

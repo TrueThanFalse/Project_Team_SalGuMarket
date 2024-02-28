@@ -59,11 +59,11 @@ public class MemberController {
 	public String mypage(HttpServletRequest request, Principal p, @RequestParam(name="email", required = false) String email, Model m) {
 		log.info(">>>>>>>>>>>>>>>>>>>"+email);
 		if(email != null) {
-			MemberVO mvo = memberService.detail(email);
+			MemberVO mvo = memberService.selectEmail(email);
 			m.addAttribute("mvo", mvo);
 			return "/member/otherspage";
 		}else {
-			MemberVO mvo = memberService.detail(p.getName());
+			MemberVO mvo = memberService.selectEmail(p.getName());
 			m.addAttribute("mvo", mvo);
 			return "/member/mypage";
 		}
@@ -72,7 +72,7 @@ public class MemberController {
 	@PostMapping("/profile")
 	public String profile(@RequestParam(name="email") String email, @RequestParam(name="file", required = false)MultipartFile file, Model m) {
 		FileVO fvo = null;
-		MemberVO mvo = memberService.detail(email);
+		MemberVO mvo = memberService.selectEmail(email);
 		String nick = mvo.getNickName();
 		if(file != null) {
 			fvo = fileHandler.uploadProfile(nick, file);
@@ -88,7 +88,7 @@ public class MemberController {
 	@GetMapping("/otherspage")
 	public void otherspage(HttpServletRequest request, @RequestParam(name="email", required = false) String email, Model m) {
 		log.info(">>>>>>>>>>>>>>>>>>>"+email);
-		MemberVO mvo = memberService.detail(email);
+		MemberVO mvo = memberService.selectEmail(email);
 		m.addAttribute("mvo", mvo);
 	}
 	

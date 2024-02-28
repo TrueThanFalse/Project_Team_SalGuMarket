@@ -17,9 +17,6 @@ public interface MemberService {
 
 	int delete(String email);
 
-
-	MemberVO detail(String email);
-
 	int setProfile(MemberVO mvo);
 
 	MemberVO selectEmail(String email);

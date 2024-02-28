@@ -53,12 +53,6 @@ public class MemberServiceImpl implements MemberService{
 		return memberMapper.delete(email);
 	}
 
-	@Override
-	public MemberVO detail(String email) {
-		// TODO Auto-generated method stub
-		return memberMapper.selectEmail(email);
-	}
-
 	@Transactional
 	@Override
 	public int setProfile(MemberVO mvo) {

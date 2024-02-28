@@ -26,5 +26,7 @@ public interface MemberMapper {
 	int remove(String email);
 
 	int delete(String email);
+
+	MemberVO selcetNickName(String nickName);
 	
 }

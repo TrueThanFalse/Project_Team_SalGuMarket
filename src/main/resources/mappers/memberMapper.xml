@@ -37,6 +37,9 @@
 		delete from member where email = #{email}
 	</delete>
 	
+	<select id="selcetNickName" resultType="com.SalGuMarket.www.security.MemberVO">
+  		select * from member where nick_name=#{nickName}
+  	</select>
 	
 	<sql id="search">
 		<if test="type!=null">

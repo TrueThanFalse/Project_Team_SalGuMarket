@@ -43,7 +43,7 @@ public class ChatController {
         ChatRoom room = chatService.createRoom(name);
         String userEmail = "test";
         model.addAttribute("room",room);
-        model.addAttribute("username",userEmail);
+       // model.addAttribute("username",userEmail);
         return "chat/chatRoom";  //만든사람이 먼저들어감
     }
 

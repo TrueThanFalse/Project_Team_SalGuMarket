@@ -1,46 +1,12 @@
 @charset "UTF-8";
-.hero__search__form form input {
- 	display: block;
- 	border: 1px solid #ebebeb;
- }
- 
- .hero__search__form form input:last-of-type {
- 	margin-top: 8px;
- 	margin-bottom: 8px;
- }
- 
- .hero__search__form form button{
- 	top: 55px;
- 	right: 75px;
- 	border-radius: 5px;
- }
- 
- .hero__search__form {
- 	margin-top: 100px;
- 	height: 120px;
- 	border: none;
- }
- 
- .k_login {
- 	margin-top: 0px;
- }
- 
-.hero__search {
-	width: 610px;
-	height: 300px;
-}
 
-.col-lg-9{
-	height: 400px;
-}
 
-h2 {
-	font-family: "Do Hyeon", sans-serif;
-}
-
-.site-btn {
+.bb {
 	font-weight: 400;
 	font-size: 18px;
+	height: 45px;
+	padding-top: 10px;
+	margin-top: 20px;
 }
 
 .container h2:after {
@@ -53,4 +19,30 @@ h2 {
    content: "";
    margin: 0 auto;
    display: block;
+}
+
+.t{
+	font-size: 20px;
+	font-family: "Do Hyeon", sans-serif;
+}
+
+.f{
+	height: 45px;
+	margin: 5px 0 20px 0;
+	border: 1px solid #FFAC6D;
+	border-radius: 0.25rem;
+}
+
+.kakao_img{
+	width: 500px;
+	margin-top: 17px;
+	height: 45px;
+}
+
+.find a{
+	margin-left: 35px;
+	margin-top: 15px;
+	color: gray;
+	font-size: 15px;
+
 }

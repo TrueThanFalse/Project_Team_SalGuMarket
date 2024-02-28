@@ -17,8 +17,11 @@ public interface MemberService {
 
 	int delete(String email);
 
+	int setProfile(MemberVO mvo);
+
 	MemberVO selectEmail(String email);
 
 	MemberVO selectNickName(String nickName);
+
 	
 }

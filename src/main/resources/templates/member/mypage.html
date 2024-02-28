@@ -7,22 +7,30 @@
 <link rel="stylesheet" type="text/css" href="/css/mypage.css">
 
     <section class="hero">
-    	<div class="container md">
+    	<div class="container text-center md">
         	<h2 style=" text-align: center; padding-top: 20px;">내 정보</h2>
         		<div class="col-lg-9 mypage">
 	        		<div class="profile-image-box">
 				        <label class="profile-image">프로필 사진</label>
-				        <img id="profile-image-display" class="profile-image-display" alt="프로필 사진 미리보기" src="/img/salgu_profile.png"><br>
-				        <input type="file" id="profile-image-input" accept="image/*">
+				        <img th:if="${mvo.isProfile == '0'}" id="profile-image-display" class="profile-image-display" alt="프로필 사진 미리보기" src="/img/salgu_profile.png"><br>
+				        <img th:if="${mvo.isProfile == '1'}" id="profile-image-display" class="profile-image-display" alt="프로필 사진 미리보기" th:src="C:\SalGuMarketUploadFile\profile\${mvo.nickName}_profile.jpeg">
+				        <form action="/member/profile" method="post" enctype="multipart/form-data" id="profile_submit">
+				        	<input type="email" name="email" class="profile-email" id="email" th:value="${mvo.email}">
+				        	<input class="image-file" type="file" name="file" id="profile-image-input" accept="image/*">
+				        	<button class="profile_submit" id="profile_submit_btn" type="submit"></button>
+				        </form>
 	        		</div>
 			        <label for="email">이메일</label>
-			        <span id="userEmail">${model.email}</span>
+			        <span id="userEmail">[[${mvo.email}]]</span>
 			        <label for="walletAddress">지갑 주소</label>
-			        <span id="walletAddress">${model.walletAddress}</span>
+			        <span th:if="${mvo.walletAddress != null}" id="walletAddress">[[${mvo.walletAddress}]]</span>
+			        <span th:if="${mvo.walletAddress == null}" id="walletAddress">지갑 주소 미생성</span>
 			        <label for="nickName">닉네임</label>
-			        <span id="nickName">${model.nickName}</span>
-			        <label for="phone">전화번호</label>
-			        <span id="phone">${model.phone}</span>
+			        <span id="nickName">[[${mvo.nickName}]]</span>
+			        <label for="phoneNum">전화번호</label>
+			        <span th:if="${mvo.phoneNum != null}" id="walletAddress">[[${mvo.phoneNum}]]</span>
+			        <span th:if="${mvo.phoneNum == null}" id="walletAddress">전화번호 미기재</span>
+			        
 		        </div>
         </div>
     </section>
@@ -41,6 +49,8 @@
         </ul>
     </section>
 
+
+	<script src="/js/profile.js"></script>
     <script>
     	//프로필 사진 변경시 미리보기 출력 추가 예정
         /* document.getElementById('profile-image-input').addEventListener('change', function(event) {

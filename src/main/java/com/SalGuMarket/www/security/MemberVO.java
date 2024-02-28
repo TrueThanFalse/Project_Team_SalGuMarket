@@ -2,6 +2,8 @@ package com.SalGuMarket.www.security;
 
 import java.util.List;
 
+import com.SalGuMarket.www.domain.FileVO;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,9 +19,10 @@ import lombok.ToString;
 @NoArgsConstructor
 public class MemberVO {
 	
-	private String email, walletAddress, pwd, nickName, regAt, lastLogin, phoneNum, stop;
-	private int report;
+	private String email, name, walletAddress, pwd, nickName, regAt, lastLogin, phoneNum, stop;
+	private int report, heart, isProfile;
 	private List<AuthVO> authList;
+	private FileVO fvo;
 	
 	public MemberVO(String email, String walletAddress) {
 		this.email = email;

@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 public class HelpBoardController {
 	
 	//1:1 문의 게시판 컨트롤러
-	
 	private final HelpBoardService helpBoardService;
 	
 	@GetMapping("/helpRegister")

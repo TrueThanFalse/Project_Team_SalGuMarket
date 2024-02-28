@@ -17,12 +17,13 @@ import com.SalGuMarket.www.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/chat/*")
 @Slf4j
 public class ChatController {
-    private final ChatService chatService;
+	private final ChatService chatService;
     private final MemberService memberService;
 
     
@@ -35,12 +36,12 @@ public class ChatController {
     }
 
     
-    // 방만들기
+//    // 방만들기
     @PostMapping("/createRoom")
     public String createRoom(Model model, @RequestParam(value="name") String name
     		,@RequestParam(value="userEmail") String Email) {
         ChatRoom room = chatService.createRoom(name);
-        MemberVO userEmail = memberService.selectUser(Email);
+        String userEmail = "test";
         model.addAttribute("room",room);
         model.addAttribute("username",userEmail);
         return "chat/chatRoom";  //만든사람이 먼저들어감
@@ -48,15 +49,15 @@ public class ChatController {
 
     // 방들어가기
     // 로그인된 user 들고가기 : 수정필요함
-    @GetMapping("/chatRoom")
-    public String chatRoom(Model model, @RequestParam(value="name") String name
-    		,@RequestParam(value="userEmail") String Email){
-        ChatRoom room = chatService.findRoomById(name);
-        MemberVO userEmail = memberService.selectUser(Email);
-        model.addAttribute("room",room);
-        model.addAttribute("username",userEmail);
-        return "chat/chatRoom";
-    }
+//    @GetMapping("/chatRoom")
+//    public String chatRoom(Model model, @RequestParam(value="name") String name
+//    		,@RequestParam(value="userEmail") String Email){
+//        ChatRoom room = chatService.findRoomById(name);
+//        MemberVO userEmail = memberService.selectUser(Email);
+//        model.addAttribute("room",room);
+//        model.addAttribute("username",userEmail);
+//        return "chat/chatRoom";
+//    }
     
     
     // readCount 용

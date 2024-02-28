@@ -2,12 +2,125 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{/layout :: setFragment(~{this::content})}">
 <th:block th:fragment="content">
+<style>
+/* 모달 스타일 */
+.modal {
+  display: none; /* 초기에는 보이지 않음 */
+  position: fixed; /* 고정 위치 */
+  z-index: 1; /* 다른 요소 위에 표시 */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* 모달이 스크롤이 가능하도록 함 */
+  background-color: rgba(0,0,0,0.4); /* 반투명한 검은색 배경 */
+}
 
+/* 모달 내용 */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 중앙 정렬 */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* 모달 닫기 버튼 */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.wrap {
+    padding: 40px 0;
+    background-color: #A8C0D6;
+}
+
+.wrap .chat {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.wrap .chat .icon {
+    position: relative;
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #eee;
+}
+
+.wrap .chat .icon i {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    font-size: 2.5rem;
+    color: #aaa;
+    transform: translateX(-50%);
+}
+
+.wrap .chat .textbox {
+    position: relative;
+    display: inline-block;
+    max-width: calc(100% - 70px);
+    padding: 10px;
+    margin-top: 7px;
+    font-size: 13px;
+    border-radius: 10px;
+}
+
+.wrap .chat .textbox::before {
+    position: absolute;
+    display: block;
+    top: 0;
+    font-size: 1.5rem;
+}
+
+.wrap .ch1 .textbox {
+    margin-left: 20px;
+    background-color: #ddd;
+}
+
+.wrap .ch1 .textbox::before {
+    left: -15px;
+    content: "◀";
+    color: #ddd;
+}
+
+.wrap .ch2 {
+    flex-direction: row-reverse;
+}
+
+.wrap .ch2 .textbox {
+    margin-right: 20px;
+    background-color: #F9EB54;
+}
+
+.wrap .ch2 .textbox::before {
+    right: -15px;
+    content: "▶";
+    color: #F9EB54;
+}
+
+	
+</style>
 <div class="container">
-<form action="/chat/createRoom" method="post">
+
+<!-- 방 만들기 버튼을 클릭하면 모달이 열리도록 설정 -->
+<form id="createRoomForm" action="/chat/createRoom" method="post">
     <input type="text" name="userEmail" placeholder="유저이름">
     <input type="text" name="name" placeholder="채팅방 이름">
-    <button type="submit" >방 만들기</button>
+    <!-- 방 만들기 버튼 클릭 시 openModal 함수 호출 -->
+    <button type="button" onclick="openModal()">방 만들기</button>
 </form>
 
 <table>
@@ -18,7 +131,133 @@
         </td>
     </tr>
 </table>
-    </div>
 
+<!-- 모달 -->
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+            <span>메세지</span>
+            <!-- 아이콘을 링크로해서 마이ㅠㅔ이지 가게? -->
+		 <div class="wrap">
+		        <div class="chat ch1">
+		            <div class="icon"><i class="fa-solid fa-user"></i></div>
+		            <div class="textbox">안녕하세요. 반갑습니다.</div>
+		        </div>
+		        <div class="chat ch2">
+		            <div class="icon"><i class="fa-solid fa-user"></i></div>
+		            <div class="textbox">안녕하세요. Sㅁlgu 관리자입니다.</div>
+		        </div>
+		        <div class="chat ch1">
+		            <div class="icon"><i class="fa-solid fa-user"></i></div>
+		            <div class="textbox">문의가 있습니다</div>
+		        </div>
+		        <div class="chat ch2">
+		            <div class="icon"><i class="fa-solid fa-user"></i></div>
+		            <div class="textbox">어떤 문제가 있으신가요?</div>
+		        </div>
+		        <div class="chat ch1">
+		            <div class="icon"><i class="fa-solid fa-user"></i></div>
+		            <div class="textbox">사기를 당했어요</div>
+		        </div>
+		</div>
+		<!--  -->
+	<div class="container">
+        <input type="text" id="userEmail" placeholder="유저이름">
+        <input type="text" id="content" placeholder="보낼 메세지를 입력하세요.">
+        <button type="button" value="전송" class="sendBtn" onclick="sendMsg()">전송</button>
+        <button type="button" value="방나가기" class="quit" onclick="quit()">방 나가기</button>
+    </div>
+  	</div>
+</div>
+
+</div>
+
+<script th:inline="javascript">
+//모달 열기 함수
+function openModal() {
+    let modal = document.getElementById("myModal");
+    modal.style.display = "block";
+}
+
+// 모달 닫기 함수
+function closeModal() {
+    let modal = document.getElementById("myModal");
+    modal.style.display = "none";
+}
+
+//WebSocket 연결 함수
+function connectWebSocket() {
+    let socket = new WebSocket("ws://localhost:8088/ws/chat");
+
+    socket.onopen = function (e) {
+        console.log('서버에 연결되었습니다!');
+        enterRoom(socket);
+    };
+
+    socket.onclose = function (e) {
+        console.log('연결이 종료되었습니다');
+    };
+
+    socket.onerror = function (e) {
+        console.log(e);
+    };
+
+    socket.onmessage = function (e) {
+        let msgArea = document.querySelector('.msgArea');
+        let message = JSON.parse(e.data);
+
+        if (message.type === 'ENTER' || message.type === 'QUIT') {
+            let newMsg = document.createElement('div');
+            newMsg.innerText = message.message; // 간소화된 메시지 표시
+            msgArea.append(newMsg);
+        } else if (message.type === 'TALK') {
+            let newMsg = document.createElement('div');
+            newMsg.innerText = message.sender + ': ' + message.msg;
+            msgArea.append(newMsg);
+        }
+    };
+
+    return socket;
+}
+
+// 방 입장 함수
+function enterRoom(socket) {
+    let enterMsg = {
+        "type": "ENTER",
+        "name": "test",
+        "sender": "test",
+        "msg": ""
+    };
+    socket.send(JSON.stringify(enterMsg));
+}
+
+// 메시지 전송 함수
+function sendMsg() {
+    let content = document.getElementById('content').value;
+    let socket = connectWebSocket();
+    let talkMsg = {
+        "type": "TALK",
+        "name": "test",
+        "sender": "test",
+        "msg": content
+    };
+    socket.send(JSON.stringify(talkMsg));
+}
+
+// 방 나가기 함수
+function quit() {
+    let socket = connectWebSocket();
+    let quitMsg = {
+        "type": "QUIT",
+        "name": "test",
+        "sender": "test",
+        "msg": ""
+    };
+    socket.send(JSON.stringify(quitMsg));
+    socket.close();
+    closeModal();
+    location.href = "/chat/chatList";
+}
+</script>
 </th:block>
 </th:block>

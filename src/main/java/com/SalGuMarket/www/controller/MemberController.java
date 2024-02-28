@@ -3,10 +3,14 @@ package com.SalGuMarket.www.controller;
 import java.security.Principal;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,11 +47,12 @@ public class MemberController {
 	public void register() {}
 	
 	@PostMapping("/register")
-	public String register(MemberVO mvo) {
+	public String register(MemberVO mvo,RedirectAttributes re) {
 		log.info(">>>> mvo >>> " + mvo);
 		mvo.setPwd(passwordEncoder.encode(mvo.getPwd()));
 		int isOK = memberService.insert(mvo);
-		return isOK>0? "redirect:/":"/member/register";
+		if(isOK>0)re.addFlashAttribute("reg", "1");
+		return "redirect:/";
 	}
 	
 	@GetMapping("/mypage")
@@ -118,5 +123,25 @@ public class MemberController {
 		re.addFlashAttribute("logout", "1");
 		return "redirect:/member/login";
 		
+	}
+	
+	//아이디 중복확인
+	@GetMapping(value ="/checkEmail/{email}", produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> checkEamil(@PathVariable("email") String email) {
+	    log.info("email::::::::::::::" + email);
+	    MemberVO mvo = memberService.selectEmail(email);
+	    log.info("mvo::::::::::::::" + mvo);
+	    return mvo == null ? new ResponseEntity<>("1", HttpStatus.OK) :
+	            new ResponseEntity<>("0", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	//닉네임 중복확인
+	@GetMapping(value ="/checkNick/{nickName}", produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> checkNick(@PathVariable("nickName") String nickName) {
+		log.info("nick_name::::::::::::::" + nickName);
+		MemberVO mvo = memberService.selectNickName(nickName);
+		log.info("mvo::::::::::::::" + mvo);
+		return mvo == null ? new ResponseEntity<>("1", HttpStatus.OK) :
+			new ResponseEntity<>("0", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

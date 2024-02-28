@@ -5,43 +5,31 @@
   Pagination
 -----------------------*/
 
-.btn{
-	background-color: #FFAC6D;
-	color: #ffffff;
-	margin-right: 10px;
-	border: none;
-}
-
-.btn:hover{
-	background-color: #FF7471;
-	color: #ffffff;
-}
-
 .pagenation .page-item .page-link{
-	font-family: "Do Hyeon", sans-serif;
-	font-weight: 300;
-	color: #FFAC6D;
+   font-family: "Do Hyeon", sans-serif;
+   font-weight: 300;
+   color: #FFAC6D;
 
-/* 	border: none; */
+/*    border: none; */
 }
 
 .pagenation .page-item .page-link:hover{
-	color: #FF7471;
+   color: #FF7471;
 }
 
 
 
 /*---------------------
-	Member
+   Member
 -----------------------*/
 .member_list h2:after{
-	position: absolute;
-	left: 0;
-	bottom: -15px;
-	right: 0;
-	height: 4px;
-	width: 80px;
-	background: #FFAC6D;
-	content: "";
-	margin: 0 auto;
+   left: 0;
+   bottom: -15px;
+   right: 0;
+   height: 4px;
+   width: 110px;
+   background: #FFAC6D;
+   content: "";
+   margin: 0 auto;
+   display: block;
 }

@@ -26,11 +26,13 @@ public interface MemberMapper {
 	int remove(String email);
 
 	int delete(String email);
-
+	
 	int yesProfile(String email);
 
 	void noProfile(String email);
 
 	int getIsProfile(String email);
+	
+	MemberVO selcetNickName(String nickName);
 	
 }

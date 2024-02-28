@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{/layout :: setFragment(~{this::content})}">
 <th:block th:fragment="content">
-<link rel="stylesheet" type="text/css" href="">
+<link rel="stylesheet" type="text/css" href="/css/fagination.css">
 
-<div class="container text-center md" style="margin-top: 40px;">
+<div class="container text-center md" style="margin-top: 10px;">
 <div class="member_list">
-<h2 style=" text-align: center; font-weight: 600;">회원 목록</h2>
+<h2 style=" text-align: center;">회원 목록</h2>
 </div>
 
 <!-- 정렬 -->
@@ -53,7 +53,7 @@
            <ul class="pagination justify-content-center">
            <!-- 이전페이지 -->
   		     <li class="page-item " th:if="${ph.prev}">
-               <a class="page-link" th:href="@{/member/list(pageNo=${ph.startPage-1},qty=${ph.pgvo.qty},type=${pgvo.type })}"  aria-label="Previous"><<</a>
+               <a class="page-link" th:href="@{/member/list(pageNo=${ph.startPage-1},qty=${ph.pgvo.qty},type=${pgvo.type })}"  aria-label="Previous">&lt;&lt;</a>
              </li>
              
    			 <li class="page-item ${ph.pgvo.pageNo == i ? 'active':''}" th:each="i:${#numbers.sequence(ph.startPage,ph.endPage)}">
@@ -62,7 +62,7 @@
              
              <!-- 다음페이지 -->
              <li class="page-item" th:if="${ph.next}">
-               <a class="page-link"  th:href="@{/member/list(pageNo=${ph.endPage+1 },qty=${ph.pgvo.qty},type=${pgvo.type })}"  aria-label="Next">>>></a>
+               <a class="page-link"  th:href="@{/member/list(pageNo=${ph.endPage+1 },qty=${ph.pgvo.qty},type=${pgvo.type })}"  aria-label="Next">&gt;&gt;</a>
              </li>
            </ul>
          </nav>

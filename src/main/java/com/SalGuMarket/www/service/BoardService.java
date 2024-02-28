@@ -8,9 +8,11 @@ import com.SalGuMarket.www.domain.PagingVO;
 
 public interface BoardService {
 
-	void register(BoardDTO boardDTO);
+	List<BoardVO> boardList(PagingVO pgvo);
 
-	List<BoardVO> list(PagingVO pgvo);
+	int getTotalCount(PagingVO pgvo);
+
+	void boardRegister(BoardDTO boardDTO);
 
 	BoardDTO selectOne(long bno);
 
@@ -18,6 +20,6 @@ public interface BoardService {
 
 	int remove(long bno);
 
-	int getTotalCount(PagingVO pgvo);
+
 	
 }

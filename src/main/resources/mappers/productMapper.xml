@@ -19,5 +19,9 @@
 		INSERT INTO product(title, category, price, content, sell, seller_email)
 		VALUES(#{title}, #{category}, #{price}, #{content}, #{sell}, #{sellerEmail})
 	</insert>
+	
+	<select id="getRecentPno" resultType="Long">
+		SELECT MAX(pno) FROM product
+	</select>
 
 </mapper>

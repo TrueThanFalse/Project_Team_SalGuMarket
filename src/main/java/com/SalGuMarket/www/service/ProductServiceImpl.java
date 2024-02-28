@@ -6,7 +6,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.SalGuMarket.www.domain.FileVO;
+import com.SalGuMarket.www.domain.ProductDTO;
 import com.SalGuMarket.www.domain.ProductVO;
+import com.SalGuMarket.www.repository.FileMapper;
 import com.SalGuMarket.www.repository.ProductMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ProductServiceImpl implements ProductService{
 
 	private final ProductMapper productMapper;
+	private final FileMapper fileMapper;
 
 	@Override
 	public ProductVO getProductById(Long pno) {
@@ -30,7 +33,19 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public int saveProduct(ProductVO pvo) {
-		return productMapper.saveProduct(pvo);
+	public int saveProduct(ProductDTO pdto) {
+		int isOK = productMapper.saveProduct(pdto.getPvo());
+		
+		if(isOK > 0) {
+			Long pno = productMapper.getRecentPno();
+			// 위 productMapper.saveProduct(pDTO.getPvo()); 구문으로 생성된 Pno이다.
+			
+			for(FileVO fvo : pdto.getFlist()) {
+				fvo.setPno(pno);
+				isOK *= fileMapper.saveProductFile(fvo);
+			}
+		}
+		
+		return isOK;
 	}
 }

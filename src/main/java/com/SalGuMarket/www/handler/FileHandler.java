@@ -52,14 +52,18 @@ public class FileHandler {
 			File storeFile = new File(folders, fullFileName);
 			
 			try {
-				//원본파일
 				file.transferTo(storeFile);
-				//file=type 이미지 파일이면 1 아니면 0
+				// 로컬디스크에 원본 파일을 실제로 생성
+				
 				if(isImageFile(storeFile)) {
-					fvo.setFileType(1);
+					fvo.setFileType(1); // file의 type은 이미지 파일이면 1 아니면 0
 					File thumbnail = new File(folders, uuid.toString()+"_th_"+FileName);
-					//이미지만 썸네일 가능 (썸네일 사이즈는 다시 정해야함)
-					Thumbnails.of(storeFile).size(80,80).toFile(thumbnail);
+					Thumbnails.of(storeFile).size(80,80).toFile(thumbnail); // 섬네일 이미지 생성
+					
+					// HMS : product용 섬네일 이미지 생성
+					File thumbnailProduct = new File(folders, uuid.toString()+"_product_"+FileName);
+					Thumbnails.of(storeFile).size(262,270).toFile(thumbnailProduct);
+					
 				}
 			} catch (Exception e) {
 				e.printStackTrace();

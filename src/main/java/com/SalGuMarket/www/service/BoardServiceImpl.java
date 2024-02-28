@@ -21,62 +21,57 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService{
 
-	private final BoardMapper bm;
+	private final BoardMapper boardMapper;
 	
-	private final FileMapper fm;
+	private final FileMapper fileMapper;
 
-	@Transactional
 	@Override
-	public void register(BoardDTO boardDTO) {
-		// TODO Auto-generated method stub
-		int isOK = bm.insert(boardDTO.getBvo());
-		if(isOK > 0 && boardDTO.getFlist().size()>0) {
-			long bno = bm.getBno();
+	public List<BoardVO> boardList(PagingVO pgvo) {
+		return boardMapper.list(pgvo);
+	}
+
+	@Override
+	public int getTotalCount(PagingVO pgvo) {
+		return boardMapper.getTotalCount(pgvo);
+	}
+
+	@Override
+	public void boardRegister(BoardDTO boardDTO) {
+		int isOk=boardMapper.insert(boardDTO.getBvo());
+		if(isOk>0&&boardDTO.getFlist().size()>0) {
+			long bno=boardMapper.getBno();
 			for(FileVO fvo : boardDTO.getFlist()) {
 				fvo.setBno(bno);
-				isOK *= fm.insertFile(fvo);
+				isOk *= fileMapper.insertFile(fvo);
 			}
 		}
+		
 	}
 
-	@Override
-	public List<BoardVO> list(PagingVO pgvo) {
-		// TODO Auto-generated method stub
-		return bm.list(pgvo);
-	}
-
-	@Transactional
 	@Override
 	public BoardDTO selectOne(long bno) {
-		BoardDTO bdto = new BoardDTO();
-		bdto.setBvo(bm.selectOne(bno));
-		bdto.setFlist(fm.getFileList(bno));
-		return bdto;
+		BoardDTO boardDto=new BoardDTO();
+		boardDto.setBvo(boardMapper.selectOne(bno));
+		boardDto.setFlist(fileMapper.getFileList(bno));
+		return boardDto;
 	}
 
-	@Transactional
 	@Override
-	public void modify(BoardDTO bdto) {
-		// TODO Auto-generated method stub
-		int isOK = bm.edit(bdto.getBvo());
-		if(isOK > 0 && bdto.getFlist().size()>0) {
-			long bno = bdto.getBvo().getBno();
-			for(FileVO fvo : bdto.getFlist()) {
+	public void modify(BoardDTO boardDTO) {
+		int isOK = boardMapper.edit(boardDTO.getBvo());
+		if(isOK > 0 && boardDTO.getFlist().size()>0) {
+			long bno = boardDTO.getBvo().getBno();
+			for(FileVO fvo : boardDTO.getFlist()) {
 				fvo.setBno(bno);
-				isOK*=fm.insertFile(fvo);
+				isOK*=fileMapper.insertFile(fvo);
 			}
 		}
 	}
 
 	@Override
 	public int remove(long bno) {
-		// TODO Auto-generated method stub
-		return bm.remove(bno);
+		return boardMapper.remove(bno);
 	}
 
-	@Override
-	public int getTotalCount(PagingVO pgvo) {
-		// TODO Auto-generated method stub
-		return bm.getTotalCount(pgvo);
-	}
+
 }

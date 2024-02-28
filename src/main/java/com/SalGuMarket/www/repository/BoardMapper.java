@@ -11,9 +11,13 @@ import com.SalGuMarket.www.domain.PagingVO;
 @Mapper
 public interface BoardMapper {
 
+	List<BoardVO> list(PagingVO pgvo);
+
+	int getTotalCount(PagingVO pgvo);
+
 	int insert(BoardVO bvo);
 
-	List<BoardVO> list(PagingVO pgvo);
+	long getBno();
 
 	BoardVO selectOne(long bno);
 
@@ -21,8 +25,6 @@ public interface BoardMapper {
 
 	int remove(long bno);
 
-	int getTotalCount(PagingVO pgvo);
 
-	long getBno();
 
 }

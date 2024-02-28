@@ -5,18 +5,6 @@
   Pagination
 -----------------------*/
 
-.btn{
-	background-color: #FFAC6D;
-	color: #ffffff;
-	margin-right: 10px;
-	border: none;
-}
-
-.btn:hover{
-	background-color: #FF7471;
-	color: #ffffff;
-}
-
 .pagenation .page-item .page-link{
 	font-family: "Do Hyeon", sans-serif;
 	font-weight: 300;
@@ -35,7 +23,6 @@
 	Member
 -----------------------*/
 .member_list h2:after{
-	position: absolute;
 	left: 0;
 	bottom: -15px;
 	right: 0;
@@ -44,4 +31,5 @@
 	background: #FFAC6D;
 	content: "";
 	margin: 0 auto;
+	display: block;
 }

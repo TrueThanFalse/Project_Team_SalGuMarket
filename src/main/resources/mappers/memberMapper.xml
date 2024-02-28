@@ -37,6 +37,17 @@
 		delete from member where email = #{email}
 	</delete>
 	
+	<update id="yesProfile">
+		update member set is_profile='1' where email=#{email}
+	</update>
+	
+	<update id="noProfile">
+		update member set is_profile='0' where email=#{email}
+	</update>
+	
+	<select id="getIsProfile" resultType="int">
+		select is_profile from member where email=#{email}
+	</select>
 	
 	<sql id="search">
 		<if test="type!=null">

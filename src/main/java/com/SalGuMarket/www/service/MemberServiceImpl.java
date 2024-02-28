@@ -3,8 +3,11 @@ package com.SalGuMarket.www.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.SalGuMarket.www.domain.FileVO;
 import com.SalGuMarket.www.domain.PagingVO;
+import com.SalGuMarket.www.repository.FileMapper;
 import com.SalGuMarket.www.repository.MemberMapper;
 import com.SalGuMarket.www.security.MemberVO;
 
@@ -17,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberServiceImpl implements MemberService{
 
 	private final MemberMapper memberMapper;
+	private final FileMapper fileMapper;
 
 	@Override
 	public int insert(MemberVO mvo) {
@@ -47,5 +51,29 @@ public class MemberServiceImpl implements MemberService{
 	public int delete(String email) {
 		// TODO Auto-generated method stub
 		return memberMapper.delete(email);
+	}
+
+	@Override
+	public MemberVO detail(String email) {
+		// TODO Auto-generated method stub
+		return memberMapper.selectEmail(email);
+	}
+
+	@Transactional
+	@Override
+	public int setProfile(MemberVO mvo) {
+		// TODO Auto-generated method stub
+		String email = mvo.getEmail();
+		if(mvo.getFvo() != null) {
+			FileVO fvo = mvo.getFvo();
+			fvo.setEmail(email);
+			fileMapper.insertFile(fvo);
+			memberMapper.yesProfile(mvo.getEmail());
+		}else {
+			//프사 미선택 삭제
+			memberMapper.noProfile(mvo.getEmail());
+		}
+		int profile = memberMapper.getIsProfile(email);
+		return profile;
 	}
 }

@@ -40,9 +40,9 @@ public class ChatController {
     public String createRoom(Model model, @RequestParam(value="name") String name
     		,@RequestParam(value="userEmail") String Email) {
         ChatRoom room = chatService.createRoom(name);
-        MemberVO userEmail = memberService.selectUser(Email);
+        //MemberVO userEmail = memberService.selectUser(Email);
         model.addAttribute("room",room);
-        model.addAttribute("username",userEmail);
+        //model.addAttribute("username",userEmail);
         return "chat/chatRoom";  //만든사람이 먼저들어감
     }
 
@@ -52,9 +52,9 @@ public class ChatController {
     public String chatRoom(Model model, @RequestParam(value="name") String name
     		,@RequestParam(value="userEmail") String Email){
         ChatRoom room = chatService.findRoomById(name);
-        MemberVO userEmail = memberService.selectUser(Email);
+        //MemberVO userEmail = memberService.selectUser(Email);
         model.addAttribute("room",room);
-        model.addAttribute("username",userEmail);
+        //model.addAttribute("username",userEmail);
         return "chat/chatRoom";
     }
     

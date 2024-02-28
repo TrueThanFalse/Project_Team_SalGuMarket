@@ -10,15 +10,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.SalGuMarket.www.domain.FileVO;
 import com.SalGuMarket.www.domain.PagingVO;
+import com.SalGuMarket.www.handler.FileHandler;
 import com.SalGuMarket.www.handler.PagingHandler;
 import com.SalGuMarket.www.security.MemberVO;
 import com.SalGuMarket.www.service.MemberService;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,6 +33,7 @@ public class MemberController {
 	private final MemberService memberService;
 	
 	private final PasswordEncoder passwordEncoder;
+	private final FileHandler fileHandler;
 	
 	@GetMapping("/login")
 	public void login() {}
@@ -44,11 +47,45 @@ public class MemberController {
 		log.info(">>>> mvo >>> " + mvo);
 		mvo.setPwd(passwordEncoder.encode(mvo.getPwd()));
 		int isOK = memberService.insert(mvo);
-		return isOK>0? "/index":"/member/register";
+		return isOK>0? "redirect:/":"/member/register";
 	}
 	
 	@GetMapping("/mypage")
-	public void mypage() {}
+	public String mypage(HttpServletRequest request, Principal p, @RequestParam(name="email", required = false) String email, Model m) {
+		log.info(">>>>>>>>>>>>>>>>>>>"+email);
+		if(email != null) {
+			MemberVO mvo = memberService.detail(email);
+			m.addAttribute("mvo", mvo);
+			return "/member/otherspage";
+		}else {
+			MemberVO mvo = memberService.detail(p.getName());
+			m.addAttribute("mvo", mvo);
+			return "/member/mypage";
+		}
+	}
+	
+	@PostMapping("/profile")
+	public String profile(@RequestParam(name="email") String email, @RequestParam(name="file", required = false)MultipartFile file, Model m) {
+		FileVO fvo = null;
+		MemberVO mvo = memberService.detail(email);
+		String nick = mvo.getNickName();
+		if(file != null) {
+			fvo = fileHandler.uploadProfile(nick, file);
+		}else {
+			//미선택시 기본 프사로
+		}
+		mvo.setFvo(fvo);
+		mvo.setIsProfile(memberService.setProfile(mvo));
+		m.addAttribute("mvo", mvo);
+		return "redirect:/member/mypage";
+	}
+	
+	@GetMapping("/otherspage")
+	public void otherspage(HttpServletRequest request, @RequestParam(name="email", required = false) String email, Model m) {
+		log.info(">>>>>>>>>>>>>>>>>>>"+email);
+		MemberVO mvo = memberService.detail(email);
+		m.addAttribute("mvo", mvo);
+	}
 	
 	@GetMapping("/list")
 	public void list (Model m, PagingVO pgvo) {

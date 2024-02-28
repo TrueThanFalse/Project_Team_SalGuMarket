@@ -11,9 +11,9 @@ import com.SalGuMarket.www.security.MemberVO;
 @Mapper
 public interface MemberMapper {
 
-	MemberVO selectEmail(String username);
+	MemberVO selectEmail(String email);
 
-	List<AuthVO> selectAuths(String username);
+	List<AuthVO> selectAuths(String email);
 
 	int insert(MemberVO mvo);
 
@@ -26,5 +26,11 @@ public interface MemberMapper {
 	int remove(String email);
 
 	int delete(String email);
+
+	int yesProfile(String email);
+
+	void noProfile(String email);
+
+	int getIsProfile(String email);
 	
 }

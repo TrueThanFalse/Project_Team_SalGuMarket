@@ -9,7 +9,7 @@ if (typeof window.ethereum !== 'undefined') { // MetaMask 연동 확인
 }
 
 const web3 = new Web3(window.ethereum); // MetaMask와 상호작용하는 Web3 객체 생성
-const contractAddress = "0xafD6F07b7Fee71B0A1d05643a3e440ac1b9147Fb";
+const contractAddress = "0x6314Bf93f66f0110e6B8247F643d8020C1040d86";
 // 이더리움 네트워크에 배포된 스마트 계약의 주소
 // <<< 주의 사항 >>> : Ganache에서 새로운 Workspace에 스마트 계약을 배포할 때마다 값을 수정해야 함
 const contractABI = [
@@ -312,97 +312,153 @@ const contractABI = [
 // 스마트 계약 인스턴스 생성
 const contract = new web3.eth.Contract(contractABI, contractAddress);
 
-// MetaMask와 연동된 계정 요청
+// MetaMask와 연동된 계정 가져오기 함수
 async function getAccount() {
     const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-    return accounts[0]; // 현재 내 계정을 반환
+	// 영단어들을 소문자로 인식하여 반환한다.
+    return accounts[0]; // 현재 MetaMask에서 선택되어 있는 계정을 반환
 }
+
+// 대문자를 소문자로 치환하는 함수
+function CustomToLowerCase(text){
+	return text.replace(/[A-Z]/g, function(match){
+		return match.toLowerCase();
+	});
+};
+loginUserWalletAddress = CustomToLowerCase(loginUserWalletAddress);
+console.log('loginUserWalletAddress CustomToLowerCase >>> ', loginUserWalletAddress);
 
 // 참고 사항 : 모든 거래 단위는 ether 단위로 통일
 
 // 판매자의 제품 판매 등록
-document.getElementById('createProduct').addEventListener('click', async () => {
-    const account = await getAccount();
-
-	// 웹사이트 로그인 사용자의 지갑 주소가 현재 MetaMask의 지갑 주소와 동일한지 확인
-	if(loginUserWalletAddress == account){ 
-		const price = web3.utils.toWei(document.getElementById('createProductValue').value, 'ether');
-		// 사용자의 입력을 받아야 함
-
-		contract.methods.createProduct(price).send({ from: account })
-			.on('receipt', function(receipt){
-				// 성공 상황
-				console.log('Product created:', receipt);
-
-				document.getElementById('createProductForm').submit();
-			})
-			.on('error', function(error) {
-				// 에러 상황
-				console.error('Transaction failed:', error)
-				window.location.href = 'index.html';
-			});
-	}else{
-		alert("MetaMask의 지갑 주소가 로그인 사용자의 지갑 주소와 일치하지 않습니다.");
-	}
-});
-
-document.getElementById('purchaseProduct').addEventListener('click', async () => {
-    const account = await getAccount();
+const isCreateProductButton = document.getElementById('createProduct');
+// HTML의 Button 요소 가져오기 (id가 createProduct인 요소가 없으면 Null 반환)
+if(isCreateProductButton){ // 만약 id가 createProduct인 요소가 있다면...
+	console.log('Event(createProduct) activate OK');
+	document.getElementById('createProduct').addEventListener('click', async () => {
+		const account = await getAccount();
 	
-	if(loginUserWalletAddress == account){
-		const productId = document.getElementById('purchaseProductValue').value;
-		const price = web3.utils.toWei(document.getElementById('purchaseProductPrice').value, 'ether');
-		// 제품 번호와 가격 정보가 HTML에 전송되어 있어야 함
+		// 웹사이트 로그인 사용자의 지갑 주소가 현재 MetaMask의 지갑 주소와 동일한지 확인
+		if(loginUserWalletAddress == account){
+			const price = web3.utils.toWei(document.getElementById('createProductValue').value, 'ether');
+			// 사용자의 입력을 받아야 함
+	
+			contract.methods.createProduct(price).send({ from: account })
+				.on('receipt', function(receipt){
+					// 블록 생성 성공 상황
+					console.log('Product created:', receipt);
+					document.getElementById('createProductForm').submit();
+				})
+				.on('error', function(error) {
+					// 블록 생성 에러 상황
+					console.error('Transaction failed:', error)
+					window.location.href = '/';
+				});
+		}else{
+			alert("MetaMask의 지갑 주소가 로그인 사용자의 지갑 주소와 일치하지 않습니다.");
+			console.log('loginUserWalletAddress >>>', loginUserWalletAddress);
+			console.log('account >>>', account);
+		}
+	});
+};
+
+// 구매자의 구매 신청
+const isPurchaseProductButton = document.getElementById('purchaseProduct');
+if(isPurchaseProductButton){
+	console.log('Event(purchaseProduct) activate OK');
+	document.getElementById('purchaseProduct').addEventListener('click', async () => {
+		const account = await getAccount();
 		
-		contract.methods.purchaseProduct(productId).send({ from: account, value: price })
-			.on('receipt', function(receipt){
-				console.log('Product purchased:', receipt);
-			})
-			.on('error', function(error) {
-				console.error('Transaction failed:', error)
-				window.location.href = 'index.html';
-			});
-	};
-});
+		if(loginUserWalletAddress == account){
+			const productId = document.getElementById('purchaseProductValue').value;
+			const price = web3.utils.toWei(document.getElementById('purchaseProductPrice').value, 'ether');
+			// 제품 번호와 가격 정보가 HTML에 전송되어 있어야 함
+			
+			contract.methods.purchaseProduct(productId).send({ from: account, value: price })
+				.on('receipt', function(receipt){
+					console.log('Product purchased:', receipt);
+				})
+				.on('error', function(error) {
+					console.error('Transaction failed:', error)
+					window.location.href = 'index.html';
+				});
+		};
+	});
+};
 
-document.getElementById('confirmPurchase').addEventListener('click', async () => {
-    const account = await getAccount();
-
-	if(loginUserWalletAddress == account){
-		const productId = document.getElementById('confirmPurchaseValue').value;
-		contract.methods.confirmPurchase(productId).send({ from: account })
-			.on('receipt', function(receipt){
-				console.log('Purchase confirmed:', receipt);
-			})
-			.on('error', function(error) {
-				console.error('Transaction failed:', error)
-				window.location.href = 'index.html';
-			});
-	};
-});
-
-document.getElementById('requestCancel').addEventListener('click', async () => {
-    const account = await getAccount();
-
-	if(loginUserWalletAddress == account){
-		const productId = document.getElementById('requestCancelValue').value;
-		contract.methods.requestCancel(productId).send({ from: account })
-			.on('receipt', function(receipt){
-				console.log('Cancellation requested:', receipt);
-			})
-			.on('error', function(error) {
-				console.error('Transaction failed:', error)
-				window.location.href = 'index.html';
-			});
-	};
-});
-
-document.getElementById('approveCancel').addEventListener('click', async () => {
-    const account = await getAccount();
+// 구매자의 구매 확정
+const isConfirmPurchaseButton = document.getElementById('confirmPurchase');
+if(isConfirmPurchaseButton){
+	console.log('Event(confirmPurchase) activate OK');
+	document.getElementById('confirmPurchase').addEventListener('click', async () => {
+		const account = await getAccount();
 	
-	if(loginUserWalletAddress == account){
-		const productId = document.getElementById('approveCancelValue').value;
-		contract.methods.approveCancel(productId).send({ from: account })
+		if(loginUserWalletAddress == account){
+			const productId = document.getElementById('confirmPurchaseValue').value;
+			contract.methods.confirmPurchase(productId).send({ from: account })
+				.on('receipt', function(receipt){
+					console.log('Purchase confirmed:', receipt);
+				})
+				.on('error', function(error) {
+					console.error('Transaction failed:', error)
+					window.location.href = 'index.html';
+				});
+		};
+	});
+};
+
+// 구매자가 판매자에게 거래 취소를 요청
+const isRequestCancelButton = document.getElementById('requestCancel');
+if(isRequestCancelButton){
+	console.log('Event(requestCancel) activate OK');
+	document.getElementById('requestCancel').addEventListener('click', async () => {
+		const account = await getAccount();
+	
+		if(loginUserWalletAddress == account){
+			const productId = document.getElementById('requestCancelValue').value;
+			contract.methods.requestCancel(productId).send({ from: account })
+				.on('receipt', function(receipt){
+					console.log('Cancellation requested:', receipt);
+				})
+				.on('error', function(error) {
+					console.error('Transaction failed:', error)
+					window.location.href = 'index.html';
+				});
+		};
+	});
+};
+
+// 판매자가 구매자의 거래 취소 요청을 승인
+const isApproveCancelButton = document.getElementById('approveCancel');
+if(isApproveCancelButton){
+	console.log('Event(approveCancel) activate OK');
+	document.getElementById('approveCancel').addEventListener('click', async () => {
+		const account = await getAccount();
+		
+		if(loginUserWalletAddress == account){
+			const productId = document.getElementById('approveCancelValue').value;
+			contract.methods.approveCancel(productId).send({ from: account })
+				.on('receipt', function(receipt){
+					console.log('Cancellation approved:', receipt);
+				})
+				.on('error', function(error) {
+					console.error('Transaction failed:', error)
+					window.location.href = 'index.html';
+				});
+		};
+	});
+};
+
+// 판매자가 거래를 취소
+const isSellerCancelButton = document.getElementById('sellerCancel');
+if(isSellerCancelButton){
+	console.log('Event(sellerCancel) activate OK');
+	document.getElementById('sellerCancel').addEventListener('click', async () => {
+		const account = await getAccount();
+	
+		if(loginUserWalletAddress == account){
+			const productId = document.getElementById('sellerCancelValue').value;
+			contract.methods.sellerCancel(productId).send({ from: account })
 			.on('receipt', function(receipt){
 				console.log('Cancellation approved:', receipt);
 			})
@@ -410,40 +466,6 @@ document.getElementById('approveCancel').addEventListener('click', async () => {
 				console.error('Transaction failed:', error)
 				window.location.href = 'index.html';
 			});
-	};
-});
-
-document.getElementById('sellerCancel').addEventListener('click', async () => {
-    const account = await getAccount();
-
-	if(loginUserWalletAddress == account){
-		const productId = document.getElementById('sellerCancelValue').value;
-        contract.methods.sellerCancel(productId).send({ from: account })
-        .on('receipt', function(receipt){
-            console.log('Cancellation approved:', receipt);
-        })
-		.on('error', function(error) {
-			console.error('Transaction failed:', error)
-			window.location.href = 'index.html';
-		});
-	};
-});
-
-// 로그인된 유저는 HTML에서 가져올 수 있으므로 비동기통신으로 서버와 여러번 통신할 필요 없다.
-/*
-async function getLoginUserWalletAddress(account) {
-    const url = '/smartContract/getLoginUserWalletAddress';
-    const config = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json; charset=UTF-8'
-        },
-        body: JSON.stringify({account})
-    };
-
-    const response = await fetch(url, config);
-    const result = await response.text();
-    console.log("getLoginUserWalletAddress => ", result);
-    return result;
-}
-*/
+		};
+	});
+};

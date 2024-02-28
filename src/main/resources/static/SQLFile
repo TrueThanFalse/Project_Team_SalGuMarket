@@ -1,8 +1,8 @@
 ----------member Table-------------
 create table member(
 email varchar(200) not null,
-name varchar(200) not null,
-wallet_address varchar(200) not null,
+name varchar(200),
+wallet_address varchar(200),
 pwd varchar(1000) not null,
 nick_name varchar(200) not null,
 reg_at datetime default now(),

@@ -48,4 +48,16 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return memberMapper.delete(email);
 	}
+
+	@Override
+	public MemberVO selectEmail(String email) {
+		// TODO Auto-generated method stub
+		return memberMapper.selectEmail(email);
+	}
+
+	@Override
+	public MemberVO selectNickName(String nickName) {
+		// TODO Auto-generated method stub
+		return memberMapper.selcetNickName(nickName);
+	}
 }

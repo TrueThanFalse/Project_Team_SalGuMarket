@@ -54,14 +54,10 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public MemberVO detail(String email) {}
-
-	public MemberVO selectEmail(String email) {
-
+	public MemberVO detail(String email) {
 		// TODO Auto-generated method stub
 		return memberMapper.selectEmail(email);
 	}
-
 
 	@Transactional
 	@Override
@@ -78,13 +74,19 @@ public class MemberServiceImpl implements MemberService{
 			memberMapper.noProfile(mvo.getEmail());
 		}
 		int profile = memberMapper.getIsProfile(email);
+		mvo.setIsProfile(profile);
 		return profile;
 	}
-
+	
+	@Override
+	public MemberVO selectEmail(String email) {
+		// TODO Auto-generated method stub
+		return memberMapper.selectEmail(email);
+	}
+	
 	@Override
 	public MemberVO selectNickName(String nickName) {
 		// TODO Auto-generated method stub
 		return memberMapper.selcetNickName(nickName);
-
 	}
 }

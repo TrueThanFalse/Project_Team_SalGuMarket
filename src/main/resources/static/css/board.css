@@ -360,48 +360,6 @@ ol {
 	top: 2px;
 }
 
-/* .header__top__right__language ul {
-	background: #222222;
-	width: 100px;
-	text-align: left;
-	padding: 5px 0;
-	position: absolute;
-	left: 0;
-	top: 43px;
-	z-index: 9;
-	opacity: 0;
-	visibility: hidden;
-	-webkit-transition: all, 0.3s;
-	-moz-transition: all, 0.3s;
-	-ms-transition: all, 0.3s;
-	-o-transition: all, 0.3s;
-	transition: all, 0.3s;
-}
- */
-/* .header__top__right__language ul li {
-	list-style: none;
-}
-
-.header__top__right__language ul li a {
-	font-size: 14px;
-	color: #ffffff;
-	padding: 5px 10px;
-} */
-
-/* .header__top__right__auth {
-	display: inline-block;
-}
-
-.header__top__right__auth a {
-	display: block;
-	font-size: 14px;
-	color: #1c1c1c;
-}
-
-.header__top__right__auth a i {
-	margin-right: 6px;
-} */
-
 .header__logo {
 	padding: 15px 0 25px 0;
 }

@@ -5,18 +5,19 @@
 </head>
 <th:block th:replace="~{/layout :: setFragment(~{this::content})}">
 <th:block th:fragment="content">
-
+	<script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+	
     <!-- Checkout Section Begin -->
     <section class="checkout spad">
         <div class="container">
             <div class="checkout__form">
                 <h4>판매 등록</h4>
-                <form action="product/productSale" id="createProductForm">
+                <form action="/product/productSale" method="post" id="createProductForm" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
                             <div class="checkout__input">
                                 <p>제목</p>
-                                <input type="text" style="color: black;">
+                                <input type="text" name="title" style="color: black;">
                             </div>
                             
                             <div class="checkout__input">
@@ -67,13 +68,25 @@
                             
                             <div class="checkout__input">
                                 <p>내용</p>
-                                <textarea rows="5" cols="" style="width: 100%;" placeholder="제품 상세 설명"></textarea>
+                                <textarea rows="5" cols="" name="content" style="width: 100%;" placeholder="제품 상세 설명"></textarea>
                             </div>
                             
                             <div class="checkout__input">
                                 <p>판매 가격 (ETH)</p>
-                                <input type="text" style="color: black;">
+                                <input type="text" name="price" id="createProductValue" style="color: black !important;">
                             </div>
+                            <!-- file upload 등록 라인 -->
+							<div class="mb-3 checkout__input">
+							  <p for="files" class="form-label">Image Files</p>
+							  <input type="file" name="files" class="form-control" id="files" multiple="multiple" style="display: none">
+							  <button type="button" class="btn btn-primary" id="fileTrigger">file Upload</button>
+							  <!-- <input type="file"> 대신 사용할 버튼 -->
+							</div>
+							<!-- 파일 목록 표기 라인 -->
+							<div class="mb-3" id="fileZone">
+								<!-- JS로 첨부 파일이 표시될 영역 -->
+							</div>
+							<!-- file upload 라인 끝 -->
                         </div>
                         
                         <div class="col-lg-4 col-md-6">
@@ -110,7 +123,7 @@
                                         <span class="checkmark"></span>
                                     </label>
                                 </div> -->
-                                <button type="button" class="site-btn" id="createProduct">판매 등록</button>
+                                <button type="button" class="site-btn fileRegisterButton" id="createProduct">판매 등록</button>
                             </div>
                         </div>
                     </div>
@@ -121,10 +134,13 @@
     <!-- Checkout Section End -->
     
     <script type="text/javascript" th:inline="javascript">
-    	const loginUserWalletAddress = [[${#authentication.principal.walletAddress}]];
+    	let loginUserWalletAddress = [[${#authentication.principal.mvo.walletAddress}]];
+    	// principal은 AuthMember 객체이다.
+    	console.log("살구마켓 로그인 사용자의 지갑 주소 >>> ", loginUserWalletAddress);
 	</script>
     <script src="/js/productSale.js"></script>
-    <script src="/js/SafeTrade.js"></script>
+    <script src="/js/safeTrade.js"></script>
+    <script src="/js/fileRegister.js"></script>
     
 </th:block>
 </th:block>

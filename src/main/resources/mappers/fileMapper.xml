@@ -8,5 +8,10 @@
 	<select id="selectListAllFile" resultType="com.SalGuMarket.www.domain.FileVO">
 		select * from file
 	</select>
+	
+	<insert id="saveProductFile">
+		INSERT INTO file(uuid, save_dir, file_name, file_type, file_size, pno)
+		VALUES(#{uuid}, #{saveDir}, #{fileName}, #{fileType}, #{fileSize}, #{pno})
+	</insert>
 
 </mapper>

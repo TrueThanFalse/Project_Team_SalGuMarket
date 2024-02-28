@@ -15,4 +15,6 @@ public interface FileMapper {
 
 	List<FileVO> getFileList(long bno);
 
+	int saveProductFile(FileVO fvo);
+
 }

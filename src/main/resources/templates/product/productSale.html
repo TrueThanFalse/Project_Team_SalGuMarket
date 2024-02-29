@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<link rel="stylesheet" href="/css/productSale.css" type="text/css">
+</head>
+<th:block th:replace="~{/layout :: setFragment(~{this::content})}">
+<th:block th:fragment="content">
+	<script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+	
+    <!-- Checkout Section Begin -->
+    <section class="checkout spad">
+        <div class="container">
+            <div class="checkout__form">
+                <h4>판매 등록</h4>
+                <form action="/product/productSale" method="post" id="createProductForm" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-6">
+                            <div class="checkout__input">
+                                <p>제목</p>
+                                <input type="text" name="title" style="color: black;">
+                            </div>
+                            
+                            <div class="checkout__input">
+                                <p>카테고리</p>
+                                <div class="form-check" id="special-diveee">
+								  <input class="form-check-input" type="radio" name="category" id="category1" value="all" checked>
+								  <label class="form-check-label" for="category1">
+								    전체
+								  </label>
+								</div>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" name="category" id="category2" value="beauty">
+								  <label class="form-check-label" for="category2">
+								    뷰티/미용
+								  </label>
+								</div>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" name="category" id="category3" value="clothes">
+								  <label class="form-check-label" for="category3">
+								    의류/잡화
+								  </label>
+								</div>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" name="category" id="category4" value="elec">
+								  <label class="form-check-label" for="category4">
+								    전자/생활가전
+								  </label>
+								</div>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" name="category" id="category5" value="ticket">
+								  <label class="form-check-label" for="category5">
+								    티켓/교환권
+								  </label>
+								</div>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" name="category" id="category6" value="animal">
+								  <label class="form-check-label" for="category6">
+								    반려동물
+								  </label>
+								</div>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" name="category" id="category7" value="free">
+								  <label class="form-check-label" for="category7">
+								    나눔
+								  </label>
+								</div>
+                            </div>
+                            
+                            <div class="checkout__input">
+                                <p>내용</p>
+                                <textarea rows="5" cols="" name="content" style="width: 100%;" placeholder="제품 상세 설명"></textarea>
+                            </div>
+                            
+                            <div class="checkout__input">
+                                <p>판매 가격 (ETH)</p>
+                                <input type="text" name="price" id="createProductValue" style="color: black !important;">
+                            </div>
+                            <!-- file upload 등록 라인 -->
+							<div class="mb-3 checkout__input">
+							  <p for="files" class="form-label">Image Files</p>
+							  <input type="file" name="files" class="form-control" id="files" multiple="multiple" style="display: none">
+							  <button type="button" class="btn btn-primary" id="fileTrigger">file Upload</button>
+							  <!-- <input type="file"> 대신 사용할 버튼 -->
+							</div>
+							<!-- 파일 목록 표기 라인 -->
+							<div class="mb-3" id="fileZone">
+								<!-- JS로 첨부 파일이 표시될 영역 -->
+							</div>
+							<!-- file upload 라인 끝 -->
+                        </div>
+                        
+                        <div class="col-lg-4 col-md-6">
+                            <div class="checkout__order">
+                                <!-- <h4>Your Order</h4>
+                                <div class="checkout__order__products">Products <span>Total</span></div>
+                                <ul>
+                                    <li>Vegetable’s Package <span>$75.99</span></li>
+                                    <li>Fresh Vegetable <span>$151.99</span></li>
+                                    <li>Organic Bananas <span>$53.99</span></li>
+                                </ul>
+                                <div class="checkout__order__subtotal">Subtotal <span>$750.99</span></div>
+                                <div class="checkout__order__total">Total <span>$750.99</span></div>
+                                <div class="checkout__input__checkbox">
+                                    <label for="acc-or">
+                                        Create an account?
+                                        <input type="checkbox" id="acc-or">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
+                                    ut labore et dolore magna aliqua.</p>
+                                <div class="checkout__input__checkbox">
+                                    <label for="payment">
+                                        Check Payment
+                                        <input type="checkbox" id="payment">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                                <div class="checkout__input__checkbox">
+                                    <label for="paypal">
+                                        Paypal
+                                        <input type="checkbox" id="paypal">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div> -->
+                                <button type="button" class="site-btn fileRegisterButton" id="createProduct">판매 등록</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Checkout Section End -->
+    
+    <script type="text/javascript" th:inline="javascript">
+    	let loginUserWalletAddress = [[${#authentication.principal.mvo.walletAddress}]];
+    	// principal은 AuthMember 객체이다.
+    	console.log("살구마켓 로그인 사용자의 지갑 주소 >>> ", loginUserWalletAddress);
+	</script>
+    <script src="/js/productSale.js"></script>
+    <script src="/js/safeTrade.js"></script>
+    <script src="/js/fileRegister.js"></script>
+    
+</th:block>
+</th:block>

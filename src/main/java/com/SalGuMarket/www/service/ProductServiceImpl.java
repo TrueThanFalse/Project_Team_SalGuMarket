@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.SalGuMarket.www.domain.FileVO;
 import com.SalGuMarket.www.domain.ProductDTO;
@@ -28,11 +29,12 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public List<FileVO> getCategoriesSliderImegeList10Imege() {
-		return productMapper.getCategoriesSliderImegeList10Imege();
+	public List<FileVO> getCategoriesSliderImageList10Image() {
+		return productMapper.getCategoriesSliderImageList10Image();
 	}
 
 	@Override
+	@Transactional
 	public int saveProduct(ProductDTO pdto) {
 		int isOK = productMapper.saveProduct(pdto.getPvo());
 		
@@ -47,5 +49,10 @@ public class ProductServiceImpl implements ProductService{
 		}
 		
 		return isOK;
+	}
+
+	@Override
+	public int modifyWalletAddress(String staticBackdropInput, String loginEmail) {
+		return productMapper.modifyWalletAddress(staticBackdropInput, loginEmail);
 	}
 }

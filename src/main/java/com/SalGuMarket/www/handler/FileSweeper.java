@@ -26,11 +26,10 @@ public class FileSweeper {
 	private final String BASE_PATH = "C:\\SalGuMarketUploadFile\\";
 	private final FileMapper fileMapper;
 	
-	//초 분 시 일 월 요일 년도(생략가능)
+		//초 분 시 일 월 요일 년도(생략가능)
 		@Scheduled(cron="0 1 * * * *")
 		public void fileSweeper() {
-			log.info(">>> FileSweeper Running Start : >>>"+LocalDateTime.now());
-			
+			log.info(">>> FileSweeper Running Start >>> {}", LocalDateTime.now());
 			
 			//DB에 등록된 파일 목록 가져오기
 			List<FileVO> dbList = fileMapper.selectListAllFile();
@@ -61,7 +60,6 @@ public class FileSweeper {
 			File dir = Paths.get(BASE_PATH+today).toFile();
 			File[] allFileObjects = dir.listFiles();
 			
-			
 			//실제 저장되어있는 파일과 DB에 존재하는 파일을 비교하여 없는 파일은 삭제 진행
 			for(File file : allFileObjects) {
 				String storedFileName = file.toPath().toString();
@@ -71,7 +69,6 @@ public class FileSweeper {
 				}
 			}
 			
-			log.info(">>> FileSweeper Running finish : >>>"+LocalDateTime.now());
-	
+			log.info(">>> FileSweeper Running Finish >>> {}", LocalDateTime.now());
 		}
 }

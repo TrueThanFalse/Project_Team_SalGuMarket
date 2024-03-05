@@ -6,10 +6,11 @@
 <mapper namespace="com.SalGuMarket.www.repository.ProductMapper">
 
 	<select id="getProductById" resultType="com.SalGuMarket.www.domain.ProductVO">
-		SELECT * FROM product WHERE pno = ${pno}
+		SELECT * FROM product
+		WHERE pno = ${pno}
 	</select>
 
-	<select id="getCategoriesSliderImegeList10Imege" resultType="com.SalGuMarket.www.domain.FileVO">
+	<select id="getCategoriesSliderImageList10Image" resultType="com.SalGuMarket.www.domain.FileVO">
 		SELECT * FROM file
 		ORDER BY pno DESC
 		LIMIT 10
@@ -24,4 +25,9 @@
 		SELECT MAX(pno) FROM product
 	</select>
 
+	<update id="modifyWalletAddress">
+		UPDATE member SET wallet_address = #{staticBackdropInput}
+		WHERE email = #{loginEmail}
+	</update>
+	
 </mapper>

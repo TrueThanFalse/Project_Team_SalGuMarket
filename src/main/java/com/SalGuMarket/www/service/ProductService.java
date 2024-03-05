@@ -8,10 +8,12 @@ import com.SalGuMarket.www.domain.ProductVO;
 
 public interface ProductService {
 
-	List<FileVO> getCategoriesSliderImegeList10Imege();
+	List<FileVO> getCategoriesSliderImageList10Image();
 	
 	ProductVO getProductById(Long pno);
 
 	int saveProduct(ProductDTO productDTO);
+
+	int modifyWalletAddress(String staticBackdropInput, String loginEmail);
 
 }

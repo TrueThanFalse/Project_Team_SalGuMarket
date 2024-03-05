@@ -1,5 +1,6 @@
 package com.SalGuMarket.www.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -34,9 +36,9 @@ public class ProductController {
 
 	@GetMapping("/")
 	public String transferIndex(Model model) {
-		List<FileVO> categoriesSliderImegeList = productService.getCategoriesSliderImegeList10Imege();
-		log.info(">>> categoriesSliderImegeList >>>" + categoriesSliderImegeList);
-		List<String> imegeUrlList = new ArrayList<String>();
+		List<FileVO> categoriesSliderImageList = productService.getCategoriesSliderImageList10Image();
+		log.info(">>> categoriesSliderImageList >>>" + categoriesSliderImageList);
+		List<String> imageUrlList = new ArrayList<String>();
 		
 //		for(int i=0; i<categoriesSliderImegeList.size(); i++) {
 //			Stirng imageUrl("/upload/"
@@ -55,13 +57,12 @@ public class ProductController {
 //			imegeUrlList.add(result);
 //		}
 		
-	    for(FileVO file : categoriesSliderImegeList) {
-	        String imageUrl = "/upload/" + file.getSaveDir() + "/" + file.getUuid() + "_" + file.getFileName();
-	        imegeUrlList.add(imageUrl);
+	    for(FileVO file : categoriesSliderImageList) {
+	        String imageUrl = File.separator + "upload" + File.separator + file.getSaveDir() + File.separator + file.getUuid() + "_product_" + file.getFileName();
+	        imageUrlList.add(imageUrl);
 	    }
 		
-		model.addAttribute("imegeUrlList", imegeUrlList);
-		model.addAttribute("categoriesSliderImegeList", categoriesSliderImegeList);
+		model.addAttribute("imageUrlList", imageUrlList);
 		return "/";
 	}
 	
@@ -74,19 +75,24 @@ public class ProductController {
 		return "/productDetail";
 	}
 	
+	// ----------------------------------------------------------------------------------------
+	
+//	@GetMapping("/productSale")
+//	public String sendProductSale(Authentication authentication, RedirectAttributes re) {
+//		AuthMember authMember = (AuthMember)authentication.getPrincipal();
+//		String WalletAddress = authMember.getMvo().getWalletAddress();
+//		log.info(">>> Principal WalletAddress >>> {}", WalletAddress);
+//		
+//		if(WalletAddress == null) {
+//			re.addFlashAttribute("WalletAddressNull", "1");
+//			return "redirect:/"; // 추후 주소 등록하는 창으로
+//		}
+//		
+//		return "/product/productSale";
+//	}
+	
 	@GetMapping("/productSale")
-	public String sendProductSale(Authentication authentication, RedirectAttributes re) {
-		AuthMember authMember = (AuthMember)authentication.getPrincipal();
-		String WalletAddress = authMember.getMvo().getWalletAddress();
-		log.info(">>> Principal WalletAddress >>> {}", WalletAddress);
-		
-		if(WalletAddress == null) {
-			re.addFlashAttribute("WalletAddressNull", "1");
-			return "redirect:/";
-		}
-		
-		return "/product/productSale";
-	}
+	public void sendProductSale() {}
 	
 	@PostMapping("/productSale")
 	public String saveProduct(ProductVO pvo, RedirectAttributes re, Authentication authentication,
@@ -109,5 +115,23 @@ public class ProductController {
 		
 		re.addFlashAttribute("saveProduct", isOK);
 		return "redirect:/";
+	}
+	
+	@GetMapping("/checkWalletAddress")
+	@ResponseBody
+	public String getWalletAddress(Authentication authentication) {
+		AuthMember authMember = (AuthMember)authentication.getPrincipal();
+		String WalletAddress = authMember.getMvo().getWalletAddress();
+		log.info(">>> Principal WalletAddress >>> {}", WalletAddress);
+		return WalletAddress == null ? "1" : "0";
+	}
+	
+	@PostMapping("/staticBackdropModal")
+	public String modifyWalletAddress(@RequestParam("staticBackdropInput") String staticBackdropInput,
+			Authentication authentication) {
+		AuthMember authMember = (AuthMember)authentication.getPrincipal();
+		String loginEmail = authMember.getMvo().getEmail(); 
+		int isOK = productService.modifyWalletAddress(staticBackdropInput, loginEmail);
+		return isOK > 0 ? "redirect:/product/productSale" : "redirect:/";
 	}
 }

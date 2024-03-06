@@ -16,6 +16,7 @@ public class FileVO {
 	private String saveDir; //저장날짜
 	private String fileName; //파일이름
 	private int fileType; //파일타입
+	private int mainImage;
 	private long bno; //자유게시판
 	private long pno; //상품
 	private long notBno; //공지사항

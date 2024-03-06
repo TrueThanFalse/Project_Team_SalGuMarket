@@ -1,0 +1,40 @@
+package com.SalGuMarket.www.controller;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import com.SalGuMarket.www.domain.FileVO;
+import com.SalGuMarket.www.service.ProductService;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+@RequiredArgsConstructor
+public class IndexController {
+
+	private final ProductService productService;
+	
+	@GetMapping("/")
+	public String index(Model model) {
+		List<FileVO> categoriesSliderImageList = productService.getCategoriesSliderImageList10Image();
+		log.info(">>> categoriesSliderImageList >>>" + categoriesSliderImageList);
+		List<String> imageUrlList = new ArrayList<String>();
+		
+	    for(FileVO file : categoriesSliderImageList) {
+	        String imageUrl = File.separator + "upload" + File.separator + file.getSaveDir() + File.separator + file.getUuid() + "_main_" + file.getFileName();
+	        imageUrlList.add(imageUrl);
+	    }
+		
+		model.addAttribute("categoriesSliderImageList", categoriesSliderImageList);
+		model.addAttribute("imageUrlList", imageUrlList);
+		
+		return "index";
+	}
+}

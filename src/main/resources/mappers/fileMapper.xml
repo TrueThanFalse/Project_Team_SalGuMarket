@@ -10,8 +10,15 @@
 	</select>
 	
 	<insert id="saveProductFile">
-		INSERT INTO file(uuid, save_dir, file_name, file_type, file_size, pno)
-		VALUES(#{uuid}, #{saveDir}, #{fileName}, #{fileType}, #{fileSize}, #{pno})
+		INSERT INTO file(uuid, save_dir, file_name, file_type, file_size, pno, main_image)
+		VALUES(#{uuid}, #{saveDir}, #{fileName}, #{fileType}, #{fileSize}, #{pno}, #{mainImage})
 	</insert>
+	
+	<select id="getCategoriesSliderImageList10Image" resultType="com.SalGuMarket.www.domain.FileVO">
+		SELECT f.uuid, f.save_dir, f.file_name, f.pno FROM file f
+		JOIN product p ON f.pno = p.pno
+		WHERE f.main_image = 1
+		ORDER BY p.reg_at DESC LIMIT 10
+	</select>
 
 </mapper>

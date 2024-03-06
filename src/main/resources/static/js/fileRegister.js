@@ -45,20 +45,20 @@ document.getElementById('files1').addEventListener('change', (e)=>{
    };
 
    let isOK = 1; // isOK : 모든 파일의 검증 결과
-   let ul = `<ul class="list-group list-group-flush">`;
+   let ul = `<ul class="list-group list-group-flush"><hr>`;
       for(let file of fileObjectArray){
          let validResult = fileValidation(file.name, file.size); // validResult : 개별 파일의 검증 결과
          isOK *= validResult; // 각 파일의 검증 결과를 isOK에 중첩
 
-         ul += `<hr><li class="list-group-item">`;
+         ul += `<li class="list-group-item">`;
          ul += `<div class="mb-3">`;
          ul += `${validResult ? '<div class="text-success-emphasis" style="color: #28a745 !important;">업로드 가능</div>' :
          '<div class="text-danger-emphasis" style="color: #dc3545 !important;">업로드 불가능</div>'}`;
          ul += `${file.name}</div>`;
          ul += `<span style="color: ${validResult ? '#28a745' : '#dc3545'} !important;">${file.size}Byte</span>`;
-         ul += `</li><hr>`;
+         ul += `</li>`;
       };
-   ul += `</ul>`;
+   ul += `</ul><hr>`;
    div.innerHTML = ul;
 
    if(isOK == 0){ // 파일 중 validation을 통과하지 못한 것이 있다면...
@@ -71,7 +71,6 @@ document.getElementById('files1').addEventListener('change', (e)=>{
 // 보조 이미지 업로드
 document.getElementById('files2').addEventListener('change', (e)=>{
    const fileObjectArray = document.getElementById('files2').files;
-   
    console.log(fileObjectArray);
 
    if(fileObjectArray.length > 10){
@@ -90,20 +89,20 @@ document.getElementById('files2').addEventListener('change', (e)=>{
    };
 
    let isOK = 1;
-   let ul = `<ul class="list-group list-group-flush">`;
+   let ul = `<ul class="list-group list-group-flush"><hr>`;
       for(let file of fileObjectArray){
          let validResult = fileValidation(file.name, file.size);
          isOK *= validResult;
 
-         ul += `<hr><li class="list-group-item">`;
+         ul += `<li class="list-group-item">`;
          ul += `<div class="mb-3">`;
          ul += `${validResult ? '<div class="text-success-emphasis" style="color: #28a745 !important;">업로드 가능</div>' :
          '<div class="text-danger-emphasis" style="color: #dc3545 !important;">업로드 불가능</div>'}`;
          ul += `${file.name}</div>`;
          ul += `<span style="color: ${validResult ? '#28a745' : '#dc3545'} !important;">${file.size}Byte</span>`;
-         ul += `</li><hr>`;
+         ul += `</li>`;
       };
-   ul += `</ul>`;
+   ul += `</ul><hr>`;
    div.innerHTML = ul;
 
    if(isOK == 0){

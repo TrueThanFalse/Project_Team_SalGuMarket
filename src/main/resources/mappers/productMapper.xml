@@ -9,12 +9,6 @@
 		SELECT * FROM product
 		WHERE pno = ${pno}
 	</select>
-
-	<select id="getCategoriesSliderImageList10Image" resultType="com.SalGuMarket.www.domain.FileVO">
-		SELECT * FROM file
-		ORDER BY pno DESC
-		LIMIT 10
-	</select>
 	
 	<insert id="saveProduct">
 		INSERT INTO product(title, category, price, content, sell, seller_email)

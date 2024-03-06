@@ -33,38 +33,6 @@ public class ProductController {
 	
 	private final ProductService productService;
 	private final FileHandler fileHandler;
-
-	@GetMapping("/")
-	public String transferIndex(Model model) {
-		List<FileVO> categoriesSliderImageList = productService.getCategoriesSliderImageList10Image();
-		log.info(">>> categoriesSliderImageList >>>" + categoriesSliderImageList);
-		List<String> imageUrlList = new ArrayList<String>();
-		
-//		for(int i=0; i<categoriesSliderImegeList.size(); i++) {
-//			Stirng imageUrl("/upload/"
-//					+ categoriesSliderImegeList.get(i).getSaveDir()
-//					+ "/"
-//					+ categoriesSliderImegeList.get(i).getUuid()
-//					+ "_"
-//					+ categoriesSliderImegeList.get(i).getFileName());
-//			
-//			String result = path.toString();
-//			
-//			if(!Files.exists(path)) {
-//				result = "/img/categories/cat-" + (i+1) + ".jpg";
-//			}
-//			
-//			imegeUrlList.add(result);
-//		}
-		
-	    for(FileVO file : categoriesSliderImageList) {
-	        String imageUrl = File.separator + "upload" + File.separator + file.getSaveDir() + File.separator + file.getUuid() + "_product_" + file.getFileName();
-	        imageUrlList.add(imageUrl);
-	    }
-		
-		model.addAttribute("imageUrlList", imageUrlList);
-		return "/";
-	}
 	
 	@GetMapping("/productDetail")
 	public String transferProductDetail(@RequestParam("pno") Long pno, Model model) {
@@ -96,7 +64,8 @@ public class ProductController {
 	
 	@PostMapping("/productSale")
 	public String saveProduct(ProductVO pvo, RedirectAttributes re, Authentication authentication,
-			@RequestParam(name="files", required = false) MultipartFile[] files) {
+			@RequestParam(name="files1", required = false) MultipartFile[] files1,
+			@RequestParam(name="files2", required = false) MultipartFile[] files2) {
 		log.info(">>> pvo >>> {}", pvo);
 		if(pvo.getCategory().equals("free")) {
 			pvo.setSell("n");
@@ -106,12 +75,16 @@ public class ProductController {
 		String SellerEmail = authentication.getName();
 		pvo.setSellerEmail(SellerEmail);
 		
-		List<FileVO> flist = null;
-		if(files[0].getSize() > 0 || files != null) {
-			flist = fileHandler.uploadFile(files);
+		List<FileVO> flist1 = null;
+		if(files1[0].getSize() > 0 || files1 != null) {
+			flist1 = fileHandler.uploadMainIamgeFile(files1);
+		}
+		List<FileVO> flist2 = null;
+		if(files1[0].getSize() > 0 || files1 != null) {
+			flist2 = fileHandler.uploadMinorImageFile(files2);
 		}
 		
-		int isOK = productService.saveProduct(new ProductDTO(pvo, flist));
+		int isOK = productService.saveProduct(new ProductDTO(pvo, flist1, flist2));
 		
 		re.addFlashAttribute("saveProduct", isOK);
 		return "redirect:/";

@@ -17,4 +17,6 @@ public interface FileMapper {
 
 	int saveProductFile(FileVO fvo);
 
+	List<FileVO> getCategoriesSliderImageList10Image();
+
 }

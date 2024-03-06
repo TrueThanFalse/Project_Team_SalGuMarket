@@ -11,8 +11,6 @@ import com.SalGuMarket.www.domain.ProductVO;
 
 @Mapper
 public interface ProductMapper {
-
-	List<FileVO> getCategoriesSliderImageList10Image();
 	
 	ProductVO getProductById(Long pno);
 

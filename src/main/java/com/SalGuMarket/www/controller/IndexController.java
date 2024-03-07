@@ -24,17 +24,12 @@ public class IndexController {
 	@GetMapping("/")
 	public String index(Model model) {
 		List<FileVO> categoriesSliderImageList = productService.getCategoriesSliderImageList10Image();
-		log.info(">>> categoriesSliderImageList >>>" + categoriesSliderImageList);
-		List<String> imageUrlList = new ArrayList<String>();
-		
+
 	    for(FileVO file : categoriesSliderImageList) {
-	        String imageUrl = File.separator + "upload" + File.separator + file.getSaveDir() + File.separator + file.getUuid() + "_main_" + file.getFileName();
-	        imageUrlList.add(imageUrl);
+	    	file.setSaveDir(file.getSaveDir().replace(File.separator, "/"));
 	    }
 		
-		model.addAttribute("categoriesSliderImageList", categoriesSliderImageList);
-		model.addAttribute("imageUrlList", imageUrlList);
-		
+		model.addAttribute("categoriesSliderImageList", categoriesSliderImageList);	
 		return "index";
 	}
 }

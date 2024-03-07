@@ -45,20 +45,6 @@ public class ProductController {
 	
 	// ----------------------------------------------------------------------------------------
 	
-//	@GetMapping("/productSale")
-//	public String sendProductSale(Authentication authentication, RedirectAttributes re) {
-//		AuthMember authMember = (AuthMember)authentication.getPrincipal();
-//		String WalletAddress = authMember.getMvo().getWalletAddress();
-//		log.info(">>> Principal WalletAddress >>> {}", WalletAddress);
-//		
-//		if(WalletAddress == null) {
-//			re.addFlashAttribute("WalletAddressNull", "1");
-//			return "redirect:/"; // 추후 주소 등록하는 창으로
-//		}
-//		
-//		return "/product/productSale";
-//	}
-	
 	@GetMapping("/productSale")
 	public void sendProductSale() {}
 	

@@ -27,7 +27,7 @@ public class FileSweeper {
 	private final FileMapper fileMapper;
 	
 		//초 분 시 일 월 요일 년도(생략가능)
-		@Scheduled(cron="0 1 * * * *")
+		@Scheduled(cron="0 0 23 * * *")
 		public void fileSweeper() {
 			log.info(">>> FileSweeper Running Start >>> {}", LocalDateTime.now());
 			

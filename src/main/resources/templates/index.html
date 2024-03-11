@@ -2,7 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{/layout :: setFragment(~{this::content})}">
 <th:block th:fragment="content">
-
+	
+	<link rel="stylesheet" href="/css/layout.css" type="text/css" >
     <!-- Hero Section Begin -->
     <section class="hero">
         <div class="container">
@@ -14,13 +15,13 @@
                             <span>카테고리</span>
                         </div>
                         <ul>
-                            <li><a href="#">전체(최신순)</a></li>
-                            <li><a href="#">뷰티/미용</a></li>
-                            <li><a href="#">의류/잡화</a></li>
-                            <li><a href="#">전자/생활가전</a></li>
-                            <li><a href="#">티켓/교환권</a></li>
-                            <li><a href="#">반려동물</a></li>
-                            <li><a href="#">나눔</a></li>
+                            <li><a href="/">전체(최신순)</a></li>
+                            <li><a href="/?type=beauty">뷰티/미용</a></li>
+                            <li><a href="/?type=clothes">의류/잡화</a></li>
+                            <li><a href="/?type=elec">전자/생활가전</a></li>
+                            <li><a href="/?type=ticket">티켓/교환권</a></li>
+                            <li><a href="/?type=animal">반려동물</a></li>
+                            <li><a href="/?type=free">나눔</a></li>
                             <li><a href="/chat/chatList">채팅방</a></li>
                         </ul>
                     </div>
@@ -95,7 +96,6 @@
                         <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-1.jpg">
                             <ul class="featured__item__pic__hover">
                                 <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
                                 <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
                             </ul>
                         </div>
@@ -105,97 +105,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-2.jpg">
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fresh-meat">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-3.jpg">
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood oranges">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-4.jpg">
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-5.jpg">
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fastfood">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-6.jpg">
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
-                    <div class="featured__item">
-                        <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-7.jpg">
-                            <ul class="featured__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="featured__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
+                <!-- <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
                     <div class="featured__item">
                         <div class="featured__item__pic set-bg" data-setbg="img/featured/feature-8.jpg">
                             <ul class="featured__item__pic__hover">
@@ -209,11 +119,35 @@
                             <h5>$30.00</h5>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
     <!-- Featured Section End -->
+    
+    <!-- Featured Section PageNation Begin -->
+    <section class="pagenation">
+	    <div class="container">
+		    <nav aria-label="Page navigation example">
+			    <ul class="pagination justify-content-center">
+				    <!-- 이전페이지 -->
+				    <li class="page-item " th:if="${ph.prev}">
+				    	<a class="page-link" th:href="@{/(pageNo=${ph.startPage-1},qty=${ph.pgvo.qty})}" aria-label="Previous"></a>
+				    </li>
+				            
+				    <li class="page-item ${ph.pgvo.pageNo == i ? 'active':''}" th:each="i:${#numbers.sequence(ph.startPage,ph.endPage)}" aria-current="page">
+				    	<a class="page-link" th:href="@{/(pageNo=${i},qty=${ph.pgvo.qty})}">[[${i}]]</a>
+				    </li>
+				             
+				    <!-- 다음페이지 -->
+				    <li class="page-item" th:if="${ph.next}">
+				    	<a class="page-link" th:href="@{/(pageNo=${ph.endPage+1},qty=${ph.pgvo.qty})}" aria-label="Next"></a>
+				    </li>
+			    </ul>
+		    </nav>
+	    </div>
+    </section>
+    <!-- Featured Section PageNation End -->
 	
 	<script type="text/javascript" th:inline="javascript">
 		const saveProduct = [[${saveProduct}]];

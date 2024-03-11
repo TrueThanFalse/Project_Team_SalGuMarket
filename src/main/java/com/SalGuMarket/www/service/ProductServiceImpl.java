@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.SalGuMarket.www.domain.FileVO;
+import com.SalGuMarket.www.domain.PagingVO;
 import com.SalGuMarket.www.domain.ProductDTO;
 import com.SalGuMarket.www.domain.ProductVO;
 import com.SalGuMarket.www.repository.FileMapper;
@@ -60,5 +61,15 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public int modifyWalletAddress(String staticBackdropInput, String loginEmail) {
 		return productMapper.modifyWalletAddress(staticBackdropInput, loginEmail);
+	}
+
+	@Override
+	public List<FileVO> get8MainImage(PagingVO pgvo) {
+		return fileMapper.get8MainImage(pgvo);
+	}
+
+	@Override
+	public int getTotalCount(PagingVO pgvo) {
+		return productMapper.getTotalCount(pgvo);
 	}
 }

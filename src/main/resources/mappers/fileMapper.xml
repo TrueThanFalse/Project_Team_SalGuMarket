@@ -18,7 +18,19 @@
 		SELECT f.uuid, f.save_dir, f.file_name, f.pno FROM file f
 		JOIN product p ON f.pno = p.pno
 		WHERE f.main_image = 1
-		ORDER BY p.reg_at DESC LIMIT 10
+		ORDER BY p.reg_at DESC
+		LIMIT 10
+	</select>
+	
+	<select id="get8MainImage" resultType="com.SalGuMarket.www.domain.FileVO">
+		SELECT f.uuid, f.save_dir, f.file_name, f.pno FROM file f
+		JOIN product p ON f.pno = p.pno
+		WHERE f.main_image = 1
+		<if test="type != null">
+			AND f.category = #{type}
+		</if>
+		ORDER BY p.reg_at DESC
+		LIMIT #{pageStart}, #{qty}
 	</select>
 
 </mapper>

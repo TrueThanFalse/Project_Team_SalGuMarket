@@ -2,47 +2,43 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{/layout :: setFragment(~{this::content})}">
 <th:block th:fragment="content">
-<!-- 
 
-좌측 말풍선 코드
-<li class="d-flex flex-row-reverse align-items-end my-3">
-  <span class="chat-box mine ms-1">${a.data().content}</span>
-  <span class="tx-small text-end">
-    ${datejs.format('M월D일 HH:mm')}
-  </span>
-</li>
-
-우측 말풍선 코드
-<li class="d-flex flex-row align-items-end my-3">
-  <span class="chat-box me-1">${a.data().content}</span>
-  <span class="tx-small">
-    ${datejs.format('M월D일 HH:mm')}
-  </span>
-</li>
-
- -->
 <div class="container">
-	<input type="text" id="userEmail" placeholder="유저이름">
-    <input type="text" id="content" placeholder="보낼 메세지를 입력하세요.">
-	<button type="button" value="전송" class="sendBtn" onclick="sendMsg()">전송</button>
-	<button type="button" value="방나가기" class="quit" onclick="quit()">방 나가기 </button>
-		<div>
-		    <span>메세지</span>
-		    <div class="msgArea"></div>
+
+	    <input type="text" id="content" placeholder="보낼 메세지를 입력하세요.">
+		<button type="submit" value="전송" class="sendBtn" onclick="sendMsg()">전송</button>
+		<button type="button" value="방나가기" class="quit" onclick="quit()">방 나가기 </button>
+	
+		<div class="wrap">
+			<div>
+			    <span>메세지 라인</span>
+			    <div class="msgArea">
+			    
+			    </div>
+			</div>
 		</div>
 </div>
+
 <script th:inline="javascript">
+console.log('ChatRoom JavaScript Insert');
+//임시로 값 넣어주기
+let userEmail = "tester@naver.com";
+
 function enterRoom(socket) {
     let enterMsg = {
-        "type": "ENTER",
-        "name": [[${room.name}]],
-        "sender": [[${username.email}]],
-        "msg": ""
+        type: "ENTER",
+        chatBno: [[${room.chatBno}]],
+        sender: userEmail,
+        message: ""
     };
     socket.send(JSON.stringify(enterMsg));
+    console.log("enterMsg");    
+    console.log(enterMsg);
 }
 
 let socket = new WebSocket("ws://localhost:8088/ws/chat");
+console.log("socket");
+console.log(socket);
 
 socket.onopen = function (e) {
     console.log('서버에 연결되었습니다!');
@@ -59,37 +55,52 @@ socket.onerror = function (e) {
 
 function sendMsg() {
     let content = document.getElementById('content').value;
-    let sender = document.getElementById('userEmail').value;
+    console.log(content);
     let talkMsg = {
-        "type": "TALK",
-        "name": [[${room.name}]],
-        "sender": sender,
-        "msg": content
+        type: "TALK",
+        chatBno: [[${room.chatBno}]],
+        sender: userEmail,
+        message: content
     };
     socket.send(JSON.stringify(talkMsg));
-}
+ 	//서버로 메시지가 전송되었는지 확인용
+    console.log("talkMsg :", talkMsg);
+};
+
 
 socket.onmessage = function (e) {
+    console.log('WebSocket 메시지 수신:', e);
     let msgArea = document.querySelector('.msgArea');
-    let message = JSON.parse(e.data);
+    
+    try {
+        let message = JSON.parse(e.data);
+        console.log('파싱된 메시지:', message);
 
-    if (message.type === 'ENTER' || message.type === 'QUIT') {
-        let newMsg = document.createElement('div');
-        newMsg.innerText = message.message; // 간소화된 메시지 표시
-        msgArea.append(newMsg);
-    } else if (message.type === 'TALK') {
-        let newMsg = document.createElement('div');
-        newMsg.innerText = message.sender + ': ' + message.msg;
-        msgArea.append(newMsg);
+        //클라이언트에서 서버로부터 수신한 메시지 확인용
+        console.log('Received message from server:', message);
+
+        if (message.type === 'ENTER' || message.type === 'QUIT') {
+            let newMsg = document.createElement('div');
+            console.log(message);
+            newMsg.innerText = message.message; // 간소화된 메시지 표시
+            msgArea.append(newMsg);
+        } else if (message.type === 'TALK') {
+            let newMsg = document.createElement('div');
+            console.log(message);
+            newMsg.innerText = message.sender + ': ' + message.message;
+            msgArea.append(newMsg);
+        }
+    } catch (error) {
+        console.error('WebSocket 메시지 처리 중 오류 발생:', error);
     }
 };
 
 function quit() {
     let quitMsg = {
-        "type": "QUIT",
-        "name": [[${room.name}]],
-        "sender": [[${username.email}]],
-        "msg": ""
+        type: "QUIT",
+        chatBno: [[${room.chatBno}]],
+        sender: userEmail,
+        message: ""
     };
     socket.send(JSON.stringify(quitMsg));
     socket.close();

@@ -42,7 +42,7 @@ public class SecurityConfig {
 						.usernameParameter("email")
 						.passwordParameter("pwd")
 						.loginPage("/member/login")
-						.defaultSuccessUrl("/board/list").permitAll())
+						.defaultSuccessUrl("/").permitAll())
 				.logout(logout -> logout
 						.logoutUrl("/member/logout")
 						.invalidateHttpSession(true)

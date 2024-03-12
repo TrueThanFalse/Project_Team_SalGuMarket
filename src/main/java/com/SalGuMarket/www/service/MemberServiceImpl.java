@@ -64,7 +64,7 @@ public class MemberServiceImpl implements MemberService{
 			FileVO fvo = mvo.getFvo();
 			fvo.setEmail(email);
 			fileMapper.deleteFile(mvo.getEmail());
-			fileMapper.insertFile(fvo);
+			fileMapper.insertProfile(fvo);
 			memberMapper.yesProfile(mvo.getEmail());
 		}else {
 			//프사 미선택 삭제

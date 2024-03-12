@@ -25,6 +25,8 @@ public interface BoardMapper {
 
 	int remove(long bno);
 
+	int readCountUp(long bno);
+
 
 
 }

@@ -6,7 +6,7 @@
 <mapper namespace="com.SalGuMarket.www.repository.FileMapper">
 
 	<select id="selectListAllFile" resultType="com.SalGuMarket.www.domain.FileVO">
-		select * from file
+		select * from file where bno=#{bno}
 	</select>
 	
 	<select id="getFile" resultType="com.SalGuMarket.www.domain.FileVO">
@@ -18,7 +18,7 @@
 		VALUES(#{uuid}, #{saveDir}, #{fileName}, #{fileType}, #{fileSize}, #{pno})
 	</insert>
 	
-	<insert id="insertFile">
+	<insert id="insertProfile">
 		INSERT INTO file(uuid, save_dir, file_name, file_type, file_size, email)
 		VALUES(#{uuid}, #{saveDir}, #{fileName}, #{fileType}, #{fileSize}, #{email})
 	</insert>
@@ -30,5 +30,10 @@
 	<select id="getFileName" resultType="String">
 		select file_name from file where email=#{email}
 	</select>
+	
+	<insert id="insertFile">
+		INSERT INTO file(uuid, save_dir, file_name, file_type, file_size, bno)
+		VALUES(#{uuid}, #{saveDir}, #{fileName}, #{fileType}, #{fileSize}, #{bno})
+	</insert>
 
 </mapper>

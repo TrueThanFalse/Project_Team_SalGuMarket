@@ -20,6 +20,8 @@ public interface BoardService {
 
 	int remove(long bno);
 
+	long getBno();
+
 
 	
 }

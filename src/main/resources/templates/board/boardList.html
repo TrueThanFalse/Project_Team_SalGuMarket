@@ -26,13 +26,15 @@
 							    </tr>
 							</thead>
 							<tbody>
+							<th:block th:each="bvo:${list}">
 								<tr>
-									<th scope="row"><a href="#">1</a></th>
-								    <td><a href="/board/boardDetail">집보내줘 </a><span class="badge">9</span></td>
-								    <td>(앞에 프로필 사진 연동)엔시티짱짱</td>
-								    <td>127</td>
-									<td>2024-02-25</td>
+									<th scope="row"><a th:href="@{/board/boardDetail(bno=${bvo.bno})}">[[${bvo.bno}]]</a></th>
+								    <td><a th:href="@{/board/boardDetail(bno=${bvo.bno})}">[[${bvo.title}]] </a><span class="badge">${cvo.}</span></td>
+								    <td>[[${bvo.nickName}]]</td>
+								    <td>[[${bvo.readCount}]]</td>
+									<td>[[${bvo.regAt}]]</td>
 								</tr>
+							</th:block>
 							</tbody>
 						</table>
 					</div>
@@ -43,25 +45,29 @@
     <!-- Featured Section End -->
         
     <!-- Pagination Section Begin-->
-    <section class="pagenation">
-	    <div class="container">
-		    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-			  <a href="/board/boardRegister"><button class="btn" type="button">작성</button></a>
-			</div>
-		    <nav aria-label="Page navigation example">
-			  <ul class="pagination justify-content-center">
-			    <li class="page-item disabled">
-			      <a class="page-link">&lt;&lt;</a>
-			    </li>
-			    <li class="page-item"><a class="page-link" href="#">1</a></li>
-			    <li class="page-item"><a class="page-link" href="#">2</a></li>
-			    <li class="page-item"><a class="page-link" href="#">3</a></li>
-			    <li class="page-item">
-			      <a class="page-link" href="#">&gt;&gt;</a>
-			    </li>
-			  </ul>
-			</nav>
-	    </div>
+        <section class="pagenation">
+       <div class="container">
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+           <a href="/board/boardRegister"><button class="btn" type="button">작성</button></a>
+          </div>
+          <nav aria-label="Page navigation example">
+           <ul class="pagination justify-content-center">
+           <!-- 이전페이지 -->
+             <li class="page-item " th:if="${ph.prev}">
+               <a class="page-link" th:href="@{/board/boardList(pageNo=${ph.startPage-1},qty=${ph.pgvo.qty})}"  aria-label="Previous">&lt;&lt;</a>
+             </li>
+             
+             <li class="page-item ${ph.pgvo.pageNo == i ? 'active':''}" th:each="i:${#numbers.sequence(ph.startPage,ph.endPage)}" aria-current="page">
+             <a class="page-link"  th:href="@{/board/boardList(pageNo=${i},qty=${ph.pgvo.qty})}">[[${i}]]</a>
+             </li>
+             
+             <!-- 다음페이지 -->
+             <li class="page-item" th:if="${ph.next}">
+               <a class="page-link"  th:href="@{/board/boardList(pageNo=${ph.endPage+1 },qty=${ph.pgvo.qty})}"  aria-label="Next">&gt;&gt;</a>
+             </li>
+           </ul>
+         </nav>
+       </div>
     </section>
 	<br><br><br>
 	<!-- Pagination Section End-->

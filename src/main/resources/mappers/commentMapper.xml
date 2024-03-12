@@ -5,6 +5,21 @@
   
 <mapper namespace="com.SalGuMarket.www.repository.CommentMapper">
 
-
+	<insert id="insert">
+		insert into comment(nick_name,content,reg_at,mod_at,bno,email)
+		value(#{nickName},#{content},#{regAt},#{modAt},#{bno},#{email})
+	</insert>
+	
+	<select id="selectOneBnoCount" resultType="int">
+		select count(cno) from comment where bno=#{bno}
+	</select>
+	
+	<select id="getList" resultType="com.SalGuMarket.www.domain.CommentVO">
+		select * from comment where bno=#{bno} order by desc limit #{pgvo.pageStart},#{pgvo.qty}
+	</select>
+	
+	<update id="edit">
+		update board set content=#{content}, mod_at=now() where cno=#{cno}
+	</update>
 
 </mapper>

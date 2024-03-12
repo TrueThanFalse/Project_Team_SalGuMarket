@@ -9,9 +9,26 @@
 		select * from file
 	</select>
 	
+	<select id="getFile" resultType="com.SalGuMarket.www.domain.FileVO">
+		select * from file where email=#{email}
+	</select>
+	
 	<insert id="saveProductFile">
 		INSERT INTO file(uuid, save_dir, file_name, file_type, file_size, pno)
 		VALUES(#{uuid}, #{saveDir}, #{fileName}, #{fileType}, #{fileSize}, #{pno})
 	</insert>
+	
+	<insert id="insertFile">
+		INSERT INTO file(uuid, save_dir, file_name, file_type, file_size, email)
+		VALUES(#{uuid}, #{saveDir}, #{fileName}, #{fileType}, #{fileSize}, #{email})
+	</insert>
+	
+	<delete id="deleteFile">
+		delete from file where email=#{email}
+	</delete>
+	
+	<select id="getFileName" resultType="String">
+		select file_name from file where email=#{email}
+	</select>
 
 </mapper>

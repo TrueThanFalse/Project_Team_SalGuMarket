@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfig implements WebMvcConfigurer{
 	// 파일 업로드 경로 설정
 	
-	String uploadPath = "file:///C:\\SalGuMarketUploadFile";
+	String uploadPath = "file:///C:\\SalGuMarketUploadFile\\";
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {

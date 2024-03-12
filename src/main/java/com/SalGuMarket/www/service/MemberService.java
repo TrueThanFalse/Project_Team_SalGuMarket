@@ -2,7 +2,9 @@ package com.SalGuMarket.www.service;
 
 import java.util.List;
 
+import com.SalGuMarket.www.domain.FileVO;
 import com.SalGuMarket.www.domain.PagingVO;
+import com.SalGuMarket.www.handler.PagingHandler;
 import com.SalGuMarket.www.security.MemberVO;
 
 public interface MemberService {
@@ -22,6 +24,12 @@ public interface MemberService {
 	MemberVO selectEmail(String email);
 
 	MemberVO selectNickName(String nickName);
+
+	//String getFileName(String email);
+
+	FileVO getFile(String email);
+
+	PagingHandler getBoardList(String email, PagingVO pgvo);
 
 	
 }

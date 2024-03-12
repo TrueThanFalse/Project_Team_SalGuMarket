@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.SalGuMarket.www.domain.BoardVO;
 import com.SalGuMarket.www.domain.PagingVO;
 import com.SalGuMarket.www.security.AuthVO;
 import com.SalGuMarket.www.security.MemberVO;
@@ -34,5 +35,9 @@ public interface MemberMapper {
 	int getIsProfile(String email);
 	
 	MemberVO selcetNickName(String nickName);
+
+	int selectEmailTotalCount(String email);
+
+	List<BoardVO> getBoardList(String email, PagingVO pgvo);
 	
 }

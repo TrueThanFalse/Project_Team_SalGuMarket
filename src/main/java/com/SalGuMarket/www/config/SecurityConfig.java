@@ -36,13 +36,12 @@ public class SecurityConfig {
 								"/**"/* ,"/js/**","/css/**","/img/**","/fonts/**" */)
 						.permitAll()
 				.requestMatchers("/member/list").hasAnyRole("ADMIN")
-				.requestMatchers("/member/list").hasAnyRole("STOP_USER")
 				.anyRequest().authenticated())
 				.formLogin(login -> login
 						.usernameParameter("email")
 						.passwordParameter("pwd")
 						.loginPage("/member/login")
-						.defaultSuccessUrl("/board/list").permitAll())
+						.defaultSuccessUrl("/").permitAll())
 				.logout(logout -> logout
 						.logoutUrl("/member/logout")
 						.invalidateHttpSession(true)

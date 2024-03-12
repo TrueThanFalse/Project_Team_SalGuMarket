@@ -74,4 +74,35 @@ public class FileSweeper {
 			log.info(">>> FileSweeper Running finish : >>>"+LocalDateTime.now());
 	
 		}
+		
+		public void fileSweeperProfile(String nick) {
+			
+			List<FileVO> dbList = fileMapper.selectListAllFile();
+			
+			List<String> currFiles = new ArrayList<String>();
+			
+			for(FileVO fvo : dbList) {
+				String filePath = fvo.getSaveDir()+File.separator+nick;
+				String fileName = fvo.getFileName();
+				currFiles.add(BASE_PATH+filePath+"_"+fileName);
+				//이미지라면 썸네일 경로도 추가
+				if(fvo.getFileType()>0) {
+					currFiles.add(BASE_PATH+filePath+"_th_"+fileName);
+					currFiles.add(BASE_PATH+filePath+"_product_"+fileName);
+				}
+			}
+			
+			File dir = Paths.get(BASE_PATH+"profile").toFile();
+			File[] allFileObjects = dir.listFiles();
+			
+			for(File file : allFileObjects) {
+				String storedFileName = file.toPath().toString();
+				if(!currFiles.contains(storedFileName)) {
+					file.delete();
+				}
+			}
+			
+			log.info(">>> FileSweeper Running finish : >>>"+LocalDateTime.now());
+	
+		}
 }

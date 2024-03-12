@@ -17,4 +17,10 @@ public interface FileMapper {
 
 	int saveProductFile(FileVO fvo);
 
+	void deleteFile(String email);
+
+	String getFileName(String email);
+
+	FileVO getFile(String email);
+
 }

@@ -94,6 +94,7 @@ public class MemberServiceImpl implements MemberService{
 		return fileMapper.getFile(email);
 	}
 
+	@Transactional
 	@Override
 	public PagingHandler getBoardList(String email, PagingVO pgvo) {
 		// TODO Auto-generated method stub

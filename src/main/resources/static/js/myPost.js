@@ -9,7 +9,7 @@ function spreadMyPostList(email, page=1){
 				ul.innerHTML=``;
             }
             for(let bvo of result.boardList){
-                let li = `<li class="list-group-item" data-cno="${bvo.bno}" data-writer="${bvo.writer}">(해당 게시글로 이동 가능하게 href예정)</li>`;
+                let li = `<li class="list-group-item" data-cno="${bvo.bno}" data-writer="${bvo.nickName}"><a href="/board/boardDetail?bno=${bvo.bno}">${bvo.title}</a></li>`;
                 ul.innerHTML += li;
             }
             let moreBtn = document.getElementById(`moreBtn`);

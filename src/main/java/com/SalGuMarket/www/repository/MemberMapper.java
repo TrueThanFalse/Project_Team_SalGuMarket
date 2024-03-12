@@ -3,6 +3,7 @@ package com.SalGuMarket.www.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.SalGuMarket.www.domain.BoardVO;
 import com.SalGuMarket.www.domain.PagingVO;
@@ -38,6 +39,6 @@ public interface MemberMapper {
 
 	int selectEmailTotalCount(String email);
 
-	List<BoardVO> getBoardList(String email, PagingVO pgvo);
+	List<BoardVO> getBoardList(@Param("email")String email, @Param("pgvo")PagingVO pgvo);
 	
 }

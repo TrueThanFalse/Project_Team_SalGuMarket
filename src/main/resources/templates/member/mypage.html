@@ -55,12 +55,13 @@
 
 	<script th:inline="javascript">
 		const isProfile = [[${mvo.isProfile}]];
-	</script>
-	<script th:inline="javascript">
 		const email = [[${mvo.email}]];
 	</script>
 	<script src="/js/profile.js"></script>
 	<script src="/js/myPost.js"></script>
+	<script th:inline="javascript">
+		spreadMyPostList(email);
+	</script>
 
 </th:block>
 </th:block>

@@ -115,7 +115,6 @@ public class MemberController {
 	@ResponseBody
 	public PagingHandler list(@PathVariable("email")String email, @PathVariable("page")int page) {
 		log.info(">>>> email >> " +email+"/ page >>" + page);
-		//List<CommentVO> / PagingHandler
 		//비동기 => 한 객제만 전송 가능
 		PagingVO pgvo = new PagingVO(page, 5);
 		PagingHandler ph = memberService.getBoardList(email, pgvo);

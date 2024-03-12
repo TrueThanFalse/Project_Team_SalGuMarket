@@ -22,7 +22,6 @@ public class ChatMessage {
 	
 	private long chatCno; // 채팅번호
     private long chatBno; // 방번호
-    private String name; // 채팅방 이름
     private String sender; // 메시지 보낸사람
     private String message; // 메시지
     private String regAt; // 작성일
@@ -30,6 +29,6 @@ public class ChatMessage {
     // sender 가 가지고있는 email 과
     // ENTER 값의 email 이 서로 다를경우에만
     // 차감되게?
-    private int readCount = 2; // 1:1 채팅이기때문에 기본값 2
+    //private int readCount = 2; // 1:1 채팅이기때문에 기본값 2
     
 }

@@ -12,8 +12,8 @@
   		select * from auth_member where email=#{email}
   	</select>
   	<insert id="insert">
-  		insert into member(email, pwd, nick_name)
-  		values (#{email}, #{pwd}, #{nickName})
+  		insert into member(name, email, pwd, nick_name)
+  		values (#{name}, #{email}, #{pwd}, #{nickName})
   	</insert>
   	<insert id="insertAuthinit">
   		insert into auth_member values (#{email}, 'ROLE_USER')

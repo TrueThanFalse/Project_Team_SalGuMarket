@@ -52,12 +52,14 @@ public class BoardServiceImpl implements BoardService{
 	public BoardDTO selectOne(long bno) {
 		BoardDTO boardDto=new BoardDTO();
 		boardDto.setBvo(boardMapper.selectOne(bno));
-		boardDto.setFlist(fileMapper.getFileList(bno));
+		boardDto.setFlist(fileMapper.selectListAllFile(bno));
+		boardDto.getBvo().setReadCount(boardMapper.readCountUp(bno));
 		return boardDto;
 	}
 
 	@Override
 	public void modify(BoardDTO boardDTO) {
+		log.info(">>>>>>>>>>>>>>"+boardDTO.getBvo());
 		int isOK = boardMapper.edit(boardDTO.getBvo());
 		if(isOK > 0 && boardDTO.getFlist().size()>0) {
 			long bno = boardDTO.getBvo().getBno();
@@ -71,6 +73,11 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int remove(long bno) {
 		return boardMapper.remove(bno);
+	}
+
+	@Override
+	public long getBno() {
+		return boardMapper.getBno();
 	}
 
 

@@ -9,7 +9,7 @@ import com.SalGuMarket.www.domain.FileVO;
 @Mapper
 public interface FileMapper {
 
-	List<FileVO> selectListAllFile();
+	List<FileVO> selectListAllFile(long bno);
 
 	int insertFile(FileVO fvo);
 

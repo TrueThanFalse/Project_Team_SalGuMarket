@@ -36,4 +36,7 @@
 		VALUES(#{uuid}, #{saveDir}, #{fileName}, #{fileType}, #{fileSize}, #{bno})
 	</insert>
 
+	<select id="selectProfile" resultType="com.SalGuMarket.www.domain.FileVO">
+		select * from file where email=#{email}
+	</select>
 </mapper>

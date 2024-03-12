@@ -28,12 +28,12 @@ public class NoticeBoardController {
 	private final FileHandler fileHandler;
 
 	
-	 @GetMapping("/noticeList")
-	 public void noticeList(Model m,PagingVO pgvo) {
-		 List<NoticeBoardVO> list=noticeBoardService.noticeBoardList(pgvo); int
-		 totalCount=noticeBoardService.getTotalCount(pgvo); PagingHandler ph=new
-		 PagingHandler(pgvo,totalCount); 
-	 }
+//	 @GetMapping("/noticeList")
+//	 public void noticeList(Model m,PagingVO pgvo) {
+//		 List<NoticeBoardVO> list=noticeBoardService.noticeBoardList(pgvo); int
+//		 totalCount=noticeBoardService.getTotalCount(pgvo); PagingHandler ph=new
+//		 PagingHandler(pgvo,totalCount); 
+//	 }
 	 
 
 	@GetMapping("/noticeDetail")

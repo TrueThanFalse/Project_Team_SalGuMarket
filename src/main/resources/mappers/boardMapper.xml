@@ -6,7 +6,7 @@
 <mapper namespace="com.SalGuMarket.www.repository.BoardMapper">
 
 	<insert id="insert">
-  		insert into board(title,email,nick_name,content) values(#{title}, #{writer},#{nickName}, #{content})
+  		insert into board(title,email,nick_name,content) values(#{title}, #{email},#{nickName}, #{content})
   	</insert>
   
   	<select id="getBno" resultType="long">

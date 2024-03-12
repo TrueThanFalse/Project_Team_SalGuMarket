@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import com.SalGuMarket.www.domain.FileVO;
 import com.SalGuMarket.www.repository.FileMapper;
+import com.SalGuMarket.www.repository.MemberMapper;
+import com.SalGuMarket.www.security.MemberVO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,7 @@ public class FileSweeper {
 
 	private final String BASE_PATH = "C:\\SalGuMarketUploadFile\\";
 	private final FileMapper fileMapper;
+	private final MemberMapper memberMapper;
 	
 	//초 분 시 일 월 요일 년도(생략가능)
 		@Scheduled(cron="0 1 * * * *")
@@ -77,7 +80,9 @@ public class FileSweeper {
 		
 		public void fileSweeperProfile(String nick) {
 			
-			List<FileVO> dbList = fileMapper.selectListAllFile();
+			MemberVO mvo = memberMapper.selcetNickName(nick);
+			
+			List<FileVO> dbList = fileMapper.selectProfile(mvo.getEmail());
 			
 			List<String> currFiles = new ArrayList<String>();
 			

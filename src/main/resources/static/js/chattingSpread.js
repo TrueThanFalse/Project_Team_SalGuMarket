@@ -74,7 +74,7 @@ function sendMsg() {
     socket.send(JSON.stringify(talkMsg));
  	//서버로 메시지가 전송되었는지 확인용
     console.log("talkMsg :", talkMsg);
-    spreadChatList(chatBno);
+	spreadChatList(chatBno);
 };
 
 

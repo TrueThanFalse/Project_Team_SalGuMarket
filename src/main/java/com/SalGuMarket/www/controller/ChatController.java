@@ -1,6 +1,12 @@
 package com.SalGuMarket.www.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.SalGuMarket.www.domain.ChatMessage;
 import com.SalGuMarket.www.domain.ChatRoom;
-import com.SalGuMarket.www.handler.PagingHandler;
 import com.SalGuMarket.www.service.ChatService;
 
+import jakarta.websocket.Session;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +32,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ChatController {
 	private final ChatService chatService;
+	
+	static List<Session> sessionUsers = Collections.synchronizedList(new ArrayList<Session>());
+	static boolean runCheck = false;
 
     
     // 채팅방 목록

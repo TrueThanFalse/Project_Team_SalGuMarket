@@ -10,12 +10,12 @@
 		value(#{nickName},#{content},#{regAt},#{modAt},#{bno},#{email})
 	</insert>
 	
-	<select id="selectOneBnoCount" resultType="int">
+	<select id="selectOneBnoTotalCount" resultType="int">
 		select count(cno) from comment where bno=#{bno}
 	</select>
 	
 	<select id="getList" resultType="com.SalGuMarket.www.domain.CommentVO">
-		select * from comment where bno=#{bno} order by desc limit #{pgvo.pageStart},#{pgvo.qty}
+		select * from comment where bno=#{bno} order by bno desc limit #{pgvo.pageStart},#{pgvo.qty}
 	</select>
 	
 	<update id="edit">

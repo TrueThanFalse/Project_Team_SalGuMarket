@@ -26,4 +26,6 @@ public interface FileMapper {
 	int insertProfile(FileVO fvo);
 	
 	List<FileVO> selectProfile(String email);
+
+	List<FileVO> getHelpFileList(long hbno);
 }

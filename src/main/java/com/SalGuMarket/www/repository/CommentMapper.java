@@ -3,6 +3,7 @@ package com.SalGuMarket.www.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.SalGuMarket.www.domain.CommentVO;
 import com.SalGuMarket.www.domain.PagingVO;
@@ -14,7 +15,7 @@ public interface CommentMapper {
 
 	int selectOneBnoTotalCount(long bno);
 
-	List<CommentVO> getList(long bno, PagingVO pgvo);
+	List<CommentVO> getList(@Param("bno") long bno,@Param("pgvo") PagingVO pgvo);
 
 	int edit(CommentVO cvo);
 

@@ -44,7 +44,7 @@
 		  <button class="btn" id="cmtPostBtn" type="button">등록</button>
 		</div>
 		
-			<ul class="list-group list-group-numbered">
+			<ul class="list-group list-group-numbered" id="cmtListArea">
 			  <li class="list-group-item d-flex justify-content-between align-items-start">
 			    <div class="ms-2 me-auto">
 			      <div id="cmtWriter" class="fw-bold">닉네임<span>작성일</span></div>
@@ -75,7 +75,11 @@
     </section>
 	<br><br><br>
 	<!-- Pagination Section End-->
+	<script th:inline="javascript">
+		const bnoVal = [[${bdto.bvo.bno}]];
+	</script>
 	<script th:src="@{/js/board/boardComment.js}"></script>
+	<script>spreadCommentList(bnoVal);</script>
 	
 </th:block>   
 </th:block>

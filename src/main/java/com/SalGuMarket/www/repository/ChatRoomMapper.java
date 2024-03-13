@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.SalGuMarket.www.domain.ChatMessage;
 import com.SalGuMarket.www.domain.ChatRoom;
 
 @Mapper
@@ -11,7 +12,7 @@ public interface ChatRoomMapper {
 
 	void createRoom(ChatRoom chatRoom);
 
-	ChatRoom joinRoom(String chatName);
+	ChatRoom joinRoom(long chatBno);
 
 	List<ChatRoom> findAllRoom();
 

@@ -18,8 +18,8 @@ public class ChattingLogServiceImpl implements ChattingLogService {
     @Override
     public void saveChattingLog(ChatMessage chatMessage) {
     	log.info("ChattingLogMapper saveChattingLogsaveChattingLog insert");
-    	log.info("chatMessage sender"+chatMessage.getSender());
-    	log.info("chatMessage Message"+chatMessage.getMessage());
+    	log.info("chatMessage sender"+chatMessage.getSenderNick());
+    	log.info("chatMessage Message"+chatMessage.getChatContent());
     	log.info("chatMessage RegAt"+chatMessage.getRegAt());
     	log.info("chatMessage ChatBno"+chatMessage.getChatBno());
 

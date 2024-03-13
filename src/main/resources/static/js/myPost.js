@@ -39,3 +39,7 @@ async function getMyPostListFromServer(email, page){
         console.log(error);
     }
 }
+
+document.getElementById(`moreBtn`).addEventListener(`click`,(e)=>{
+	spreadMyPostList(email, parseInt(e.target.dataset.page));
+})

@@ -11,9 +11,9 @@
     </insert>
 
     <!-- 특정 채팅방 조회 -->
-    <select id="joinRoom" parameterType="String" resultType="com.SalGuMarket.www.domain.ChatRoom">
+    <select id="joinRoom" resultType="com.SalGuMarket.www.domain.ChatRoom">
         select * from chatting_room
-        where chat_name = #{chatName}
+        where chat_bno = #{chatBno}
     </select>
 
     <!-- 모든 채팅방 목록 조회 -->

@@ -62,14 +62,14 @@ function spreadCommentList(bno,page=1){
                 ul.innerHTML=``;
             }
             for(let cvo of result.cmtList){
-                let li=`<ul class="list-group list-group-numbered">`;
-                li += `<li class="list-group-item d-flex justify-content-between align-items-start">`;
-                li += `<div class="ms-2 me-auto"></div>`;
+                let li=`<li class="list-group-item d-flex justify-content-between align-items-start">`;
+                li += `<div class="ms-2 me-auto">`;
+                li += `<div id="cmtWriter" class="fw-bold">${cvo.nickName}<span style="float: right;">${cvo.regAt}</span></div>`;
                 li += `${cvo.content}`;
                 li += `</div>`;
-                li += `<span class="badge text-bg-success">수정</span><span class="badge text-bg-danger">삭제</span>`;
+                li += `<button class="cmtModBtn cmtBtn" type="button">수정</button>`;
+                li += `<button class="cmtDelBtn cmtBtn" type="button">삭제</button>`;
                 li += `</li>`;
-                li += `</ul>`;
                 ul.innerHTML += li;
             }
             let moreBtn = document.getElementById('moreBtn');

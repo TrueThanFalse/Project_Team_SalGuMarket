@@ -1,7 +1,14 @@
 package com.SalGuMarket.www.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
+import com.SalGuMarket.www.domain.FileVO;
+import com.SalGuMarket.www.domain.HelpBoardDTO;
+import com.SalGuMarket.www.domain.HelpBoardVO;
+import com.SalGuMarket.www.domain.PagingVO;
+import com.SalGuMarket.www.repository.FileMapper;
 import com.SalGuMarket.www.repository.HelpBoardMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -12,6 +19,48 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class HelpBoardServiceImpl implements HelpBoardService{
 	
-	private final HelpBoardMapper hm;
+	private final HelpBoardMapper helpBoardMapper;
+	
+	private final FileMapper fileMapper;
+
+	@Override
+	public List<HelpBoardVO> boardList(PagingVO pgvo) {
+		// TODO Auto-generated method stub
+		return helpBoardMapper.list(pgvo);
+	}
+
+	@Override
+	public int getTotalCount(PagingVO pgvo) {
+		// TODO Auto-generated method stub
+		return helpBoardMapper.getTotalCount(pgvo);
+	}
+
+	@Override
+	public HelpBoardDTO selectOne(long hbno) {
+		// TODO Auto-generated method stub
+		HelpBoardDTO hbdto = new HelpBoardDTO();
+		hbdto.setHbvo(helpBoardMapper.selectOne(hbno));
+		hbdto.setFlist(fileMapper.getHelpFileList(hbno));
+		return hbdto;
+	}
+
+	@Override
+	public void helpBoardRegister(HelpBoardDTO helpBoardDTO) {
+		// TODO Auto-generated method stub
+		int isOk=helpBoardMapper.insert(helpBoardDTO.getHbvo());
+		if(isOk>0&&helpBoardDTO.getFlist().size()>0) {
+			long bno=helpBoardMapper.getHBno();
+			for(FileVO fvo : helpBoardDTO.getFlist()) {
+				fvo.setBno(bno);
+				isOk *= fileMapper.insertFile(fvo);
+			}
+		}
+	}
+
+	@Override
+	public long getHBno() {
+		// TODO Auto-generated method stub
+		return helpBoardMapper.getHBno();
+	}
 
 }

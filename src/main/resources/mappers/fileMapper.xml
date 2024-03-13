@@ -39,4 +39,8 @@
 	<select id="selectProfile" resultType="com.SalGuMarket.www.domain.FileVO">
 		select * from file where email=#{email}
 	</select>
+	
+	<select id="getHelpFileList" resultType="com.SalGuMarket.www.domain.FileVO">
+		select * from file where h_bno=#{hbno}
+	</select>
 </mapper>

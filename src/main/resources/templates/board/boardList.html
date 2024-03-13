@@ -21,8 +21,8 @@
 							      <th scope="col">글번호</th>
 							      <th scope="col">제목</th>
 							      <th scope="col">작성자</th>
-							      <th scope="col">조회수</th>
 							      <th scope="col">작성일</th>
+							      <th scope="col">조회수</th>
 							    </tr>
 							</thead>
 							<tbody>
@@ -31,8 +31,8 @@
 									<th scope="row"><a th:href="@{/board/boardDetail(bno=${bvo.bno})}">[[${bvo.bno}]]</a></th>
 								    <td><a th:href="@{/board/boardDetail(bno=${bvo.bno})}">[[${bvo.title}]] </a><span class="badge">${cvo.}</span></td>
 								    <td>[[${bvo.nickName}]]</td>
-								    <td>[[${bvo.readCount}]]</td>
 									<td>[[${bvo.regAt}]]</td>
+								    <td>[[${bvo.readCount}]]</td>
 								</tr>
 							</th:block>
 							</tbody>

@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService{
 		int isOK = productMapper.saveProduct(pdto.getPvo());
 		
 		if(isOK > 0) {
-			Long pno = productMapper.getRecentPno();
+			long pno = productMapper.getRecentPno();
 			// 위 productMapper.saveProduct(pDTO.getPvo()); 구문으로 생성된 Pno이다.
 			
 			for(FileVO fvo : pdto.getFlist1()) {

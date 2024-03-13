@@ -44,7 +44,8 @@ public class FileSweeper {
 				//이미지라면 썸네일 경로도 추가
 				if(fvo.getFileType()>0) {
 					currFiles.add(BASE_PATH+filePath+"_th_"+fileName);
-					currFiles.add(BASE_PATH+filePath+"_product_"+fileName);
+					currFiles.add(BASE_PATH+filePath+"_main_"+fileName);
+					currFiles.add(BASE_PATH+filePath+"_minor_"+fileName);
 				}
 			}
 			

@@ -17,6 +17,8 @@ public class FileVO {
 	private String fileName; //파일이름
 	private int fileType; //파일타입
 	private int mainImage;
+	private String productTitle;
+	private long price;
 	private long bno; //자유게시판
 	private long pno; //상품
 	private long notBno; //공지사항
@@ -26,20 +28,3 @@ public class FileVO {
 	private String Email;
 
 }
-
-
-//DB
-/*
-create table file(
-uuid varchar(256) not null,
-save_dir varchar(256) not null,
-file_name varchar(256) not null,
-file_type int(1) default 0,
-bno bigint,
-pno bigint,
-not_bno bigint,
-q_bno bigint,
-file_size bigint not null,
-reg_at datetime default now(),
-primary key(uuid));
- */

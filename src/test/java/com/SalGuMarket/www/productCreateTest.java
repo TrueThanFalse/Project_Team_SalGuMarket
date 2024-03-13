@@ -1,71 +1,130 @@
 package com.SalGuMarket.www;
 
+import static org.junit.Assert.fail;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.SalGuMarket.www.domain.FileVO;
+import com.SalGuMarket.www.domain.ProductDTO;
 import com.SalGuMarket.www.domain.ProductVO;
-import com.SalGuMarket.www.repository.ProductMapper;
+import com.SalGuMarket.www.handler.FileHandler;
+import com.SalGuMarket.www.service.ProductService;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = productCreateTest.class)
+@SpringBootTest
 public class productCreateTest {
-	
+
 	@Autowired
-	private ProductMapper productMapper;
+	private ProductService productService;
+	@Autowired
+	private FileHandler fileHandler;
+	@Autowired
+	private ResourceLoader resourceLoader;
 	
 	@Test
-	void productCreate() {
+	public void productCreate() {
+		
+		long price = 10;
+		
 		for(int i=0; i<23; i++) {
 			ProductVO pvo = new ProductVO();
 			pvo.setTitle("TestTitle" + i);
 			pvo.setCategory("beauty");
 			pvo.setContent("TestContent" + i);
+			pvo.setPrice(price);
+			pvo.setSell("y");
 			
-			productMapper.saveProduct(pvo);
+			testImageFileCreate(pvo);
 		}
+		
 		for(int i=0; i<23; i++) {
 			ProductVO pvo = new ProductVO();
 			pvo.setTitle("TestTitle" + i);
 			pvo.setCategory("clothes");
 			pvo.setContent("TestContent" + i);
+			pvo.setPrice(price);
+			pvo.setSell("y");
 			
-			productMapper.saveProduct(pvo);
+			testImageFileCreate(pvo);
 		}
+		
 		for(int i=0; i<23; i++) {
 			ProductVO pvo = new ProductVO();
 			pvo.setTitle("TestTitle" + i);
 			pvo.setCategory("elec");
 			pvo.setContent("TestContent" + i);
+			pvo.setPrice(price);
+			pvo.setSell("y");
 			
-			productMapper.saveProduct(pvo);
+			testImageFileCreate(pvo);
 		}
+		
 		for(int i=0; i<23; i++) {
 			ProductVO pvo = new ProductVO();
 			pvo.setTitle("TestTitle" + i);
 			pvo.setCategory("ticket");
 			pvo.setContent("TestContent" + i);
+			pvo.setPrice(price);
+			pvo.setSell("y");
 			
-			productMapper.saveProduct(pvo);
+			testImageFileCreate(pvo);
 		}
+		
 		for(int i=0; i<23; i++) {
 			ProductVO pvo = new ProductVO();
 			pvo.setTitle("TestTitle" + i);
 			pvo.setCategory("animal");
 			pvo.setContent("TestContent" + i);
+			pvo.setPrice(price);
+			pvo.setSell("y");
 			
-			productMapper.saveProduct(pvo);
+			testImageFileCreate(pvo);
 		}
-		for(int i=0; i<23; i++) {
+		
+		for(int i=0; i<123; i++) {
 			ProductVO pvo = new ProductVO();
 			pvo.setTitle("TestTitle" + i);
 			pvo.setCategory("free");
 			pvo.setContent("TestContent" + i);
+			pvo.setPrice(price);
 			pvo.setSell("n");
 			
-			productMapper.saveProduct(pvo);
+			testImageFileCreate(pvo);
 		}
+	}
+	
+	private void testImageFileCreate(ProductVO pvo) {
+		
+		Resource resource = resourceLoader.getResource("classpath:testImage.jpg");
+	    MultipartFile multipartFile = null;
+
+	    try (InputStream inputStream = resource.getInputStream()) {
+	        multipartFile = new MockMultipartFile("file", "testImage.jpg", "image/jpeg", inputStream);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        fail("Failed to load test image file");
+	    }
+		
+		MultipartFile[] files = new MultipartFile[] {multipartFile};
+		
+		List<FileVO> flist1 = null;
+		List<FileVO> flist2 = null;
+		if (files[0].getSize() > 0) {
+            flist1 = fileHandler.uploadMainIamgeFile(files);
+        }
+		if (files[0].getSize() > 0) {
+            flist2 = fileHandler.uploadMinorImageFile(files);
+        }
+		
+		productService.saveProduct(new ProductDTO(pvo, flist1, flist2));
 	}
 }

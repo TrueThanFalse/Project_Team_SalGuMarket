@@ -26,6 +26,15 @@ public class IndexController {
 	
 	@GetMapping("/")
 	public String index(Model model, PagingVO pgvo) {
+		
+		// categoryImageList의 개수는 8개
+		pgvo.setQty(8);
+		
+		// 첫 화면 뿌릴때, 페이지네이션의 type은 공백값을 가짐
+		if(pgvo.getType() == "") {
+			pgvo.setType(null);
+		}
+		
 		List<FileVO> categoriesSliderImageList = productService.getCategoriesSliderImageList10Image();
 		for(FileVO file : categoriesSliderImageList) {
 	    	file.setSaveDir(file.getSaveDir().replace(File.separator, "/"));

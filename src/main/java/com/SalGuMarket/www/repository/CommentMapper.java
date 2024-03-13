@@ -19,4 +19,6 @@ public interface CommentMapper {
 
 	int edit(CommentVO cvo);
 
+	int delete(long cno);
+
 }

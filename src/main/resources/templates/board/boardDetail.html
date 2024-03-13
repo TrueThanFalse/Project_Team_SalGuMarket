@@ -33,16 +33,17 @@
     <!-- Featured Section End -->
     
     <!-- Comment Section Begin -->   
-    <div th:if="${loginmvo!=null}">
     <section class="comment-area">
 		<div class="container">
 		
+    <div th:if="${loginmvo.nickName!=null}">
 		<div class="input-group mb-3">
 		  <input type="text" id="cmtText" class="form-control" placeholder="댓글 내용을 입력해주세요." aria-label="Recipient's username" aria-describedby="button-addon2">
 		  <input type="text" id="cmtNickName" th:value="${loginmvo.nickName}">
 		  <input type="text" id="cmtEmail" th:value="${loginmvo.email}">
 		  <button class="btn" id="cmtPostBtn" type="button">등록</button>
 		</div>
+    </div>
 		
 			<ul class="list-group list-group-numbered" id="cmtListArea">
 			  <li class="list-group-item d-flex justify-content-between align-items-start">
@@ -57,7 +58,6 @@
     		<button type="button" class="moreBtn" id="moreBtn">더보기</button>
 		</div>
     </section>
-    </div>
     <br><br><br>
     <!-- Comment Section End -->
         
@@ -75,9 +75,29 @@
     </section>
 	<br><br><br>
 	<!-- Pagination Section End-->
+	<div class="modal" id="myModal" tabindex="-1">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title">Anonymous</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	      <div class="input">
+	      	<input id="cmtTextMod">
+	      </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" id="cmtModBtn" class="btn btn-primary">저장</button>
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 	
 	<script th:inline="javascript">
 		const bnoVal = [[${bdto.bvo.bno}]];
+		const nick = [[${loginmvo.nickName}]];
 	</script>
 	<script th:src="@{/js/board/boardComment.js}"></script>
 	<script>spreadCommentList(bnoVal);</script>

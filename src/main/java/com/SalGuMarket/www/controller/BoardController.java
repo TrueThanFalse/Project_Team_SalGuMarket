@@ -74,7 +74,8 @@ public class BoardController {
 			MemberVO mvo = memberService.selectEmail(p.getName());
 			m.addAttribute("loginmvo", mvo);
 		}else {
-			m.addAttribute("loginmvo", null);
+			MemberVO mvo = new MemberVO();
+			m.addAttribute("loginmvo", mvo);
 		}
 	}
 	

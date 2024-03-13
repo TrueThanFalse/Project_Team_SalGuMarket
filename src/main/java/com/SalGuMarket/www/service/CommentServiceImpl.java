@@ -35,5 +35,10 @@ public class CommentServiceImpl implements CommentService{
 	public int edit(CommentVO cvo) {
 		return commentMapper.edit(cvo);
 	}
+	@Override
+	public int remove(long cno) {
+		// TODO Auto-generated method stub
+		return commentMapper.delete(cno);
+	}
 
 }

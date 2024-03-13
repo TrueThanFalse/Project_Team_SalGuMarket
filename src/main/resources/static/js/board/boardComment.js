@@ -62,13 +62,15 @@ function spreadCommentList(bno,page=1){
                 ul.innerHTML=``;
             }
             for(let cvo of result.cmtList){
-                let li=`<li class="list-group-item d-flex justify-content-between align-items-start">`;
+                let li=`<li class="list-group-item d-flex justify-content-between align-items-start" data-cno="${cvo.cno}" data-writer="${cvo.nickName}">`;
                 li += `<div class="ms-2 me-auto">`;
                 li += `<div id="cmtWriter" class="fw-bold">${cvo.nickName}<span style="float: right;">${cvo.regAt}</span></div>`;
                 li += `${cvo.content}`;
                 li += `</div>`;
-                li += `<button class="cmtModBtn cmtBtn" type="button">수정</button>`;
-                li += `<button class="cmtDelBtn cmtBtn" type="button">삭제</button>`;
+                if(nick==cvo.nickName){
+                li += `<button class="cmtModBtn mod cmtBtn" data-bs-toggle="modal" data-bs-target="#myModal" type="button">수정</button>`;
+                li += `<button class="cmtDelBtn del cmtBtn" type="button">삭제</button>`;						
+				}
                 li += `</li>`;
                 ul.innerHTML += li;
             }
@@ -89,3 +91,73 @@ function spreadCommentList(bno,page=1){
     
 } 
 
+document.addEventListener(`click`,(e)=>{
+	if(e.target.classList.contains(`mod`)){
+		//수정
+		let li = e.target.closest(`li`); //내 버튼이 포함되어있는 li 찾기
+		//같은 부모의 다음 형제 객체를 반환
+		let cmtText = li.querySelector(`.fw-bold`).nextSibling;
+		console.log(cmtText);
+		//현재 선택한 노드의 밸류 반환
+		document.getElementById(`cmtTextMod`).value = cmtText.nodeValue;
+		document.getElementById(`cmtModBtn`).setAttribute(`data-cno`, li.dataset.cno);
+	}else if(e.target.id == `cmtModBtn`){
+		//모달 수정 버튼
+		let cmtDataMod = {
+		cno : e.target.dataset.cno,
+		content : document.getElementById(`cmtTextMod`).value			
+		};
+		editCommentToServer(cmtDataMod).then(result=>{
+			if(result===`1`){
+				alert(`수정완료`);
+				//모달창 닫기
+				spreadCommentList(bnoVal);
+				document.querySelector(`.btn-close`).click();
+			}
+		})
+	}else if(e.target.classList.contains(`del`)){
+		//삭제
+		let li = e.target.closest(`li`);
+		let cno = li.dataset.cno;
+		removeCommentFromServer(cno).then(result=>{
+			if(result===`1`){
+				alert(`삭제완료`);
+				spreadCommentList(bnoVal);
+			}
+		})
+	}else if(e.target.id==`moreBtn`){
+		spreadCommentList(bnoVal, parseInt(e.target.dataset.page));
+	}
+})
+
+async function editCommentToServer(cmtDataMod){
+	try{
+		const url="/comment/edit";
+		const config={
+			method:'put',
+			headers:{
+				'content-type':'application/json; charset=utf-8'
+			},
+			body:JSON.stringify(cmtDataMod)
+		};
+		const resp = await fetch(url, config);
+		const result = await resp.text();
+		return result;
+	}catch(error){
+		console.log(error);
+	}
+}
+
+async function removeCommentFromServer(cno){
+	try{
+		const url = `/comment/`+cno;
+		const config ={
+			method : `delete`
+		};
+		const resp = await fetch(url, config);
+		const result = await resp.text();
+		return result;
+	}catch{
+		console.log(error);
+	}
+}

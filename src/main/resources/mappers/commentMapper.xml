@@ -19,7 +19,10 @@
 	</select>
 	
 	<update id="edit">
-		update board set content=#{content}, mod_at=now() where cno=#{cno}
+		update comment set content=#{content}, mod_at=now() where cno=#{cno}
 	</update>
 
+	<delete id="delete">
+		delete from comment where cno=#{cno}
+	</delete>
 </mapper>

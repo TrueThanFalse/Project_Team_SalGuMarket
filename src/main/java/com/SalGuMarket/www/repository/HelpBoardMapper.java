@@ -16,8 +16,12 @@ public interface HelpBoardMapper {
 
 	HelpBoardVO selectOne(long hbno);
 
-	long getHBno();
+	long getHbno();
 
 	int insert(HelpBoardVO hbvo);
+
+	int edit(HelpBoardVO hbvo);
+
+	int remove(long hbno);
 
 }

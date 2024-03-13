@@ -42,8 +42,8 @@ public class HelpBoardController {
 			flist=fileHandler.uploadFile(files);
 		}
 		helpBoardService.helpBoardRegister(new HelpBoardDTO(hbvo,flist));
-		long hbno=helpBoardService.getHBno();
-		return "redirect:/board/boardDetail?bno="+hbno;
+		long hbno=helpBoardService.getHbno();
+		return "redirect:/help/helpDetail?hbno="+hbno;
 	}
 	
 	@GetMapping("/helpList")
@@ -55,10 +55,27 @@ public class HelpBoardController {
 		m.addAttribute("ph",ph);
 	}
 	
-	@GetMapping("/helpDetail")
+	@GetMapping({"/helpDetail","/helpModify"})
 	public void helpDetail(@RequestParam("hbno") long hbno, Model m) {
 		HelpBoardDTO hbdto=helpBoardService.selectOne(hbno);
 		m.addAttribute("hbdto",hbdto);
+	}
+	
+	@PostMapping("/helpModify")
+	public String modify(HelpBoardVO hbvo, @RequestParam(name="files", required=false) MultipartFile[] files) {
+		List<FileVO> flist=null;
+		if(files[0].getSize()>0||files!=null) {
+			flist=fileHandler.uploadFile(files);
+		}
+		helpBoardService.modify(new HelpBoardDTO(hbvo,flist));
+		long noBno=helpBoardService.getHbno();
+		return "rediret:/help/helpDetail?hbno="+hbvo.getHbno();
+	}
+	
+	@GetMapping("/helpRemove")
+	public String remove(@RequestParam("hbno") long hbno) {
+		int isOk=helpBoardService.remove(hbno);
+		return "redirect:/help/helpList";
 	}
 	
 	

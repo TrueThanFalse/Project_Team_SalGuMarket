@@ -25,6 +25,11 @@ public interface MemberService {
 
 	MemberVO selectNickName(String nickName);
 
+
+	int checkpw(MemberVO mvo);
+
+	int updatePWD(MemberVO mvo);
+
 	//String getFileName(String email);
 
 	FileVO getFile(String email);

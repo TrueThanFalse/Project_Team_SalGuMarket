@@ -16,6 +16,10 @@ public interface HelpBoardService {
 
 	void helpBoardRegister(HelpBoardDTO helpBoardDTO);
 
-	long getHBno();
+	long getHbno();
+
+	void modify(HelpBoardDTO helpBoardDTO);
+
+	int remove(long hbno);
 
 }

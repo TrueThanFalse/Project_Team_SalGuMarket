@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:replace="~{/layout :: setFragment(~{this::content})}">
 <th:block th:fragment="content">
 <link rel="stylesheet" type="text/css" href="/css/notice.css">
@@ -57,7 +58,7 @@
 							<th:block th:each="nbvo:${list}">
 								<tr>
 									<th scope="row"><a href="@{/notice/noticeDetail(noBno=${nbvo.nobno})}">[[${nbvo.noBno}]]</a></th>
-								    <td><a href="@{notice/noticeDetail(noBno=${nbvo.noBno})}">[[${nbvo.title}]]</a></td>
+								    <td><a th:href="@{/notice/noticeDetail(noBno=${nbvo.noBno})}">[[${nbvo.title}]]</a></td>
 									<td>[[${nbvo.regAt}]]</td>
 									<td>[[${nbvo.readCount}]]</td>
 								</tr>
@@ -75,7 +76,7 @@
         <section class="pagenation">
        <div class="container">
           <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-           <a href="/notice/noticeRegister"><button class="btn" type="button">작성</button></a>
+           <a href="/notice/noticeRegister"><button sec:authorize="hasAnyAuthority('ROLE_ADMIN')" class="btn" type="button">작성</button></a>
           </div>
           <nav aria-label="Page navigation example">
            <ul class="pagination justify-content-center">

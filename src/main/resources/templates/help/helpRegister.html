@@ -8,7 +8,7 @@
 <form action="/help/helpRegister" method="post" enctype="multipart/form-data">
     <section class="table">
         <div class="container-md">
-        <input type="text" name="email" class="form-control" aria-label="Username" aria-describedby="basic-addon1" th:value=${bdto.bvo.email}>
+        <input type="hidden" name="email" class="form-control" aria-label="Username" aria-describedby="basic-addon1" th:value=${loginmvo.email}>
 				<div class="input-group mb-3">
 				  <span class="input-group-text" id="basic-addon1">제목</span>
 				  <input type="text" class="form-control" name="title" placeholder="제목을 입력해주세요.">

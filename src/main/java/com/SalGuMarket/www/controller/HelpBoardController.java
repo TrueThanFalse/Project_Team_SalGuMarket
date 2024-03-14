@@ -1,5 +1,6 @@
 package com.SalGuMarket.www.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,9 @@ import com.SalGuMarket.www.domain.HelpBoardVO;
 import com.SalGuMarket.www.domain.PagingVO;
 import com.SalGuMarket.www.handler.FileHandler;
 import com.SalGuMarket.www.handler.PagingHandler;
+import com.SalGuMarket.www.security.MemberVO;
 import com.SalGuMarket.www.service.HelpBoardService;
+import com.SalGuMarket.www.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,11 +32,20 @@ public class HelpBoardController {
 	
 	//1:1 문의 게시판 컨트롤러
 	private final HelpBoardService helpBoardService;
+	private final MemberService memberService;
 	
 	private final FileHandler fileHandler;
 	
 	@GetMapping("/helpRegister")
-	public void helpRegister() {}
+	public void helpRegister(Principal p, Model m) {
+		if(p != null) {
+			MemberVO mvo = memberService.selectEmail(p.getName());
+			m.addAttribute("loginmvo", mvo);
+		}else {
+			MemberVO mvo = new MemberVO();
+			m.addAttribute("loginmvo", mvo);
+		}
+	}
 	
 	@PostMapping("/helpRegister")
 	public String boardRegister(HelpBoardVO hbvo,@RequestParam(name="files", required=false)MultipartFile[] files) {
@@ -68,8 +80,8 @@ public class HelpBoardController {
 			flist=fileHandler.uploadFile(files);
 		}
 		helpBoardService.modify(new HelpBoardDTO(hbvo,flist));
-		long noBno=helpBoardService.getHbno();
-		return "rediret:/help/helpDetail?hbno="+hbvo.getHbno();
+		long hbno=helpBoardService.getHbno();
+		return "redirect:/help/helpDetail?hbno="+hbno;
 	}
 	
 	@GetMapping("/helpRemove")

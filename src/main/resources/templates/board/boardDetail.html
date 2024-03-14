@@ -39,8 +39,8 @@
     <div th:if="${loginmvo.nickName!=null}">
 		<div class="input-group mb-3">
 		  <input type="text" id="cmtText" class="form-control" placeholder="댓글 내용을 입력해주세요." aria-label="Recipient's username" aria-describedby="button-addon2">
-		  <input type="text" id="cmtNickName" th:value="${loginmvo.nickName}">
-		  <input type="text" id="cmtEmail" th:value="${loginmvo.email}">
+		  <input type="hidden" id="cmtNickName" th:value="${loginmvo.nickName}">
+		  <input type="hidden" id="cmtEmail" th:value="${loginmvo.email}">
 		  <button class="btn" id="cmtPostBtn" type="button">등록</button>
 		</div>
     </div>
@@ -79,12 +79,12 @@
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title">Anonymous</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	        <h5 class="modal-title">댓글 수정</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" style="background-color:white; color: #FF7471; border: none; border-radius: 3px;">X</button>
 	      </div>
 	      <div class="modal-body">
 	      <div class="input">
-	      	<input id="cmtTextMod">
+	      	<input id="cmtTextMod" style="width: 100%;">
 	      </div>
 	      </div>
 	      <div class="modal-footer">

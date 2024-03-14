@@ -21,7 +21,7 @@
   		select * from help_board where h_bno=#{hbno}
   	</select>
   	
-  	<select id="gethBno" resultType="long">
+  	<select id="getHbno" resultType="long">
 		select max(h_bno) from help_board
 	</select>
 	

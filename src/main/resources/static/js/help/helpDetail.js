@@ -2,7 +2,7 @@ console.log("helpDetail js");
 
 document.getElementById(`listBtn`).addEventListener(`click`,()=>{
     // location.href="/board/list";
-    location.replace(`/notice/list`);
+    location.replace(`/help/list`);
 });
 
 document.getElementById(`delBtn`).addEventListener(`click`,()=>{

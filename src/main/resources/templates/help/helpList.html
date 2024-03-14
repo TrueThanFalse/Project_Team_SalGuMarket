@@ -24,8 +24,8 @@
 							<tbody>
 							<th:block th:each="hbvo:${list}">
 								<tr>
-									<th scope="row"><a href="@{/help/helpDetail(hbno=${hbno=${hbvo.hbno})}">[[${hbvo.hbno}]]</a></th>
-								    <td><a href="@{/help/helpDetail(hbno=${hbno=${hbvo.hbno})}"><span><i class="bi bi-file-lock2-fill"></i></span>[[${hbvo.title}]]  </a><span class="badge text-bg-danger">답변완료</span></td>
+									<th scope="row"><a th:href="@{/help/helpDetail(hbno=${hbvo.hbno})}">[[${hbvo.hbno}]]</a></th>
+								    <td><a th:href="@{/help/helpDetail(hbno=${hbvo.hbno})}"><span><i class="bi bi-file-lock2-fill"></i></span>[[${hbvo.title}]]  </a><span class="badge text-bg-danger">답변완료</span></td>
 									<td>[[${hbvo.regAt}]]</td>
 								</tr>
 							</th:block>

@@ -64,14 +64,14 @@ public class WebSockChatHandler extends TextWebSocketHandler {
             chatMessage.setChatContent(chatMessage.getSenderNick() + "님이 퇴장했습니다..");
             sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
             log.info("message payload : "+message.getPayload());
-        }else if(chatMessage.getType().equals(ChatMessage.MessageType.TALK)){
+        }else {
         	log.info("session : " + session);
             log.info("message ~~~~~~~~: "+message.getPayload());
             log.info("type : " + chatMessage.getType());
             log.info("message : 0 :"+chatMessage.getChatContent());
             // 메시지 저장
             chattingLog.saveChattingLog(chatMessage);
-            sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) ); //입장,퇴장 아닐 때는 클라이언트로부터 온 메세지 그대로 전달.
+            sendToEachSocket(sessions,message ); //입장,퇴장 아닐 때는 클라이언트로부터 온 메세지 그대로 전달.
         }
     }
     private void sendToEachSocket(Set<WebSocketSession> sessions, TextMessage message) {

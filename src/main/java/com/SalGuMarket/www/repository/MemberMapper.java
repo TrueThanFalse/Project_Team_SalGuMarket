@@ -34,5 +34,11 @@ public interface MemberMapper {
 	int getIsProfile(String email);
 	
 	MemberVO selcetNickName(String nickName);
+
+	MemberVO check(MemberVO mvo);
+
+	int checkpw(MemberVO mvo);
+
+	int updatePWD(MemberVO mvo);
 	
 }

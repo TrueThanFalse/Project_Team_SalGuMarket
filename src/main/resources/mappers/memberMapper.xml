@@ -12,8 +12,8 @@
   		select * from auth_member where email=#{email}
   	</select>
   	<insert id="insert">
-  		insert into member(email, pwd, nick_name)
-  		values (#{email}, #{pwd}, #{nickName})
+  		insert into member(name, email, pwd, nick_name, reg_email)
+  		values (#{name}, #{email}, #{pwd}, #{nickName},#{regEmail})
   	</insert>
   	<insert id="insertAuthinit">
   		insert into auth_member values (#{email}, 'ROLE_USER')
@@ -52,6 +52,18 @@
 	<select id="selcetNickName" resultType="com.SalGuMarket.www.security.MemberVO">
   		select * from member where nick_name=#{nickName}
   	</select>
+  	
+  	<select id="check" resultType="com.SalGuMarket.www.security.MemberVO">
+  		select * from member where name=#{name} and reg_email = #{regEmail}
+  	</select>
+  	
+  	<select id="checkpw" resultType="int">
+  		select count(*) from member where name=#{name} and email = #{email}
+  	</select>
+  	
+  	<update id="updatePWD">
+  		update member set pwd = #{pwd} where email = #{email}
+  	</update>
 	
 	<sql id="search">
 		<if test="type!=null">

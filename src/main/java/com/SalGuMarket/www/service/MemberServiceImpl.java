@@ -83,4 +83,18 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return memberMapper.selcetNickName(nickName);
 	}
+
+	@Override
+	public int checkpw(MemberVO mvo) {
+		// TODO Auto-generated method stub
+		return memberMapper.checkpw(mvo);
+		
+	}
+
+	@Override
+	public int updatePWD(MemberVO mvo) {
+		// TODO Auto-generated method stub
+		return memberMapper.updatePWD(mvo);
+		
+	}
 }

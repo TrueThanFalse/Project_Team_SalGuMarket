@@ -1,19 +1,27 @@
 package com.SalGuMarket.www.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.SalGuMarket.www.domain.ChatMessage;
 import com.SalGuMarket.www.domain.ChatRoom;
-import com.SalGuMarket.www.security.MemberVO;
 import com.SalGuMarket.www.service.ChatService;
-import com.SalGuMarket.www.service.MemberService;
 
+import jakarta.websocket.Session;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +32,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ChatController {
 	private final ChatService chatService;
+	
+	static List<Session> sessionUsers = Collections.synchronizedList(new ArrayList<Session>());
+	static boolean runCheck = false;
 
     
     // 채팅방 목록
@@ -48,13 +59,21 @@ public class ChatController {
     // 방 들어가기
     @GetMapping("/chatRoom")
     public String chatRoom(Model model,
-    		@RequestParam("chatName") String chatName) {
-    	log.info("chatName : "+chatName);
+    		@RequestParam("chatBno") long chatBno) {
+    	log.info("chatName : "+chatBno);
         // 채팅방 정보 가져오기
-        ChatRoom room = chatService.findRoomById(chatName);
+        ChatRoom room = chatService.findRoomById(chatBno);
 
         model.addAttribute("room", room);
         return "chat/chatRoom";
     }
     
+    @GetMapping("/chatRoom/{chatBno}")
+	@ResponseBody
+	public List<ChatMessage> list(@PathVariable("chatBno")long chatBno) {
+		log.info(">>>> chatName >> " +chatBno);
+		//비동기 => 한 객제만 전송 가능
+		List<ChatMessage> list = chatService.getMessageList(chatBno);
+		return list;
+	}
 }

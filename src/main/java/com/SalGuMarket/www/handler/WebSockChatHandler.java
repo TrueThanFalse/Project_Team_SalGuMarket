@@ -42,9 +42,10 @@ public class WebSockChatHandler extends TextWebSocketHandler {
         log.info("room 객체확인 : "+ room);
         Set<WebSocketSession> sessions=room.getSessions();   //방에 있는 현재 사용자 한명이 WebsocketSession
         log.info("WebSocket Handler 부분 =======");
+        log.info("><><><"+chatMessage);
         log.info("chatMessage type : "+chatMessage.getType());
-        log.info("chatMessage Message : "+ chatMessage.getMessage());
-        log.info("chatMessage sender : "+ chatMessage.getSender());
+        log.info("chatMessage Message : "+ chatMessage.getChatContent());
+        log.info("chatMessage sender : "+ chatMessage.getSenderNick());
         log.info("session : "+session);
         log.info("세션연결");
         
@@ -53,24 +54,24 @@ public class WebSockChatHandler extends TextWebSocketHandler {
             //사용자가 방에 입장하면  Enter메세지를 보내도록 해놓음.  이건 새로운사용자가 socket 연결한 것이랑은 다름.
             //socket연결은 이 메세지 보내기전에 이미 되어있는 상태
             sessions.add(session);
-            chatMessage.setMessage(chatMessage.getSender() + "님이 입장했습니다.");  //TALK일 경우 msg가 있을 거고, ENTER일 경우 메세지 없으니까 message set            sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
-            log.info(" 입장메세지 확인 : "+chatMessage.getMessage());
+            chatMessage.setChatContent(chatMessage.getSenderNick() + "님이 입장했습니다.");  //TALK일 경우 msg가 있을 거고, ENTER일 경우 메세지 없으니까 message set            sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
+            log.info(" 입장메세지 확인 : "+chatMessage.getChatContent());
             sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
             log.info("message : "+message.getPayload());
         }else if (chatMessage.getType().equals(ChatMessage.MessageType.QUIT)) {
         	log.info("type : " + chatMessage.getType());
             sessions.remove(session);
-            chatMessage.setMessage(chatMessage.getSender() + "님이 퇴장했습니다..");
+            chatMessage.setChatContent(chatMessage.getSenderNick() + "님이 퇴장했습니다..");
             sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) );
             log.info("message payload : "+message.getPayload());
-        }else if(chatMessage.getType().equals(ChatMessage.MessageType.TALK)){
+        }else {
         	log.info("session : " + session);
             log.info("message ~~~~~~~~: "+message.getPayload());
             log.info("type : " + chatMessage.getType());
-            log.info("message : 0 :"+chatMessage.getMessage());
+            log.info("message : 0 :"+chatMessage.getChatContent());
             // 메시지 저장
             chattingLog.saveChattingLog(chatMessage);
-            sendToEachSocket(sessions,new TextMessage(objectMapper.writeValueAsString(chatMessage)) ); //입장,퇴장 아닐 때는 클라이언트로부터 온 메세지 그대로 전달.
+            sendToEachSocket(sessions,message ); //입장,퇴장 아닐 때는 클라이언트로부터 온 메세지 그대로 전달.
         }
     }
     private void sendToEachSocket(Set<WebSocketSession> sessions, TextMessage message) {

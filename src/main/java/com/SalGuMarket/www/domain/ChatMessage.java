@@ -22,8 +22,8 @@ public class ChatMessage {
 	
 	private long chatCno; // 채팅번호
     private long chatBno; // 방번호
-    private String sender; // 메시지 보낸사람
-    private String message; // 메시지
+    private String senderNick; // 메시지 보낸사람
+    private String chatContent; // 메시지
     private String regAt; // 작성일
     
     // sender 가 가지고있는 email 과

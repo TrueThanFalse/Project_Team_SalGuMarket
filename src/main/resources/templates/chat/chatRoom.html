@@ -2,110 +2,113 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{/layout :: setFragment(~{this::content})}">
 <th:block th:fragment="content">
+<style>
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 
+a {
+    text-decoration: none;
+}
+
+.wrap {
+    padding: 40px 0;
+    background-color: #A8C0D6;
+}
+
+.wrap .chat {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.wrap .chat .icon {
+    position: relative;
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #eee;
+}
+
+.wrap .chat .icon i {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    font-size: 2.5rem;
+    color: #aaa;
+    transform: translateX(-50%);
+}
+
+.wrap .chat .textbox {
+    position: relative;
+    display: inline-block;
+    max-width: calc(100% - 70px);
+    padding: 10px;
+    margin-top: 7px;
+    font-size: 13px;
+    border-radius: 10px;
+}
+
+.wrap .chat .textbox::before {
+    position: absolute;
+    display: block;
+    top: 0;
+    font-size: 1.5rem;
+}
+
+.wrap .ch1 .textbox {
+    margin-left: 20px;
+    background-color: #ddd;
+}
+
+.wrap .ch1 .textbox::before {
+    left: -15px;
+    content: "◀";
+    color: #ddd;
+}
+
+.wrap .ch2 {
+    flex-direction: row-reverse;
+}
+
+.wrap .ch2 .textbox {
+    margin-right: 20px;
+    background-color: #F9EB54;
+}
+
+.wrap .ch2 .textbox::before {
+    right: -15px;
+    content: "▶";
+    color: #F9EB54;
+}
+</style>
 <div class="container">
-
-	    <input type="text" id="content" placeholder="보낼 메세지를 입력하세요.">
-		<button type="submit" value="전송" class="sendBtn" onclick="sendMsg()">전송</button>
-		<button type="button" value="방나가기" class="quit" onclick="quit()">방 나가기 </button>
-	
+		
+		<input type="text" id="content" placeholder="보낼 메세지를 입력하세요.">
+		<button type="button" id="sendBtn" value="전송" class="sendBtn" onclick="sendMsg()">전송</button>
+		
 		<div class="wrap">
 			<div>
-			    <span>메세지 라인</span>
+			    <span>상품 / 가격 / etc...</span>
 			    <div class="msgArea">
-			    
+			    	<ul id="msgArea"></ul>
 			    </div>
 			</div>
+
 		</div>
+		<button type="button" value="방나가기" class="quit" onclick="quit()">방 나가기 </button>
 </div>
 
 <script th:inline="javascript">
-console.log('ChatRoom JavaScript Insert');
-//임시로 값 넣어주기
-let userEmail = "tester@naver.com";
-
-function enterRoom(socket) {
-    let enterMsg = {
-        type: "ENTER",
-        chatBno: [[${room.chatBno}]],
-        sender: userEmail,
-        message: ""
-    };
-    socket.send(JSON.stringify(enterMsg));
-    console.log("enterMsg");    
-    console.log(enterMsg);
-}
-
-let socket = new WebSocket("ws://localhost:8088/ws/chat");
-console.log("socket");
-console.log(socket);
-
-socket.onopen = function (e) {
-    console.log('서버에 연결되었습니다!');
-    enterRoom(socket);
-};
-
-socket.onclose = function (e) {
-    console.log('연결이 종료되었습니다');
-};
-
-socket.onerror = function (e) {
-    console.log(e);
-};
-
-function sendMsg() {
-    let content = document.getElementById('content').value;
-    console.log(content);
-    let talkMsg = {
-        type: "TALK",
-        chatBno: [[${room.chatBno}]],
-        sender: userEmail,
-        message: content
-    };
-    socket.send(JSON.stringify(talkMsg));
- 	//서버로 메시지가 전송되었는지 확인용
-    console.log("talkMsg :", talkMsg);
-};
-
-
-socket.onmessage = function (e) {
-    console.log('WebSocket 메시지 수신:', e);
-    let msgArea = document.querySelector('.msgArea');
-    
-    try {
-        let message = JSON.parse(e.data);
-        console.log('파싱된 메시지:', message);
-
-        //클라이언트에서 서버로부터 수신한 메시지 확인용
-        console.log('Received message from server:', message);
-
-        if (message.type === 'ENTER' || message.type === 'QUIT') {
-            let newMsg = document.createElement('div');
-            console.log(message);
-            newMsg.innerText = message.message; // 간소화된 메시지 표시
-            msgArea.append(newMsg);
-        } else if (message.type === 'TALK') {
-            let newMsg = document.createElement('div');
-            console.log(message);
-            newMsg.innerText = message.sender + ': ' + message.message;
-            msgArea.append(newMsg);
-        }
-    } catch (error) {
-        console.error('WebSocket 메시지 처리 중 오류 발생:', error);
-    }
-};
-
-function quit() {
-    let quitMsg = {
-        type: "QUIT",
-        chatBno: [[${room.chatBno}]],
-        sender: userEmail,
-        message: ""
-    };
-    socket.send(JSON.stringify(quitMsg));
-    socket.close();
-    location.href = "/chat/chatList";
-}
+	const chatBno = [[${room.chatBno}]];
 </script>
+<script src="/js/chattingSpread.js"></script>
+<script th:inline="javascript">
+spreadChatList(chatBno);
+</script>
+
 </th:block>
 </th:block>

@@ -6,7 +6,11 @@
   
 	<insert id="saveChattingLog">
 		insert into chatting_log (chat_content, sender_email,sender_nick, reg_at, chat_bno)
-		values (#{message}, #{sender},"test" ,now() ,#{chatBno})
+		values (#{chatContent}, "test@test.test",#{senderNick} ,now() ,#{chatBno})
 	</insert>
+
+	<select id="getChatMessage" resultType="com.SalGuMarket.www.domain.ChatMessage">
+		select * from chatting_log where chat_bno=#{chatBno}
+	</select>
 
   </mapper>

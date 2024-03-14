@@ -89,6 +89,18 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
+	public int checkpw(MemberVO mvo) {
+		// TODO Auto-generated method stub
+		return memberMapper.checkpw(mvo);
+		
+	}
+
+	@Override
+	public int updatePWD(MemberVO mvo) {
+		// TODO Auto-generated method stub
+		return memberMapper.updatePWD(mvo);
+	}
+
 	public FileVO getFile(String email) {
 		// TODO Auto-generated method stub
 		return fileMapper.getFile(email);

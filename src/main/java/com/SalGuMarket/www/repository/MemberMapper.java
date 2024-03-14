@@ -37,8 +37,15 @@ public interface MemberMapper {
 	
 	MemberVO selcetNickName(String nickName);
 
+	MemberVO check(MemberVO mvo);
+
+	int checkpw(MemberVO mvo);
+
+	int updatePWD(MemberVO mvo);
+
 	int selectEmailTotalCount(String email);
 
 	List<BoardVO> getBoardList(@Param("email")String email, @Param("pgvo")PagingVO pgvo);
+
 	
 }

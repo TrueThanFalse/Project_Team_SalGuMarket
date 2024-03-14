@@ -54,5 +54,4 @@ public class ChatServiceImpl implements ChatService{
 		// TODO Auto-generated method stub
 		return chattingLogMapper.getChatMessage(chatBno);
 	}
-
 }

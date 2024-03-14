@@ -2,21 +2,108 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{/layout :: setFragment(~{this::content})}">
 <th:block th:fragment="content">
+<style>
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 
+a {
+    text-decoration: none;
+}
+
+.wrap {
+    padding: 40px 0;
+    background-color: #A8C0D6;
+}
+
+.wrap .chat {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.wrap .chat .icon {
+    position: relative;
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #eee;
+}
+
+.wrap .chat .icon i {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    font-size: 2.5rem;
+    color: #aaa;
+    transform: translateX(-50%);
+}
+
+.wrap .chat .textbox {
+    position: relative;
+    display: inline-block;
+    max-width: calc(100% - 70px);
+    padding: 10px;
+    margin-top: 7px;
+    font-size: 13px;
+    border-radius: 10px;
+}
+
+.wrap .chat .textbox::before {
+    position: absolute;
+    display: block;
+    top: 0;
+    font-size: 1.5rem;
+}
+
+.wrap .ch1 .textbox {
+    margin-left: 20px;
+    background-color: #ddd;
+}
+
+.wrap .ch1 .textbox::before {
+    left: -15px;
+    content: "◀";
+    color: #ddd;
+}
+
+.wrap .ch2 {
+    flex-direction: row-reverse;
+}
+
+.wrap .ch2 .textbox {
+    margin-right: 20px;
+    background-color: #F9EB54;
+}
+
+.wrap .ch2 .textbox::before {
+    right: -15px;
+    content: "▶";
+    color: #F9EB54;
+}
+</style>
 <div class="container">
 
 	    <input type="text" id="content" placeholder="보낼 메세지를 입력하세요.">
 		<button type="button" id="sendBtn" value="전송" class="sendBtn" onclick="sendMsg()">전송</button>
 		<button type="button" value="방나가기" class="quit" onclick="quit()">방 나가기 </button>
-	
+		
+		<input type="text" id="content" placeholder="보낼 메세지를 입력하세요.">
+		<button type="button" id="sendBtn" value="전송" class="sendBtn" onclick="sendMsg()">전송</button>
+		
 		<div class="wrap">
 			<div>
-			    <span>메세지 라인</span>
+			    <span>상품 / 가격 / etc...</span>
 			    <div class="msgArea">
 			    	<ul id="msgArea"></ul>
 			    </div>
 			</div>
+
 		</div>
+		<button type="button" value="방나가기" class="quit" onclick="quit()">방 나가기 </button>
 </div>
 
 <script th:inline="javascript">

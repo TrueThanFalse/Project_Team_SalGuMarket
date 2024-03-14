@@ -19,7 +19,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class MemberVO {
 	
-	private String email, name, walletAddress, pwd, nickName, regAt, lastLogin, phoneNum, stop;
+	private String email, name, walletAddress, pwd, nickName, regAt, regEmail, lastLogin;
 	private int report, heart, isProfile;
 	private List<AuthVO> authList;
 	private FileVO fvo;
@@ -28,5 +28,6 @@ public class MemberVO {
 		this.email = email;
 		this.walletAddress = walletAddress;
 	}
+
 
 }

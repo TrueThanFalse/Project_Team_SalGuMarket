@@ -2,6 +2,7 @@ package com.SalGuMarket.www.handler;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +13,18 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.SalGuMarket.www.domain.FileVO;
+import com.SalGuMarket.www.repository.FileMapper;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.coobird.thumbnailator.Thumbnails;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class FileHandler {
-	private final String DIR = "C:\\SalGuMarketUploadFile";
+	private final String DIR = "C:\\SalGuMarketUploadFile\\";
+	private final FileSweeper fileSweeper;
 	
 	public List<FileVO> uploadFile(MultipartFile[] files){
 		List<FileVO> flist = new ArrayList<>();
@@ -76,42 +81,45 @@ public class FileHandler {
 	}
 	
 	public FileVO uploadProfile(String nick, MultipartFile profile_image){
+		fileSweeper.fileSweeperProfile(nick);
 		String profile = "profile";
 		
 		File folders = new File(DIR, profile);
 		
-		//실제 폴더 생성
 		if(!folders.exists()) {
 			folders.mkdirs();
 		}
 		
-		//FileVO설정
-		//for(MultipartFile file : profile_image) {
 		FileVO fvo = new FileVO();
 		fvo.setSaveDir(profile);
 		fvo.setFileSize(profile_image.getSize());
-		fvo.setFileName(profile);
 		
-		//디스크 저장 파일 생성
-		String fullFileName = nick+"_"+profile;
+		String originalFileName = profile_image.getOriginalFilename();
+		String fileType = originalFileName.substring(
+				originalFileName.lastIndexOf("."));
+		
+		String fileName = profile+fileType;
+		
+		fvo.setFileName(fileName);
+		
+		UUID uuid = UUID.randomUUID();
+		fvo.setUuid(uuid.toString());
+		
+		String fullFileName = nick+"_"+fileName;
 		File storeFile = new File(folders, fullFileName);
 		
-		try {
-			//원본파일
-			profile_image.transferTo(storeFile);
-			//file=type 이미지 파일이면 1 아니면 0
-			if(isImageFile(storeFile)) {
-				fvo.setFileType(1);
-				File thumbnail = new File(folders, nick+"_th_"+profile);
-				//이미지만 썸네일 가능 (썸네일 사이즈는 다시 정해야함)
-				Thumbnails.of(storeFile).size(80,80).toFile(thumbnail);
+		if(storeFile.exists()) {
+			storeFile.delete();
+			try {
+				storeFile.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			log.info("파일 저장 오류");
 		}
-	
-		//}
+		try {profile_image.transferTo(storeFile);} catch (Exception e) {}
+
+		
 		return fvo;
 	}
 

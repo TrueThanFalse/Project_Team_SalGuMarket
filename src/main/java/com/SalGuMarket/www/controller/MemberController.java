@@ -1,8 +1,12 @@
 package com.SalGuMarket.www.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -57,14 +62,26 @@ public class MemberController {
 	
 	@GetMapping("/mypage")
 	public String mypage(HttpServletRequest request, Principal p, @RequestParam(name="email", required = false) String email, Model m) {
-		log.info(">>>>>>>>>>>>>>>>>>>"+email);
+		log.info(">>>>>>>>>>>>>>>>>>>email"+email);
 		if(email != null) {
 			MemberVO mvo = memberService.selectEmail(email);
 			m.addAttribute("mvo", mvo);
-			return "/member/otherspage";
+			FileVO fvo = memberService.getFile(email);
+			if(fvo!=null) {
+			String fileName = fvo.getFileName();
+			m.addAttribute("fileName", fileName);
+			}
+			return "redirect:/member/otherspage?email="+email;
 		}else {
 			MemberVO mvo = memberService.selectEmail(p.getName());
 			m.addAttribute("mvo", mvo);
+			FileVO fvo = memberService.getFile(mvo.getEmail());
+			if(fvo!=null) {
+				String fileName = fvo.getFileName();				
+				m.addAttribute("fileName", fileName);
+				m.addAttribute("fvo", fvo);
+			}
+			log.info(">>>>>>>>>>>>.."+mvo);
 			return "/member/mypage";
 		}
 	}
@@ -86,10 +103,22 @@ public class MemberController {
 	}
 	
 	@GetMapping("/otherspage")
-	public void otherspage(HttpServletRequest request, @RequestParam(name="email", required = false) String email, Model m) {
+	public void otherspage(@RequestParam(name="email", required = false) String email, Model m) {
 		log.info(">>>>>>>>>>>>>>>>>>>"+email);
 		MemberVO mvo = memberService.selectEmail(email);
+		FileVO fvo = memberService.getFile(email);
+		m.addAttribute("fvo", fvo);
 		m.addAttribute("mvo", mvo);
+	}
+	
+	@GetMapping("/{email}/{page}")
+	@ResponseBody
+	public PagingHandler list(@PathVariable("email")String email, @PathVariable("page")int page) {
+		log.info(">>>> email >> " +email+"/ page >>" + page);
+		//비동기 => 한 객제만 전송 가능
+		PagingVO pgvo = new PagingVO(page, 5);
+		PagingHandler ph = memberService.getBoardList(email, pgvo);
+		return ph;
 	}
 	
 	@GetMapping("/list")
@@ -100,6 +129,13 @@ public class MemberController {
 	    PagingHandler ph = new PagingHandler(pgvo, totalCount,9);
 
 	    List<MemberVO> list = memberService.getList(pgvo);
+	    
+	    for(MemberVO mvo : list) {
+	    	if(mvo.getIsProfile() == 1) {
+	    		mvo.setFvo(memberService.getFile(mvo.getEmail()));
+	    	}
+	    }
+	    
 		m.addAttribute("list", list);
 		m.addAttribute("pgvo", pgvo);
 		m.addAttribute("ph", ph);

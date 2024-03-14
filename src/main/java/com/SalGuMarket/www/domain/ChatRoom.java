@@ -29,16 +29,12 @@ public class ChatRoom {
 	private String buyerEmail;
 	private String buyerNick;
 
-	private String name; //	 방제
+	private String chatName; //	 방제
 	
 	private String regAt;
 	private long pno;
 	private long price;
 	
 	private Set<WebSocketSession> sessions = new HashSet<>();
-	
-    public ChatRoom(String name) {
-        this.name = name;
-    }
 
 }

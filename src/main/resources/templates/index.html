@@ -227,11 +227,11 @@
 		}
 	</script>
 	
+	<script th:inline="javascript">
+		const reg = [[${reg}]];
+		if(reg==="1"){
+			alert("회원가입 성공 로그인 해주세요.");
+		}
+	</script>
 </th:block>
 </th:block>
-<script th:inline="javascript">
-const reg = [[${reg}]];
-if(reg==="1"){
-	alert("회원가입 성공 로그인 해주세요.");
-}
-</script>

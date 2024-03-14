@@ -1,15 +1,15 @@
 package com.SalGuMarket.www.service;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
+import com.SalGuMarket.www.domain.ChatMessage;
 import com.SalGuMarket.www.domain.ChatRoom;
+import com.SalGuMarket.www.repository.ChatRoomMapper;
+import com.SalGuMarket.www.repository.ChattingLogMapper;
 
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,34 +19,39 @@ import lombok.extern.slf4j.Slf4j;
 public class ChatServiceImpl implements ChatService{
 	
 	// DB연결시
-	/* private final ChatRoomMapper chatRoomMapper; */
-	private Map<String, ChatRoom> chatRooms;
-
-    @PostConstruct
-    private void init() {
-        chatRooms = new LinkedHashMap<>();
-    }
+	private final ChatRoomMapper chatRoomMapper;
+	
+	private final ChattingLogMapper chattingLogMapper;
 	
 	@Override
-	public ChatRoom createRoom(String name) {
-	//	return chatRoomMapper.createRoom(name);
-		ChatRoom chatRoom = ChatRoom.builder()
-				.name(name)
-				.build();
-		chatRooms.put(name, chatRoom);
-        return chatRoom;
+	public void createRoom(ChatRoom chatRoom) {
+	    log.info("ChatServiceImpl createRoom 진입"); 
+	    log.info("chatRoom :"+chatRoom);
+	    chatRoomMapper.createRoom(chatRoom);
 	}
 
 	@Override
-	public ChatRoom findRoomById(String name) {
-	//	return ChatRoomMapper.joinRoom(name);
-		return chatRooms.get(name);
+	public ChatRoom findRoomById(long chatBno) {
+		log.info("ChatServiceImpl findRoomById");
+		log.info("chatName : "+chatBno);
+		return chatRoomMapper.joinRoom(chatBno);
 	}
 
 	@Override
 	public List<ChatRoom> findAllRoom() {
-	//	return chatRoomMapper.allRoom();
-		return new ArrayList<>(chatRooms.values());
+		log.info("ChatServiceImpl findAllRoom");
+		return chatRoomMapper.findAllRoom();
 	}
 
+	@Override
+	public ChatRoom findRoomByBno(long chatBno) {
+		log.info("ChatSAerviceImpl findRoomById long chatBno");
+		return chatRoomMapper.chattingSend(chatBno);
+	}
+
+	@Override
+	public List<ChatMessage> getMessageList(long chatBno) {
+		// TODO Auto-generated method stub
+		return chattingLogMapper.getChatMessage(chatBno);
+	}
 }

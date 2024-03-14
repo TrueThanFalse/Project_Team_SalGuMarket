@@ -1,11 +1,25 @@
 package com.SalGuMarket.www.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import java.security.Principal;
+import java.util.List;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.SalGuMarket.www.domain.BoardDTO;
+import com.SalGuMarket.www.domain.BoardVO;
+import com.SalGuMarket.www.domain.FileVO;
+import com.SalGuMarket.www.domain.PagingVO;
 import com.SalGuMarket.www.handler.FileHandler;
+import com.SalGuMarket.www.handler.PagingHandler;
+import com.SalGuMarket.www.security.MemberVO;
 import com.SalGuMarket.www.service.BoardService;
+import com.SalGuMarket.www.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 
 	private final BoardService boardService;
+	private final MemberService memberService;
 	
 	private final FileHandler fileHandler;
 	 
@@ -29,9 +44,15 @@ public class BoardController {
 		m.addAttribute("ph",ph);
 	}
 	
-	
 	@GetMapping("/boardRegister")
-	public void boardRegister() {}
+	public void boardRegister(Principal p, Model m) {
+		if(p != null) {
+			MemberVO mvo = memberService.selectEmail(p.getName());
+			m.addAttribute("loginmvo", mvo);
+		}else {
+			m.addAttribute("loginmvo", null);
+		}
+	}
 	
 	@PostMapping("/boardRegister")
 	public String boardRegister(BoardVO bvo,@RequestParam(name="files", required=false)MultipartFile[] files) {
@@ -40,13 +61,22 @@ public class BoardController {
 			flist=fileHandler.uploadFile(files);
 		}
 		boardService.boardRegister(new BoardDTO(bvo,flist));
-		return "index";
+		long bno=boardService.getBno();
+		return "redirect:/board/boardDetail?bno="+bno;
 	}
 	
 	@GetMapping({"/boardDetail","/boardModify"})
-	public void boardDetail(@RequestParam("bno") long bno, Model m) {
+	public void boardDetail(Principal p, @RequestParam("bno") long bno, Model m) {
 		BoardDTO bdto=boardService.selectOne(bno);
 		m.addAttribute("bdto",bdto);
+		
+		if(p != null) {
+			MemberVO mvo = memberService.selectEmail(p.getName());
+			m.addAttribute("loginmvo", mvo);
+		}else {
+			MemberVO mvo = new MemberVO();
+			m.addAttribute("loginmvo", mvo);
+		}
 	}
 	
 	@PostMapping("/boardModify")
@@ -56,9 +86,11 @@ public class BoardController {
 			flist=fileHandler.uploadFile(files);
 		}
 		boardService.modify(new BoardDTO(bvo,flist));
-		return "redirect:/board.detail?bno="+bvo.getBno();
+		long bno=boardService.getBno();
+		return "redirect:/board/boardDetail?bno="+bno;
 	}
 	
+	@GetMapping("/boardRemove")
 	public String remove(@RequestParam("bno") long bno) {
 		int isOk=boardService.remove(bno);
 		return "redirect:/board/boardList";

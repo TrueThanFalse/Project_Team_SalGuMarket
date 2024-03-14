@@ -15,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class NoticeBoardDTO {
 	
-	private NoticeBoardVO novo;
+	private NoticeBoardVO nbvo;
 	private List<FileVO> flist;
 
 }

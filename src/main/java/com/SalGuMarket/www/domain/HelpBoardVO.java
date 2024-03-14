@@ -18,9 +18,6 @@ import lombok.ToString;
 public class HelpBoardVO {
 	
 	private String  title,email,content,regAt,modAt;
-	private int hbno,readCount;
+	private int hbno;
 	
-	
-	
-
 }

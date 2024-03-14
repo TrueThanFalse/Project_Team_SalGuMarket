@@ -72,4 +72,14 @@ public class ProductServiceImpl implements ProductService{
 	public int getTotalCount(PagingVO pgvo) {
 		return productMapper.getTotalCount(pgvo);
 	}
+
+	@Override
+	public FileVO getMainImageByPno(Long pno) {
+		return fileMapper.getMainImageByPno(pno);
+	}
+
+	@Override
+	public List<FileVO> getMinorIamgeListByPno(Long pno) {
+		return fileMapper.getMinorIamgeListByPno(pno);
+	}
 }

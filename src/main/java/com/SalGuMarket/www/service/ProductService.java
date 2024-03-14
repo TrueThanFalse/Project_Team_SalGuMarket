@@ -21,4 +21,8 @@ public interface ProductService {
 
 	int getTotalCount(PagingVO pgvo);
 
+	FileVO getMainImageByPno(Long pno);
+
+	List<FileVO> getMinorIamgeListByPno(Long pno);
+
 }

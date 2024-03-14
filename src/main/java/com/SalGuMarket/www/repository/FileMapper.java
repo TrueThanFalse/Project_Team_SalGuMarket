@@ -22,4 +22,8 @@ public interface FileMapper {
 
 	List<FileVO> get8MainImage(PagingVO pgvo);
 
+	FileVO getMainImageByPno(Long pno);
+
+	List<FileVO> getMinorIamgeListByPno(Long pno);
+
 }

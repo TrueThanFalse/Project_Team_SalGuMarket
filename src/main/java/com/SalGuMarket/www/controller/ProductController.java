@@ -38,8 +38,12 @@ public class ProductController {
 	public String transferProductDetail(@RequestParam("pno") Long pno, Model model) {
 		ProductVO pvo = productService.getProductById(pno);
 		log.info(">>> pvo >>> {}", pvo);
+		FileVO MainImage = productService.getMainImageByPno(pno);
+		List<FileVO> MinorIamgeList = productService.getMinorIamgeListByPno(pno);
 		
-		model.addAttribute(pvo);
+		model.addAttribute("pvo", pvo);
+		model.addAttribute("MainImage", MainImage);
+		model.addAttribute("MinorIamgeList", MinorIamgeList);
 		return "/productDetail";
 	}
 	
@@ -50,8 +54,8 @@ public class ProductController {
 	
 	@PostMapping("/productSale")
 	public String saveProduct(ProductVO pvo, RedirectAttributes re, Authentication authentication,
-			@RequestParam(name="files1", required = false) MultipartFile[] files1,
-			@RequestParam(name="files2", required = false) MultipartFile[] files2) {
+			@RequestParam(name="files1", required = false) MultipartFile[] fileMain,
+			@RequestParam(name="files2", required = false) MultipartFile[] filesMinor) {
 		log.info(">>> pvo >>> {}", pvo);
 		if(pvo.getCategory().equals("free")) {
 			pvo.setSell("n");
@@ -61,16 +65,16 @@ public class ProductController {
 		String SellerEmail = authentication.getName();
 		pvo.setSellerEmail(SellerEmail);
 		
-		List<FileVO> flist1 = null;
-		if(files1[0].getSize() > 0 || files1 != null) {
-			flist1 = fileHandler.uploadMainIamgeFile(files1);
+		List<FileVO> flistMain = null;
+		if(fileMain[0].getSize() > 0 || fileMain != null) {
+			flistMain = fileHandler.uploadMainIamgeFile(fileMain);
 		}
-		List<FileVO> flist2 = null;
-		if(files1[0].getSize() > 0 || files1 != null) {
-			flist2 = fileHandler.uploadMinorImageFile(files2);
+		List<FileVO> flistMinor = null;
+		if(filesMinor[0].getSize() > 0 || filesMinor != null) {
+			flistMinor = fileHandler.uploadMinorImageFile(filesMinor);
 		}
 		
-		int isOK = productService.saveProduct(new ProductDTO(pvo, flist1, flist2));
+		int isOK = productService.saveProduct(new ProductDTO(pvo, flistMain, flistMinor));
 		
 		re.addFlashAttribute("saveProduct", isOK);
 		return "redirect:/";

@@ -29,5 +29,15 @@
 		ORDER BY p.pno DESC
 		LIMIT #{pageStart}, #{qty}
 	</select>
+	
+	<select id="getMainImageByPno" resultType="com.SalGuMarket.www.domain.FileVO">
+		SELECT * FROM file
+		WHERE pno = #{pno} AND main_image = 1
+	</select>
+	
+	<select id="getMinorIamgeListByPno" resultType="com.SalGuMarket.www.domain.FileVO">
+		SELECT * FROM file
+		WHERE pno = #{pno} AND main_image = 0
+	</select>
 
 </mapper>

@@ -3,9 +3,9 @@ console.log("SafeTrade.js Join Success");
 if (typeof window.ethereum !== 'undefined') { // MetaMask 연동 확인    
     console.log('It is connected to MetaMask!');
 } else { // MetaMask와 연결이 안된 상태면 MetaMask 설치 웹페이지로 새로운 창을 오픈
-    alert('Please install MetaMask to use this feature.');
+    alert('MetaMask를 설치해 주세요.');
 	window.history.back();
-    window.open('https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=ko', '_blank');
+    window.open('https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=ko');
 }
 
 const web3 = new Web3(window.ethereum); // MetaMask와 상호작용하는 Web3 객체 생성
@@ -315,7 +315,7 @@ const contract = new web3.eth.Contract(contractABI, contractAddress);
 // MetaMask와 연동된 계정 가져오기 함수
 async function getAccount() {
     const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-	// 영단어들을 소문자로 인식하여 반환한다.
+	// 영문자는 소문자로 치환하여 accounts에 반환한다.
     return accounts[0]; // 현재 MetaMask에서 선택되어 있는 계정을 반환
 }
 
@@ -326,7 +326,7 @@ function CustomToLowerCase(text){
 	});
 };
 loginUserWalletAddress = CustomToLowerCase(loginUserWalletAddress);
-console.log('loginUserWalletAddress CustomToLowerCase >>> ', loginUserWalletAddress);
+console.log('>>> 살구마켓 로그인 사용자의 지갑 주소(소문자 치환) >>> ', loginUserWalletAddress);
 
 // 참고 사항 : 모든 거래 단위는 ether 단위로 통일
 
@@ -341,7 +341,6 @@ if(isCreateProductButton){ // 만약 id가 createProduct인 요소가 있다면.
 		// 웹사이트 로그인 사용자의 지갑 주소가 현재 MetaMask의 지갑 주소와 동일한지 확인
 		if(loginUserWalletAddress == account){
 			const price = web3.utils.toWei(document.getElementById('createProductValue').value, 'ether');
-			// 사용자의 입력을 받아야 함
 	
 			contract.methods.createProduct(price).send({ from: account })
 				.on('receipt', function(receipt){
@@ -356,8 +355,8 @@ if(isCreateProductButton){ // 만약 id가 createProduct인 요소가 있다면.
 				});
 		}else{
 			alert("MetaMask의 지갑 주소가 로그인 사용자의 지갑 주소와 일치하지 않습니다.");
-			console.log('loginUserWalletAddress >>>', loginUserWalletAddress);
-			console.log('account >>>', account);
+			console.log('>>> loginUserWalletAddress >>> ', loginUserWalletAddress);
+			console.log('>>> account >>> ', account);
 		}
 	});
 };
@@ -380,7 +379,7 @@ if(isPurchaseProductButton){
 				})
 				.on('error', function(error) {
 					console.error('Transaction failed:', error)
-					window.location.href = 'index.html';
+					window.location.href = '/';
 				});
 		};
 	});
@@ -401,7 +400,7 @@ if(isConfirmPurchaseButton){
 				})
 				.on('error', function(error) {
 					console.error('Transaction failed:', error)
-					window.location.href = 'index.html';
+					window.location.href = '/';
 				});
 		};
 	});
@@ -422,7 +421,7 @@ if(isRequestCancelButton){
 				})
 				.on('error', function(error) {
 					console.error('Transaction failed:', error)
-					window.location.href = 'index.html';
+					window.location.href = '/';
 				});
 		};
 	});
@@ -443,7 +442,7 @@ if(isApproveCancelButton){
 				})
 				.on('error', function(error) {
 					console.error('Transaction failed:', error)
-					window.location.href = 'index.html';
+					window.location.href = '/';
 				});
 		};
 	});
@@ -464,7 +463,7 @@ if(isSellerCancelButton){
 			})
 			.on('error', function(error) {
 				console.error('Transaction failed:', error)
-				window.location.href = 'index.html';
+				window.location.href = '/';
 			});
 		};
 	});

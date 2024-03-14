@@ -1,5 +1,6 @@
 package com.SalGuMarket.www.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,66 +33,29 @@ public class ProductController {
 	
 	private final ProductService productService;
 	private final FileHandler fileHandler;
-
-	@GetMapping("/")
-	public String transferIndex(Model model) {
-		List<FileVO> categoriesSliderImegeList = productService.getCategoriesSliderImegeList10Imege();
-		log.info(">>> categoriesSliderImegeList >>>" + categoriesSliderImegeList);
-		List<String> imegeUrlList = new ArrayList<String>();
-		
-//		for(int i=0; i<categoriesSliderImegeList.size(); i++) {
-//			Stirng imageUrl("/upload/"
-//					+ categoriesSliderImegeList.get(i).getSaveDir()
-//					+ "/"
-//					+ categoriesSliderImegeList.get(i).getUuid()
-//					+ "_"
-//					+ categoriesSliderImegeList.get(i).getFileName());
-//			
-//			String result = path.toString();
-//			
-//			if(!Files.exists(path)) {
-//				result = "/img/categories/cat-" + (i+1) + ".jpg";
-//			}
-//			
-//			imegeUrlList.add(result);
-//		}
-		
-	    for(FileVO file : categoriesSliderImegeList) {
-	        String imageUrl = "/upload/" + file.getSaveDir() + "/" + file.getUuid() + "_" + file.getFileName();
-	        imegeUrlList.add(imageUrl);
-	    }
-		
-		model.addAttribute("imegeUrlList", imegeUrlList);
-		model.addAttribute("categoriesSliderImegeList", categoriesSliderImegeList);
-		return "/";
-	}
 	
 	@GetMapping("/productDetail")
 	public String transferProductDetail(@RequestParam("pno") Long pno, Model model) {
 		ProductVO pvo = productService.getProductById(pno);
 		log.info(">>> pvo >>> {}", pvo);
+		FileVO MainImage = productService.getMainImageByPno(pno);
+		List<FileVO> MinorIamgeList = productService.getMinorIamgeListByPno(pno);
 		
-		model.addAttribute(pvo);
+		model.addAttribute("pvo", pvo);
+		model.addAttribute("MainImage", MainImage);
+		model.addAttribute("MinorIamgeList", MinorIamgeList);
 		return "/productDetail";
 	}
 	
+	// ----------------------------------------------------------------------------------------
+	
 	@GetMapping("/productSale")
-	public String sendProductSale(Authentication authentication, RedirectAttributes re) {
-		AuthMember authMember = (AuthMember)authentication.getPrincipal();
-		String WalletAddress = authMember.getMvo().getWalletAddress();
-		log.info(">>> Principal WalletAddress >>> {}", WalletAddress);
-		
-		if(WalletAddress == null) {
-			re.addFlashAttribute("WalletAddressNull", "1");
-			return "redirect:/";
-		}
-		
-		return "/product/productSale";
-	}
+	public void sendProductSale() {}
 	
 	@PostMapping("/productSale")
 	public String saveProduct(ProductVO pvo, RedirectAttributes re, Authentication authentication,
-			@RequestParam(name="files", required = false) MultipartFile[] files) {
+			@RequestParam(name="files1", required = false) MultipartFile[] fileMain,
+			@RequestParam(name="files2", required = false) MultipartFile[] filesMinor) {
 		log.info(">>> pvo >>> {}", pvo);
 		if(pvo.getCategory().equals("free")) {
 			pvo.setSell("n");
@@ -100,14 +65,36 @@ public class ProductController {
 		String SellerEmail = authentication.getName();
 		pvo.setSellerEmail(SellerEmail);
 		
-		List<FileVO> flist = null;
-		if(files[0].getSize() > 0 || files != null) {
-			flist = fileHandler.uploadFile(files);
+		List<FileVO> flistMain = null;
+		if(fileMain[0].getSize() > 0 || fileMain != null) {
+			flistMain = fileHandler.uploadMainIamgeFile(fileMain);
+		}
+		List<FileVO> flistMinor = null;
+		if(filesMinor[0].getSize() > 0 || filesMinor != null) {
+			flistMinor = fileHandler.uploadMinorImageFile(filesMinor);
 		}
 		
-		int isOK = productService.saveProduct(new ProductDTO(pvo, flist));
+		int isOK = productService.saveProduct(new ProductDTO(pvo, flistMain, flistMinor));
 		
 		re.addFlashAttribute("saveProduct", isOK);
 		return "redirect:/";
+	}
+	
+	@GetMapping("/checkWalletAddress")
+	@ResponseBody
+	public String getWalletAddress(Authentication authentication) {
+		AuthMember authMember = (AuthMember)authentication.getPrincipal();
+		String WalletAddress = authMember.getMvo().getWalletAddress();
+		log.info(">>> Principal WalletAddress >>> {}", WalletAddress);
+		return WalletAddress == null ? "1" : "0";
+	}
+	
+	@PostMapping("/staticBackdropModal")
+	public String modifyWalletAddress(@RequestParam("staticBackdropInput") String staticBackdropInput,
+			Authentication authentication) {
+		AuthMember authMember = (AuthMember)authentication.getPrincipal();
+		String loginEmail = authMember.getMvo().getEmail(); 
+		int isOK = productService.modifyWalletAddress(staticBackdropInput, loginEmail);
+		return isOK > 0 ? "redirect:/product/productSale" : "redirect:/";
 	}
 }

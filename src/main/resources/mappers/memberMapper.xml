@@ -19,7 +19,6 @@
   		insert into auth_member values (#{email}, 'ROLE_USER')
   	</insert>
   	
-  	
   	<!-- 민지 -->
   	<select id="getList" resultType="com.SalGuMarket.www.security.MemberVO">
   		select * from member <include refid="search"></include> limit #{pageStart}, #{qty}

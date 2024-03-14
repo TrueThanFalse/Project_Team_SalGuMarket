@@ -52,7 +52,7 @@ public class NoticeBoardServiceImpl implements NoticeBoardService{
 	public NoticeBoardDTO selectOne(long noBno) {
 		NoticeBoardDTO noticeBoardDTO = new NoticeBoardDTO();
 		noticeBoardDTO.setNbvo(noticeBoardMapper.selectOne(noBno));
-		noticeBoardDTO.setFlist(fileMapper.getFileList(noBno));
+		noticeBoardDTO.setFlist(fileMapper.getNoticeFileList(noBno));
 		noticeBoardDTO.getNbvo().setReadCount(noticeBoardMapper.readCountUp(noBno));
 		return noticeBoardDTO;
 	}

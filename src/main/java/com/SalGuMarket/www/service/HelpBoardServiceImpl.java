@@ -49,7 +49,7 @@ public class HelpBoardServiceImpl implements HelpBoardService{
 		// TODO Auto-generated method stub
 		int isOk=helpBoardMapper.insert(helpBoardDTO.getHbvo());
 		if(isOk>0&&helpBoardDTO.getFlist().size()>0) {
-			long bno=helpBoardMapper.getHBno();
+			long bno=helpBoardMapper.getHbno();
 			for(FileVO fvo : helpBoardDTO.getFlist()) {
 				fvo.setBno(bno);
 				isOk *= fileMapper.insertFile(fvo);
@@ -58,9 +58,26 @@ public class HelpBoardServiceImpl implements HelpBoardService{
 	}
 
 	@Override
-	public long getHBno() {
-		// TODO Auto-generated method stub
-		return helpBoardMapper.getHBno();
+	public long getHbno() {
+		return helpBoardMapper.getHbno();
+	}
+
+	@Override
+	public void modify(HelpBoardDTO helpBoardDTO) {
+		int isOk=helpBoardMapper.edit(helpBoardDTO.getHbvo());
+		if(isOk>0&&helpBoardDTO.getFlist().size()>0) {
+			long hbno=helpBoardDTO.getHbvo().getHbno();
+			for(FileVO fvo : helpBoardDTO.getFlist()){
+				fvo.setBno(hbno);
+				isOk*=fileMapper.insertFile(fvo);
+			}
+		}
+		
+	}
+
+	@Override
+	public int remove(long hbno) {
+		return helpBoardMapper.remove(hbno);
 	}
 
 }

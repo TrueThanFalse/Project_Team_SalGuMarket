@@ -40,5 +40,10 @@ public class CommentServiceImpl implements CommentService{
 		// TODO Auto-generated method stub
 		return commentMapper.delete(cno);
 	}
+	@Override
+	public int cmtCount(long bno) {
+		// TODO Auto-generated method stub
+		return commentMapper.selectOneBnoTotalCount(bno);
+	}
 
 }

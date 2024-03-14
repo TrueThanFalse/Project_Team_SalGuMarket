@@ -19,6 +19,7 @@ import com.SalGuMarket.www.handler.FileHandler;
 import com.SalGuMarket.www.handler.PagingHandler;
 import com.SalGuMarket.www.security.MemberVO;
 import com.SalGuMarket.www.service.BoardService;
+import com.SalGuMarket.www.service.CommentService;
 import com.SalGuMarket.www.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class BoardController {
 
 	private final BoardService boardService;
 	private final MemberService memberService;
+	private final CommentService commentService;
 	
 	private final FileHandler fileHandler;
 	 
@@ -40,6 +42,10 @@ public class BoardController {
 		List<BoardVO> list=boardService.boardList(pgvo);
 		int totalCount=boardService.getTotalCount(pgvo);
 		PagingHandler ph = new PagingHandler(pgvo, totalCount);
+		for(BoardVO bvo : list) {
+			int cmtCount = commentService.cmtCount(bvo.getBno());
+			bvo.setCmtCount(cmtCount);
+		}
 		m.addAttribute("list",list);
 		m.addAttribute("ph",ph);
 	}
@@ -50,7 +56,8 @@ public class BoardController {
 			MemberVO mvo = memberService.selectEmail(p.getName());
 			m.addAttribute("loginmvo", mvo);
 		}else {
-			m.addAttribute("loginmvo", null);
+			MemberVO mvo = new MemberVO();
+			m.addAttribute("loginmvo", mvo);
 		}
 	}
 	

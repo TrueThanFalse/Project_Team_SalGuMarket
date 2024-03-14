@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import com.SalGuMarket.www.domain.FileVO;
 import com.SalGuMarket.www.repository.FileMapper;
+import com.SalGuMarket.www.repository.MemberMapper;
+import com.SalGuMarket.www.security.MemberVO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,7 @@ public class FileSweeper {
 
 	private final String BASE_PATH = "C:\\SalGuMarketUploadFile\\";
 	private final FileMapper fileMapper;
+	private final MemberMapper memberMapper;
 	
 		//초 분 시 일 월 요일 년도(생략가능)
 		@Scheduled(cron="0 0 23 * * *")
@@ -71,5 +74,38 @@ public class FileSweeper {
 			}
 			
 			log.info(">>> FileSweeper Running Finish >>> {}", LocalDateTime.now());
+		}
+		
+		public void fileSweeperProfile(String nick) {
+			
+			MemberVO mvo = memberMapper.selcetNickName(nick);
+			
+			List<FileVO> dbList = fileMapper.selectProfile(mvo.getEmail());
+			
+			List<String> currFiles = new ArrayList<String>();
+			
+			for(FileVO fvo : dbList) {
+				String filePath = fvo.getSaveDir()+File.separator+nick;
+				String fileName = fvo.getFileName();
+				currFiles.add(BASE_PATH+filePath+"_"+fileName);
+				//이미지라면 썸네일 경로도 추가
+				if(fvo.getFileType()>0) {
+					currFiles.add(BASE_PATH+filePath+"_th_"+fileName);
+					currFiles.add(BASE_PATH+filePath+"_product_"+fileName);
+				}
+			}
+			
+			File dir = Paths.get(BASE_PATH+"profile").toFile();
+			File[] allFileObjects = dir.listFiles();
+			
+			for(File file : allFileObjects) {
+				String storedFileName = file.toPath().toString();
+				if(!currFiles.contains(storedFileName)) {
+					file.delete();
+				}
+			}
+			
+			log.info(">>> FileSweeper Running finish : >>>"+LocalDateTime.now());
+	
 		}
 }

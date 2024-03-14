@@ -58,7 +58,7 @@
 					  <li class="nav-item">
 					    <a class="nav-link" href="/help/helpList">1:1문의</a>
 					  </li>
-					  <li class="nav-item">
+					  <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
 					    <a class="nav-link" th:href="@{/member/list(pageNo=1,qty=9)}">회원목록</a> <!-- 시큐리티 설정 후 관리자만 보이게 -->
 					  </li>
 					</ul>
@@ -66,12 +66,12 @@
                 <div class="col-lg-3">
                     <div class="header__cart">
                     <!-- 로그아웃 사용자 -->
-                        <ul>
+                        <ul sec:authorize="isAnonymous()">
                             <li><a href="/member/login"><i class="bi bi-person"></i> 로그인</a></li>
                             <li><a href="/member/register"><i class="bi bi-person-add"></i> 회원가입</a></li>
                         </ul>
                         <!-- 로그인 사용자 -->
-                         <ul>
+                         <ul sec:authorize="isAuthenticated()">
                             <li><a href="/member/mypage"><i class="bi bi-person-circle"></i> 내 정보</a></li>
                             <li><a href="/member/logout"><i class="bi bi-x-circle"></i> 로그아웃</a></li>
                         </ul> 

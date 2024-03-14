@@ -21,7 +21,7 @@ public class FileVO {
 	private long price;
 	private long bno; //자유게시판
 	private long pno; //상품
-	private long notBno; //공지사항
+	private long noBno; //공지사항
 	private long qBno; //1:1문의
 	private long fileSize; //파일 사이즈
 	private String regAt; //등록날짜

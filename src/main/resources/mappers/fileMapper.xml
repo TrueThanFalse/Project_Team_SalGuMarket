@@ -6,7 +6,11 @@
 <mapper namespace="com.SalGuMarket.www.repository.FileMapper">
 
 	<select id="selectListAllFile" resultType="com.SalGuMarket.www.domain.FileVO">
-		select * from file
+		select * from file where bno=#{bno}
+	</select>
+	
+	<select id="getFile" resultType="com.SalGuMarket.www.domain.FileVO">
+		select * from file where email=#{email}
 	</select>
 	
 	<insert id="saveProductFile">
@@ -14,6 +18,7 @@
 		VALUES(#{uuid}, #{saveDir}, #{fileName}, #{fileType}, #{fileSize}, #{pno}, #{mainImage})
 	</insert>
 	
+<<<<<<< HEAD
 	<select id="getCategoriesSliderImageList10Image" resultType="com.SalGuMarket.www.domain.FileVO">
 		SELECT f.uuid, f.save_dir, f.file_name, f.pno FROM file f
 		JOIN product p ON f.pno = p.pno
@@ -39,5 +44,31 @@
 		SELECT * FROM file
 		WHERE pno = #{pno} AND main_image = 0
 	</select>
+=======
+	<insert id="insertProfile">
+		INSERT INTO file(uuid, save_dir, file_name, file_type, file_size, email)
+		VALUES(#{uuid}, #{saveDir}, #{fileName}, #{fileType}, #{fileSize}, #{email})
+	</insert>
+	
+	<delete id="deleteFile">
+		delete from file where email=#{email}
+	</delete>
+	
+	<select id="getFileName" resultType="String">
+		select file_name from file where email=#{email}
+	</select>
+	
+	<insert id="insertFile">
+		INSERT INTO file(uuid, save_dir, file_name, file_type, file_size, bno)
+		VALUES(#{uuid}, #{saveDir}, #{fileName}, #{fileType}, #{fileSize}, #{bno})
+	</insert>
+>>>>>>> 20d7dc03d6616d3339a8a2e881232f368c782e0e
 
+	<select id="selectProfile" resultType="com.SalGuMarket.www.domain.FileVO">
+		select * from file where email=#{email}
+	</select>
+	
+	<select id="getHelpFileList" resultType="com.SalGuMarket.www.domain.FileVO">
+		select * from file where h_bno=#{hbno}
+	</select>
 </mapper>

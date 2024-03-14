@@ -36,7 +36,6 @@ public class SecurityConfig {
 								"/**"/* ,"/js/**","/css/**","/img/**","/fonts/**" */)
 						.permitAll()
 				.requestMatchers("/member/list").hasAnyRole("ADMIN")
-				.requestMatchers("/member/list").hasAnyRole("STOP_USER")
 				.anyRequest().authenticated())
 				.formLogin(login -> login
 						.usernameParameter("email")

@@ -14,7 +14,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public class NoticeBoardVO {
 	
-	private int noBno,readCount;
-	private String title, content, regAt, modAt, nickName;
+	private long noBno;
+	private int readCount;
+	private String title, content, regAt, modAt;
 
 }

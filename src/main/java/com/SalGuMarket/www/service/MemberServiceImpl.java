@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.SalGuMarket.www.domain.BoardVO;
 import com.SalGuMarket.www.domain.FileVO;
 import com.SalGuMarket.www.domain.PagingVO;
+import com.SalGuMarket.www.handler.PagingHandler;
 import com.SalGuMarket.www.repository.FileMapper;
 import com.SalGuMarket.www.repository.MemberMapper;
 import com.SalGuMarket.www.security.MemberVO;
@@ -61,10 +63,12 @@ public class MemberServiceImpl implements MemberService{
 		if(mvo.getFvo() != null) {
 			FileVO fvo = mvo.getFvo();
 			fvo.setEmail(email);
-			fileMapper.insertFile(fvo);
+			fileMapper.deleteFile(mvo.getEmail());
+			fileMapper.insertProfile(fvo);
 			memberMapper.yesProfile(mvo.getEmail());
 		}else {
 			//프사 미선택 삭제
+			fileMapper.deleteFile(mvo.getEmail());
 			memberMapper.noProfile(mvo.getEmail());
 		}
 		int profile = memberMapper.getIsProfile(email);
@@ -95,6 +99,20 @@ public class MemberServiceImpl implements MemberService{
 	public int updatePWD(MemberVO mvo) {
 		// TODO Auto-generated method stub
 		return memberMapper.updatePWD(mvo);
-		
+	}
+
+	public FileVO getFile(String email) {
+		// TODO Auto-generated method stub
+		return fileMapper.getFile(email);
+	}
+
+	@Transactional
+	@Override
+	public PagingHandler getBoardList(String email, PagingVO pgvo) {
+		// TODO Auto-generated method stub
+		int totalCount = memberMapper.selectEmailTotalCount(email);
+		List<BoardVO> list = memberMapper.getBoardList(email, pgvo);
+		PagingHandler ph = new PagingHandler(pgvo, totalCount, list, 1);
+		return ph;
 	}
 }

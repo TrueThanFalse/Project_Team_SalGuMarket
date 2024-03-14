@@ -6,16 +6,15 @@
 <mapper namespace="com.SalGuMarket.www.repository.BoardMapper">
 
 	<insert id="insert">
-  		insert into board(title,content) values(#{title}, #{writer}, #{content})
+  		insert into board(title,email,nick_name,content) values(#{title}, #{email},#{nickName}, #{content})
   	</insert>
   
   	<select id="getBno" resultType="long">
 		select max(bno) from board
 	</select>
   
-  	
   	<select id="list" resultType="com.SalGuMarket.www.domain.BoardVO">
-  		select * from board <include refid="search"/> order by bno desc limit #{pageStart},#{qty}
+  		select * from board order by bno desc limit #{pageStart},#{qty}
   	</select>
   
   	<select id="selectOne" resultType="com.SalGuMarket.www.domain.BoardVO">
@@ -31,29 +30,11 @@
   	</delete>
   	
   	<select id="getTotalCount" resultType="int">
-  		select count(bno) from board <include refid="search"/>
+  		select count(bno) from board
   	</select>
   	
-  	<sql id="search">
-		<if test="type != null">
-			<trim prefix="where(" suffix=")" prefixOverrides="or">
-				<foreach collection="typeToArray" item="type">
-					<trim prefix="or">
-						<choose>
-							<when test="type == t.tostring()">
-								title like concat('%', #{keyword}, '%')
-							</when>
-							<when test="type == w.tostring()">
-								writer like concat('%', #{keyword}, '%')
-							</when>
-							<when test="type == c.tostring()">
-								content like concat('%', #{keyword}, '%')
-							</when>
-						</choose>
-					</trim>
-				</foreach>
-			</trim>
-		</if>
-	</sql>
-
+  	<update id="readCountUp">
+  		update board set read_count=read_count+1 where bno=#{bno}
+  	</update>
+  
 </mapper>

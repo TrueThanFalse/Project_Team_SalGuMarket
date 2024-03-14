@@ -2,6 +2,7 @@ package com.SalGuMarket.www.handler;
 
 import java.util.List;
 
+import com.SalGuMarket.www.domain.BoardVO;
 import com.SalGuMarket.www.domain.CommentVO;
 import com.SalGuMarket.www.domain.PagingVO;
 
@@ -23,6 +24,8 @@ public class PagingHandler {
 	
 	private List<CommentVO> cmtList;
 	// 댓글 더보기 버튼을 위한 변수 => 매개변수로 setting 시켜야 함
+	
+	private List<BoardVO> boardList;
 	
 	// 생성자에서 모든 계산 Logic을 완료시켜서 변수에 값들이 세팅되어야 함
 	public PagingHandler(PagingVO pgvo, int totalCount) {
@@ -66,5 +69,10 @@ public class PagingHandler {
 	public PagingHandler(PagingVO pgvo, int totalCount, List<CommentVO> cmtList) {
 		this(pgvo, totalCount);
 		this.cmtList = cmtList;
+	}
+	
+	public PagingHandler(PagingVO pgvo, int totalCount, List<BoardVO> boardList, int i) {
+		this(pgvo, totalCount);
+		this.boardList = boardList;
 	}
 }

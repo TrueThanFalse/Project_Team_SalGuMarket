@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Configuration
 @EnableWebSocket   //이게 websocket 서버로서 동작하겠다는 어노테이션
- class WebSocketConfig implements WebSocketConfigurer {
+public class WebSocketConfig implements WebSocketConfigurer {
 	
 	private final WebSocketHandler webSocketHandler;
 

@@ -13,6 +13,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class BoardVO {
 
+	private int readCount;	
 	private long bno;
-	private String title, writer, content, regAt, modAt;
+	private String title, email, nickName, content, regAt, modAt;
 }

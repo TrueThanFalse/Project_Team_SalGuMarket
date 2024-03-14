@@ -12,7 +12,8 @@
         		<div class="col-lg-9 mypage">
 	        		<div class="profile-image-box">
 				        <label class="profile-image">프로필 사진</label>
-				        <img id="profile-image-display" class="profile-image-display" alt="프로필 사진 미리보기" src="/img/salgu_profile.png"><br>
+				        <img th:if="${mvo.isProfile == 0}" id="profile-image-display" class="profile-image-display" alt="프로필 사진 미리보기" src="/img/salgu_profile.png"><br>
+			        	<img th:if="${mvo.isProfile == 1}" id="profile-image-display" class="profile-image-display myProfile" alt="프로필 사진 미리보기" th:src="@{|/upload/${fvo.saveDir}/${mvo.nickName}_${fvo.fileName}|}">
 	        		</div>
 			        <label for="email">이메일</label>
 			        <span id="userEmail">[[${mvo.email}]]</span>

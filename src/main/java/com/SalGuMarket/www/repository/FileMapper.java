@@ -9,7 +9,7 @@ import com.SalGuMarket.www.domain.FileVO;
 @Mapper
 public interface FileMapper {
 
-	List<FileVO> selectListAllFile();
+	List<FileVO> selectListAllFile(long bno);
 
 	int insertFile(FileVO fvo);
 
@@ -17,4 +17,15 @@ public interface FileMapper {
 
 	int saveProductFile(FileVO fvo);
 
+	void deleteFile(String email);
+
+	String getFileName(String email);
+
+	FileVO getFile(String email);
+
+	int insertProfile(FileVO fvo);
+	
+	List<FileVO> selectProfile(String email);
+
+	List<FileVO> getHelpFileList(long hbno);
 }

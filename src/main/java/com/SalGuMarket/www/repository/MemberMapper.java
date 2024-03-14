@@ -3,7 +3,9 @@ package com.SalGuMarket.www.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
+import com.SalGuMarket.www.domain.BoardVO;
 import com.SalGuMarket.www.domain.PagingVO;
 import com.SalGuMarket.www.security.AuthVO;
 import com.SalGuMarket.www.security.MemberVO;
@@ -40,5 +42,10 @@ public interface MemberMapper {
 	int checkpw(MemberVO mvo);
 
 	int updatePWD(MemberVO mvo);
+
+	int selectEmailTotalCount(String email);
+
+	List<BoardVO> getBoardList(@Param("email")String email, @Param("pgvo")PagingVO pgvo);
+
 	
 }

@@ -1,4 +1,4 @@
-console.log("board JS in");
+console.log("noticeRegister JS in");
 
 document.getElementById('trigger').addEventListener('click',()=>{
     document.getElementById('files').click();
@@ -35,7 +35,7 @@ document.addEventListener(`change`, (e)=>{
             isOK *= validResult;
             ul += `<li class="list-group-item">`;
 
-            ul += `<div class="ms-2 me-auto">${validResult? `<div class="fw-bold">업로드 가능`:`<div class="fw-bold text-danger">업로드 불가능`}</div>`;
+            ul += `<div class="ms-2 me-auto">${validResult? `<div class="fw-bold text-success">업로드 가능`:`<div class="fw-bold text-danger">업로드 불가능`}</div>`;
             ul += `${file.name}</div>`;
             ul += `<span class="badge rounded-pill text-bg-${validResult? `primary`:`danger`}">${file.size}Byte</span>`;
             ul += `</li>`;
@@ -44,7 +44,7 @@ document.addEventListener(`change`, (e)=>{
         div.innerHTML = ul;
 
         if(isOK==0){
-            document.getElementById(`regBtn`).disabled = true;
+            document.getElementById(`btn`).disabled = true;
         }
     }
 })

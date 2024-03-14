@@ -29,11 +29,10 @@ public class FileSweeper {
 	private final FileMapper fileMapper;
 	private final MemberMapper memberMapper;
 	
-	//초 분 시 일 월 요일 년도(생략가능)
-		@Scheduled(cron="0 1 * * * *")
+		//초 분 시 일 월 요일 년도(생략가능)
+		@Scheduled(cron="0 0 23 * * *")
 		public void fileSweeper() {
-			log.info(">>> FileSweeper Running Start : >>>"+LocalDateTime.now());
-			
+			log.info(">>> FileSweeper Running Start >>> {}", LocalDateTime.now());
 			
 			//DB에 등록된 파일 목록 가져오기
 			List<FileVO> dbList = fileMapper.selectListAllFile();
@@ -48,7 +47,8 @@ public class FileSweeper {
 				//이미지라면 썸네일 경로도 추가
 				if(fvo.getFileType()>0) {
 					currFiles.add(BASE_PATH+filePath+"_th_"+fileName);
-					currFiles.add(BASE_PATH+filePath+"_product_"+fileName);
+					currFiles.add(BASE_PATH+filePath+"_main_"+fileName);
+					currFiles.add(BASE_PATH+filePath+"_minor_"+fileName);
 				}
 			}
 			
@@ -64,7 +64,6 @@ public class FileSweeper {
 			File dir = Paths.get(BASE_PATH+today).toFile();
 			File[] allFileObjects = dir.listFiles();
 			
-			
 			//실제 저장되어있는 파일과 DB에 존재하는 파일을 비교하여 없는 파일은 삭제 진행
 			for(File file : allFileObjects) {
 				String storedFileName = file.toPath().toString();
@@ -74,8 +73,7 @@ public class FileSweeper {
 				}
 			}
 			
-			log.info(">>> FileSweeper Running finish : >>>"+LocalDateTime.now());
-	
+			log.info(">>> FileSweeper Running Finish >>> {}", LocalDateTime.now());
 		}
 		
 		public void fileSweeperProfile(String nick) {

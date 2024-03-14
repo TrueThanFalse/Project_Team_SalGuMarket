@@ -16,5 +16,6 @@ import lombok.ToString;
 public class ProductDTO {
 
 	private ProductVO pvo;
-	private List<FileVO> flist;
+	private List<FileVO> flist1;
+	private List<FileVO> flist2;
 }

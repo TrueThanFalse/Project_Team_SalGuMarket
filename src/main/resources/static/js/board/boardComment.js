@@ -17,7 +17,7 @@ document.getElementById('cmtPostBtn').addEventListener('click',()=>{
         console.log(cmtData);
         postCommentToServer(cmtData).then(result=>{
              if(result==`1`){
-                alert(`댓글 등록 성공`);
+                alert(`댓글이 등록되었습니다.`);
                 cmtText.value=``;
             }
             //화면에 뿌리기
@@ -109,7 +109,7 @@ document.addEventListener(`click`,(e)=>{
 		};
 		editCommentToServer(cmtDataMod).then(result=>{
 			if(result===`1`){
-				alert(`수정완료`);
+				alert(`댓글이 수정되었습니다.`);
 				//모달창 닫기
 				spreadCommentList(bnoVal);
 				document.querySelector(`.btn-close`).click();
@@ -121,7 +121,7 @@ document.addEventListener(`click`,(e)=>{
 		let cno = li.dataset.cno;
 		removeCommentFromServer(cno).then(result=>{
 			if(result===`1`){
-				alert(`삭제완료`);
+				alert(`댓글이 삭제되었습니다.`);
 				spreadCommentList(bnoVal);
 			}
 		})

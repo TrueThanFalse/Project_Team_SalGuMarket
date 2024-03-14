@@ -17,7 +17,7 @@
 		insert into notice(title,content) value(#{title},#{content})
 	</insert>
 	
-	<select id="selectOne" resultType="com.SalGuMarket.www.domain.NoticeBoardDTO">
+	<select id="selectOne" resultType="com.SalGuMarket.www.domain.NoticeBoardVO">
 		select * from notice where no_bno=#{noBno}
 	</select>
 	
@@ -25,7 +25,7 @@
 		select max(no_bno) from notice
 	</select>
 	
-	  <update id="edit">
+	<update id="edit">
   		update notice set title=#{title}, content=#{content}, reg_at=now() where no_bno=#{noBno}
   	</update>
   	

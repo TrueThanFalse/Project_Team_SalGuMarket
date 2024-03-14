@@ -29,7 +29,7 @@
 							<th:block th:each="bvo:${list}">
 								<tr>
 									<th scope="row"><a th:href="@{/board/boardDetail(bno=${bvo.bno})}">[[${bvo.bno}]]</a></th>
-								    <td><a th:href="@{/board/boardDetail(bno=${bvo.bno})}">[[${bvo.title}]] </a><span class="badge">${cvo.}</span></td>
+								    <td><a th:href="@{/board/boardDetail(bno=${bvo.bno})}">[[${bvo.title}]] </a><span class="badge">[[${bvo.cmtCount}]]</span></td>
 								    <td>[[${bvo.nickName}]]</td>
 									<td>[[${bvo.regAt}]]</td>
 								    <td>[[${bvo.readCount}]]</td>
@@ -45,7 +45,7 @@
     <!-- Featured Section End -->
         
     <!-- Pagination Section Begin-->
-        <section class="pagenation">
+    <section class="pagenation">
        <div class="container">
           <div class="d-grid gap-2 d-md-flex justify-content-md-end">
            <a href="/board/boardRegister"><button class="btn" type="button">작성</button></a>

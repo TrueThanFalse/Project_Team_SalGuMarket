@@ -19,7 +19,6 @@
   		insert into auth_member values (#{email}, 'ROLE_USER')
   	</insert>
   	
-  	
   	<!-- 민지 -->
   	<select id="getList" resultType="com.SalGuMarket.www.security.MemberVO">
   		select * from member <include refid="search"></include> limit #{pageStart}, #{qty}
@@ -64,6 +63,7 @@
   	<update id="updatePWD">
   		update member set pwd = #{pwd} where email = #{email}
   	</update>
+  	
   	<select id="selectEmailTotalCount" resultType="int">
   		select count(bno) from board where email = #{email}
 	</select>

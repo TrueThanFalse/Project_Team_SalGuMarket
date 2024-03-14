@@ -28,4 +28,6 @@ public interface FileMapper {
 	List<FileVO> selectProfile(String email);
 
 	List<FileVO> getHelpFileList(long hbno);
+
+	List<FileVO> getNoticeFileList(long noBno);
 }

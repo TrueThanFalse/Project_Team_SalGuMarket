@@ -53,7 +53,6 @@
   		select * from member where nick_name=#{nickName}
   	</select>
   	
-
   	<select id="check" resultType="com.SalGuMarket.www.security.MemberVO">
   		select * from member where name=#{name} and reg_email = #{regEmail}
   	</select>
@@ -73,7 +72,6 @@
 	<select id="getBoardList" resultType="com.SalGuMarket.www.domain.BoardVO">
 		select * from board where email=#{email} order by bno desc limit #{pgvo.pageStart}, #{pgvo.qty}
 	</select>
-
 	
 	<sql id="search">
 		<if test="type!=null">

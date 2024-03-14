@@ -56,7 +56,7 @@ public class NoticeBoardController {
 	 }
 	 noticeBoardService.register(new NoticeBoardDTO(nbvo,flist));
 	 long noBno=noticeBoardService.getNoBno();
-	 return "redirect:/noticeBoard/noticeBoardDetail?noBno="+noBno;
+	 return "redirect:/notice/noticeDetail?noBno="+noBno;
 	}
 
 	@GetMapping({"/noticeDetail","/noticeModify"})
@@ -66,7 +66,7 @@ public class NoticeBoardController {
 	}
 
 
-	@GetMapping("/noticeModify")
+	@PostMapping("/noticeModify")
 	public String modify(NoticeBoardVO nbvo, @RequestParam(name="files", required = false)MultipartFile[] files) {
 		List<FileVO> flist = null;
 		if(files[0].getSize()>0||files != null) {
@@ -74,12 +74,12 @@ public class NoticeBoardController {
 		}
 		noticeBoardService.modify(new NoticeBoardDTO(nbvo,flist));
 		long noBno=noticeBoardService.getNoBno();
-		return "redirect:/notice/detail?bno="+nbvo.getNoBno();
+		return "redirect:/notice/noticeDetail?noBno="+nbvo.getNoBno();
 	}
 	
-	@GetMapping("/remove")
+	@GetMapping("/noticeRemove")
 	public String remove(@RequestParam("noBno") long noBno) {
 		int isOK = noticeBoardService.remove(noBno);
-		return "redirect:/noticeBoard/list";
+		return "redirect:/notice/noticeList";
 	}
 }

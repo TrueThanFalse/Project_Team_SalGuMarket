@@ -13,15 +13,24 @@
 	  	select count(h_bno) from help_board
   	</select>
   	
+	<insert id="insert">
+  		insert into help_board(title,email,content) values(#{title}, #{email}, #{content})
+  	</insert>
+  	
   	<select id="selectOne" resultType="com.SalGuMarket.www.domain.HelpBoardVO">
   		select * from help_board where h_bno=#{hbno}
   	</select>
   	
-  	<select id="gethBno" resultType="long">
+  	<select id="getHbno" resultType="long">
 		select max(h_bno) from help_board
 	</select>
 	
-	<insert id="insert">
-  		insert into help_board(title,email,nick_name,content) values(#{title}, #{email},#{nickName}, #{content})
-  	</insert>
+	<update id="edit">
+  		update help_board set title=#{title}, content=#{content}, reg_at=now() where h_bno=#{hbno}
+  	</update>
+  	
+  	<delete id="remove">
+  		delete from help_board where h_bno=#{hbno}
+  	</delete>
+	
 </mapper>

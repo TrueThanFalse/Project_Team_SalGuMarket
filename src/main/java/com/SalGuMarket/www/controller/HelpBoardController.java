@@ -1,5 +1,6 @@
 package com.SalGuMarket.www.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,9 @@ import com.SalGuMarket.www.domain.HelpBoardVO;
 import com.SalGuMarket.www.domain.PagingVO;
 import com.SalGuMarket.www.handler.FileHandler;
 import com.SalGuMarket.www.handler.PagingHandler;
+import com.SalGuMarket.www.security.MemberVO;
 import com.SalGuMarket.www.service.HelpBoardService;
+import com.SalGuMarket.www.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,11 +32,20 @@ public class HelpBoardController {
 	
 	//1:1 문의 게시판 컨트롤러
 	private final HelpBoardService helpBoardService;
+	private final MemberService memberService;
 	
 	private final FileHandler fileHandler;
 	
 	@GetMapping("/helpRegister")
-	public void helpRegister() {}
+	public void helpRegister(Principal p, Model m) {
+		if(p != null) {
+			MemberVO mvo = memberService.selectEmail(p.getName());
+			m.addAttribute("loginmvo", mvo);
+		}else {
+			MemberVO mvo = new MemberVO();
+			m.addAttribute("loginmvo", mvo);
+		}
+	}
 	
 	@PostMapping("/helpRegister")
 	public String boardRegister(HelpBoardVO hbvo,@RequestParam(name="files", required=false)MultipartFile[] files) {
@@ -42,8 +54,8 @@ public class HelpBoardController {
 			flist=fileHandler.uploadFile(files);
 		}
 		helpBoardService.helpBoardRegister(new HelpBoardDTO(hbvo,flist));
-		long hbno=helpBoardService.getHBno();
-		return "redirect:/board/boardDetail?bno="+hbno;
+		long hbno=helpBoardService.getHbno();
+		return "redirect:/help/helpDetail?hbno="+hbno;
 	}
 	
 	@GetMapping("/helpList")
@@ -55,10 +67,27 @@ public class HelpBoardController {
 		m.addAttribute("ph",ph);
 	}
 	
-	@GetMapping("/helpDetail")
+	@GetMapping({"/helpDetail","/helpModify"})
 	public void helpDetail(@RequestParam("hbno") long hbno, Model m) {
 		HelpBoardDTO hbdto=helpBoardService.selectOne(hbno);
 		m.addAttribute("hbdto",hbdto);
+	}
+	
+	@PostMapping("/helpModify")
+	public String modify(HelpBoardVO hbvo, @RequestParam(name="files", required=false) MultipartFile[] files) {
+		List<FileVO> flist=null;
+		if(files[0].getSize()>0||files!=null) {
+			flist=fileHandler.uploadFile(files);
+		}
+		helpBoardService.modify(new HelpBoardDTO(hbvo,flist));
+		long hbno=helpBoardService.getHbno();
+		return "redirect:/help/helpDetail?hbno="+hbno;
+	}
+	
+	@GetMapping("/helpRemove")
+	public String remove(@RequestParam("hbno") long hbno) {
+		int isOk=helpBoardService.remove(hbno);
+		return "redirect:/help/helpList";
 	}
 	
 	

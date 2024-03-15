@@ -37,14 +37,19 @@ public class ProductController {
 	@GetMapping("/productDetail")
 	public String transferProductDetail(@RequestParam("pno") Long pno, Model model) {
 		ProductVO pvo = productService.getProductById(pno);
-		log.info(">>> pvo >>> {}", pvo);
-		FileVO MainImage = productService.getMainImageByPno(pno);
-		List<FileVO> MinorIamgeList = productService.getMinorIamgeListByPno(pno);
+		
+		FileVO mainImage = productService.getMainImageByPno(pno);
+		mainImage.setSaveDir(mainImage.getSaveDir().replace(File.separator, "/"));
+		
+		List<FileVO> minorIamgeList = productService.getMinorIamgeListByPno(pno);
+		for(FileVO file : minorIamgeList) {
+			file.setSaveDir(mainImage.getSaveDir().replace(File.separator, "/"));
+		}
 		
 		model.addAttribute("pvo", pvo);
-		model.addAttribute("MainImage", MainImage);
-		model.addAttribute("MinorIamgeList", MinorIamgeList);
-		return "/productDetail";
+		model.addAttribute("mainImage", mainImage);
+		model.addAttribute("minorIamgeList", minorIamgeList);
+		return "/product/productDetail";
 	}
 	
 	// ----------------------------------------------------------------------------------------

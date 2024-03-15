@@ -9,16 +9,14 @@ function spreadChatList(chatBno, page=1){
 				ul.innerHTML=``;
             }
             for(let chat of result){
-<<<<<<< HEAD
-                let li = `<li class="list-group-item">${chat.chatContent}<span style="float: right;">${chat.senderNick}</span></li>`;
-=======
+
                 let li = `<li class="chat ch1">
                 <div class="icon"><i class="fa-solid fa-user"></i></div>
                 <span style="float: right;">${chat.senderNick}</span>
                 <div class="textbox">${chat.chatContent}</div>
                 </li>
                 `;
->>>>>>> b08e4838753557e850a0e4122329d841157a8277
+
                 ul.innerHTML += li;
             }
         }else{
@@ -27,10 +25,7 @@ function spreadChatList(chatBno, page=1){
         }
     })
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> b08e4838753557e850a0e4122329d841157a8277
 async function getChatListFromServer(chatBno){
     try {
         const resp = await fetch("/chat/chatRoom/"+chatBno);
@@ -92,11 +87,8 @@ function sendMsg() {
 
 socket.onmessage = function (e) {
     console.log('WebSocket 메시지 수신:', e);
-<<<<<<< HEAD
-    let msgArea = document.querySelector('.msgArea');
-=======
+
     let msgArea = document.getElementById('msgArea');
->>>>>>> b08e4838753557e850a0e4122329d841157a8277
     
     try {
         let message = JSON.parse(e.data);

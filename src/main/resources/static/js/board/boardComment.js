@@ -79,7 +79,7 @@ function spreadCommentList(bno,page=1){
             console.log(moreBtn);
             if(result.pgvo.pageNo<result.endPage){
                 moreBtn.style.visibility=`visible`;
-                moreBtn.dataset.page=`page+1`;
+                moreBtn.dataset.page=page+1;
             }else{
                 moreBtn.style.visibility=`hidden`;
             }

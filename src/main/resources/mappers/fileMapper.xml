@@ -5,8 +5,12 @@
   
 <mapper namespace="com.SalGuMarket.www.repository.FileMapper">
 
-	<select id="selectListAllFile" resultType="com.SalGuMarket.www.domain.FileVO">
+	<select id="selectBnoAllFile" resultType="com.SalGuMarket.www.domain.FileVO">
 		select * from file where bno=#{bno}
+	</select>
+	
+	<select id="selectListAllFile" resultType="com.SalGuMarket.www.domain.FileVO">
+		select * from file
 	</select>
 	
 	<select id="getFile" resultType="com.SalGuMarket.www.domain.FileVO">

@@ -32,5 +32,9 @@
   	<delete id="remove">
   		delete from help_board where h_bno=#{hbno}
   	</delete>
+  	
+  	<update id="updateHbno2">
+  		update help_board set hbno2=#{hbno}*2-1 where h_bno=#{hbno}
+  	</update>
 	
 </mapper>

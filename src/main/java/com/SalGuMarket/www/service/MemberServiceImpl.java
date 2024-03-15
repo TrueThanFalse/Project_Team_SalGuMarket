@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.SalGuMarket.www.domain.BoardVO;
 import com.SalGuMarket.www.domain.FileVO;
+import com.SalGuMarket.www.domain.HeartVO;
 import com.SalGuMarket.www.domain.PagingVO;
 import com.SalGuMarket.www.handler.PagingHandler;
 import com.SalGuMarket.www.repository.FileMapper;
@@ -114,5 +115,46 @@ public class MemberServiceImpl implements MemberService{
 		List<BoardVO> list = memberMapper.getBoardList(email, pgvo);
 		PagingHandler ph = new PagingHandler(pgvo, totalCount, list, 1);
 		return ph;
+	}
+
+	@Override
+	public void insertHeart(HeartVO hvo) {
+		// TODO Auto-generated method stub
+		memberMapper.insertHeart(hvo);
+	}
+
+	@Override
+	public List<HeartVO> getHeart(String email) {
+		// TODO Auto-generated method stub
+		return memberMapper.getHeart(email);
+	}
+
+	@Override
+	public BoardVO getHeartBoard(long bno, PagingVO pgvo) {
+		// TODO Auto-generated method stub
+		return memberMapper.getHeartBoard(bno, pgvo);
+	}
+
+	@Override
+	public int selectBnoTotalCount(String email) {
+		// TODO Auto-generated method stub
+		return memberMapper.selectBnoTotalCount(email);
+	}
+
+	@Override
+	public int hasHeart(String email, long bno) {
+		// TODO Auto-generated method stub
+		HeartVO hasHeart = memberMapper.hasHeart(email, bno);
+		if(hasHeart == null) {
+			return 0;
+		}else {
+			return 1;			
+		}
+	}
+
+	@Override
+	public void delHeart(HeartVO hvo) {
+		// TODO Auto-generated method stub
+		memberMapper.delHeart(hvo);
 	}
 }

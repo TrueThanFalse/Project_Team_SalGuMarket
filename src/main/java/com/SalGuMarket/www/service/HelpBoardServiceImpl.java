@@ -55,6 +55,8 @@ public class HelpBoardServiceImpl implements HelpBoardService{
 				isOk *= fileMapper.insertFile(fvo);
 			}
 		}
+		long hbno = helpBoardMapper.getHbno();
+		helpBoardMapper.updateHbno2(hbno);
 	}
 
 	@Override

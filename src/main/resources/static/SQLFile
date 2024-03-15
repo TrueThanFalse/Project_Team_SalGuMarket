@@ -216,3 +216,8 @@ REFERENCES member(email);
 ALTER TABLE comment
 FOREIGN KEY (bno)
 REFERENCES board(bno);
+
+--------- heart Table-----------
+create table heart(
+email varchar(200),
+pno bigint);

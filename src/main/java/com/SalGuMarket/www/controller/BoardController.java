@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.SalGuMarket.www.domain.BoardDTO;
 import com.SalGuMarket.www.domain.BoardVO;
 import com.SalGuMarket.www.domain.FileVO;
+import com.SalGuMarket.www.domain.HeartVO;
 import com.SalGuMarket.www.domain.PagingVO;
 import com.SalGuMarket.www.handler.FileHandler;
 import com.SalGuMarket.www.handler.PagingHandler;
@@ -76,10 +77,11 @@ public class BoardController {
 	public void boardDetail(Principal p, @RequestParam("bno") long bno, Model m) {
 		BoardDTO bdto=boardService.selectOne(bno);
 		m.addAttribute("bdto",bdto);
-		
 		if(p != null) {
 			MemberVO mvo = memberService.selectEmail(p.getName());
 			m.addAttribute("loginmvo", mvo);
+			int hasHeart = memberService.hasHeart(p.getName(), bno);
+			m.addAttribute("hasHeart", hasHeart);
 		}else {
 			MemberVO mvo = new MemberVO();
 			m.addAttribute("loginmvo", mvo);

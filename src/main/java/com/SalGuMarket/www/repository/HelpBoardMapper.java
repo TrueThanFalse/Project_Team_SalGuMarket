@@ -24,4 +24,6 @@ public interface HelpBoardMapper {
 
 	int remove(long hbno);
 
+	void updateHbno2(long hbno);
+
 }

@@ -72,6 +72,31 @@
 		select * from board where email=#{email} order by bno desc limit #{pgvo.pageStart}, #{pgvo.qty}
 	</select>
 	
+	<select id="getHeart" resultType="com.SalGuMarket.www.domain.HeartVO">
+		select * from heart where email=#{email}
+	</select>
+	
+	<insert id="insertHeart">
+  		insert into heart(email, bno)
+  		values (#{email}, #{bno})
+  	</insert>
+	
+	<select id="getHeartBoard" resultType="com.SalGuMarket.www.domain.BoardVO">
+		select * from board where bno=#{bno} order by bno desc limit #{pgvo.pageStart}, #{pgvo.qty}
+	</select>
+	
+	<select id="selectBnoTotalCount" resultType="int">
+  		select count(bno) from heart where email = #{email}
+	</select>
+	
+	<select id="hasHeart" resultType="com.SalGuMarket.www.domain.HeartVO">
+  		select * from heart where email = #{email} and bno = #{bno}
+	</select>
+	
+	<delete id="delHeart">
+		delete from heart where email = #{email} and bno = #{bno}
+	</delete>
+	
 	<sql id="search">
 		<if test="type!=null">
 			<trim prefix="order by" prefixOverrides="or">

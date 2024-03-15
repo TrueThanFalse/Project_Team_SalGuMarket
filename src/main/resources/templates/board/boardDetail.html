@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:replace="~{/layout :: setFragment(~{this::content})}">
 <th:block th:fragment="content">
 <link rel="stylesheet" type="text/css" href="/css/board.css">
@@ -64,6 +65,16 @@
     <!-- Pagination Section Begin-->
     <section class="button-area">
 	    <div class="container">
+	    <form th:if="${hasHeart == 0}" action="/member/heart" method="post">
+	    	<input type="hidden" name="email" id="heartEmail" th:value="${loginmvo.email}">
+	    	<input type="hidden" name="bno" id="heartBno" th:value="${bdto.bvo.bno}">
+	    	<button sec:authorize="isAuthenticated()" class="heart btn" type="submit">♡</button>
+	    </form>
+	    <form th:if="${hasHeart == 1}" action="/member/delHeart" method="post">
+	    	<input type="hidden" name="email" id="heartEmail" th:value="${loginmvo.email}">
+	    	<input type="hidden" name="bno" id="heartBno" th:value="${bdto.bvo.bno}">
+	    	<button sec:authorize="isAuthenticated()" class="heart btn" type="submit">♥</button>
+	    </form>
 		    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 			  <a href="/board/boardList"><button class="btn listBtn" type="button">목록</button></a>
 			  <div th:if="${loginmvo!=null}">

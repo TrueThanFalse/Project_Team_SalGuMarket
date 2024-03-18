@@ -20,6 +20,7 @@ import com.SalGuMarket.www.domain.ProductDTO;
 import com.SalGuMarket.www.domain.ProductVO;
 import com.SalGuMarket.www.handler.FileHandler;
 import com.SalGuMarket.www.security.AuthMember;
+import com.SalGuMarket.www.security.MemberVO;
 import com.SalGuMarket.www.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
@@ -69,6 +70,9 @@ public class ProductController {
 		}
 		String SellerEmail = authentication.getName();
 		pvo.setSellerEmail(SellerEmail);
+		MemberVO mvo = productService.getSellerNickName(SellerEmail);
+		pvo.setSellerNickName(SellerNickName);
+		
 		
 		List<FileVO> flistMain = null;
 		if(fileMain[0].getSize() > 0 || fileMain != null) {

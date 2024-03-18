@@ -10,7 +10,9 @@ import com.SalGuMarket.www.domain.PagingVO;
 import com.SalGuMarket.www.domain.ProductDTO;
 import com.SalGuMarket.www.domain.ProductVO;
 import com.SalGuMarket.www.repository.FileMapper;
+import com.SalGuMarket.www.repository.MemberMapper;
 import com.SalGuMarket.www.repository.ProductMapper;
+import com.SalGuMarket.www.security.MemberVO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +24,7 @@ public class ProductServiceImpl implements ProductService{
 
 	private final ProductMapper productMapper;
 	private final FileMapper fileMapper;
+	private final MemberMapper memberMapper;
 
 	@Override
 	public ProductVO getProductById(Long pno) {
@@ -81,5 +84,10 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public List<FileVO> getMinorIamgeListByPno(Long pno) {
 		return fileMapper.getMinorIamgeListByPno(pno);
+	}
+
+	@Override
+	public String getSellerNickName(String sellerEmail) {
+		return memberMapper.selectEmail(sellerEmail);
 	}
 }

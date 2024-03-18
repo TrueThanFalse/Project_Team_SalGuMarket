@@ -6,6 +6,7 @@ import com.SalGuMarket.www.domain.FileVO;
 import com.SalGuMarket.www.domain.PagingVO;
 import com.SalGuMarket.www.domain.ProductDTO;
 import com.SalGuMarket.www.domain.ProductVO;
+import com.SalGuMarket.www.security.MemberVO;
 
 public interface ProductService {
 
@@ -24,5 +25,7 @@ public interface ProductService {
 	FileVO getMainImageByPno(Long pno);
 
 	List<FileVO> getMinorIamgeListByPno(Long pno);
+
+	String getSellerNickName(String sellerEmail);
 
 }

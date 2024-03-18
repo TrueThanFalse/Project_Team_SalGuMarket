@@ -4,6 +4,7 @@
 <th:block th:fragment="content">
 	
 	<link rel="stylesheet" href="/css/layout.css" type="text/css" >
+	<link rel="stylesheet" href="/css/index.css" type="text/css" >
     <!-- Hero Section Begin -->
     <section class="hero">
         <div class="container">
@@ -30,11 +31,10 @@
                     <div class="hero__search">
                     	<!-- 검색창 -->
                         <div class="hero__search__form">
-                            <form action="/">
+                            <form th:action="@{/}" method="get">
 	                            <select name="type" class="form-select" aria-label="Default select example">
-								  <option th:selected="${ph.pgvo.type} == null ? true : false">Choose...</option>
-								  <option th:value="t" th:selected="${ph.pgvo.type} == 't' ? true : false">제목</option>
-								  <option th:value="w" th:selected="${ph.pgvo.type} == 'w' ? true : false">작성자</option>
+								  <option th:value="t" th:selected="${ph.pgvo.type == null || ph.pgvo.type == 't'}">제목</option>
+								  <option th:value="w" th:selected="${ph.pgvo.type == 'w'}">작성자</option>
 								</select>
                                 <input type="text" name="keyword" th:value="${ph.pgvo.keyword}" placeholder="What do you need?">
                                 <input type="hidden" name="pageNo" th:value="1">
@@ -121,16 +121,16 @@
 			    <ul class="pagination justify-content-center">
 				    <!-- 이전페이지 -->
 				    <li class="page-item " th:if="${ph.prev}">
-				    	<a class="page-link" th:href="@{/(pageNo=${ph.startPage-1},qty=${ph.pgvo.qty},type=${ph.pgvo.type},keyword=${ph.pgvo.keword})}" aria-label="Previous">&lt;&lt;</a>
+				    	<a class="page-link" th:href="@{/(pageNo=${ph.startPage-1},qty=${ph.pgvo.qty},type=${ph.pgvo.type},keyword=${ph.pgvo.keyword})}" aria-label="Previous">&lt;&lt;</a>
 				    </li>
 				            
 				    <li class="page-item ${ph.pgvo.pageNo == i ? 'active':''}" th:each="i:${#numbers.sequence(ph.startPage,ph.endPage)}" aria-current="page">
-				    	<a class="page-link" th:href="@{/(pageNo=${i},qty=${ph.pgvo.qty},type=${ph.pgvo.type},keyword=${ph.pgvo.keword})}">[[${i}]]</a>
+				    	<a class="page-link" th:href="@{/(pageNo=${i},qty=${ph.pgvo.qty},type=${ph.pgvo.type},keyword=${ph.pgvo.keyword})}">[[${i}]]</a>
 				    </li>
 				             
 				    <!-- 다음페이지 -->
 				    <li class="page-item" th:if="${ph.next}">
-				    	<a class="page-link" th:href="@{/(pageNo=${ph.endPage+1},qty=${ph.pgvo.qty},type=${ph.pgvo.type},keyword=${ph.pgvo.keword})}" aria-label="Next">&gt;&gt;</a>
+				    	<a class="page-link" th:href="@{/(pageNo=${ph.endPage+1},qty=${ph.pgvo.qty},type=${ph.pgvo.type},keyword=${ph.pgvo.keyword})}" aria-label="Next">&gt;&gt;</a>
 				    </li>
 			    </ul>
 		    </nav>

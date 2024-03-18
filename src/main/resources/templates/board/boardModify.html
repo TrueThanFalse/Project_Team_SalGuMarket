@@ -13,13 +13,9 @@
 				  <span class="input-group-text" id="basic-addon1">제목</span>
 				  <input type="text" class="form-control" name="title" aria-label="Username" aria-describedby="basic-addon1" th:value=${bdto.bvo.title}>
 				</div>
-				<div class="input-group mb-3">
-				  <span class="input-group-text" id="basic-addon1">작성자</span>
-				  <input type="text" name="email" class="form-control" aria-label="Username" aria-describedby="basic-addon1" th:value=${bdto.bvo.email}>
-				</div>
-				<div class="input-group mb-3">
-				  <span class="input-group-text" id="basic-addon1">닉네임</span>
-				  <input type="text" name="nickName" class="form-control" aria-label="Username" aria-describedby="basic-addon1" th:value=${bdto.bvo.nickName}>
+				<div>
+				  <input type="hidden" name="email" class="form-control" aria-label="Username" aria-describedby="basic-addon1" th:value=${bdto.bvo.email}>
+				  <input type="hidden" name="nickName" class="form-control" aria-label="Username" aria-describedby="basic-addon1" th:value=${bdto.bvo.nickName}>
 				</div>
 				<div class="input-group">
 				  <span class="input-group-text">내용</span>

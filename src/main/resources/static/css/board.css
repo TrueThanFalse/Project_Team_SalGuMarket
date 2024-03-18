@@ -38,7 +38,7 @@ body {
 	font-family: "Do Hyeon", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	font-smoothing: antialiased;
-	font-weight: 300;
+	/* font-weight: 300; */
 }
 
 h1,
@@ -675,13 +675,16 @@ a{
 
 .moreBtn{
 	background-color: #ffffff;
-	border: none;
-	/* width: 10%; */
+	border: 1px solid #ffffff;
+	width: 100%;
 	margin: 0 auto;
+	text-align: center;
+	color: #495057;
 }
 
 .moreBtn:hover{
-	border: 10px solid #000000;
+	border: 1px solid rgba(0, 0, 0, .125);
+	border-radius: 3px;)
 }
 
 .cmtModBtn, .cmtDelBtn{

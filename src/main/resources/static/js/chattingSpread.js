@@ -9,11 +9,20 @@ function spreadChatList(chatBno, page=1){
 				ul.innerHTML=``;
             }
             for(let chat of result){
-                let li = `<li class="chat ch1">
-                <div class="icon"><i class="fa-solid fa-user"></i></div>
-                <span style="float: right;">${chat.senderNick}</span>
-                <div class="textbox">${chat.chatContent}</div>
-                </li>
+				const regAt = new Date(chat.regAt);
+                const hour = regAt.getHours().toString().padStart(2, '0');
+                const minute = regAt.getMinutes().toString().padStart(2, '0');
+                let li = `
+                <div class="you1">
+                <br>
+                <img class="chat-img" src="/" />
+	                <div class="you">
+	                    <div class="chat-name">${chat.senderNick}</div>
+	                    <div class="chat-Content">${chat.chatContent}</div>
+	                    <div class="you-time">${hour}:${minute}</div>
+	                </div>   
+	                <br> 
+            	</div>
                 `;
                 ul.innerHTML += li;
             }
@@ -23,6 +32,29 @@ function spreadChatList(chatBno, page=1){
         }
     })
 }
+
+/*
+            <div class="you1">
+                <img class="chat-img" src="/" />
+                <div class="you">
+                    <div class="chat-name">내 친구 / ${chat.senderNick}</div>
+                    밥 머것냐? / ${chat.chatContent}
+                    <div class="you-time">오후 3:40</div>
+                </div>
+            </div>
+            <div class="me1">
+                <div class="me">
+                    ㅇㅇ
+                    <div class="me-time">오후 3:40</div>
+                </div>
+                <br>
+                <div class="me">
+                    너는?
+                    <div class="me-time">오후 3:41</div>
+                </div>
+                <br>
+            </div>
+*/
 
 async function getChatListFromServer(chatBno){
     try {
@@ -37,12 +69,14 @@ async function getChatListFromServer(chatBno){
 console.log('ChatRoom JavaScript Insert');
 //임시로 값 넣어주기
 let userEmail = "tester@naver.com";
+let userNick = "유저닉네임";
 
 function enterRoom(socket) {
     let enterMsg = {
         type: "ENTER",
         chatBno: chatBno,
-        senderNick: userEmail,
+        senderEmail: userEmail,
+        senderNick: userNick,
         chatContent: ""
     };
     socket.send(JSON.stringify(enterMsg));
@@ -53,7 +87,6 @@ function enterRoom(socket) {
 let socket = new WebSocket("ws://localhost:8088/ws/chat");
 console.log("socket");
 console.log(socket);
-
 socket.onopen = function (e) {
     console.log('서버에 연결되었습니다!');
     enterRoom(socket);
@@ -73,7 +106,8 @@ function sendMsg() {
     let talkMsg = {
         type: "TALK",
         chatBno: chatBno,
-        senderNick: userEmail,
+        senderEmail: userEmail,
+        senderNick: userNick,
         chatContent: content
     };
     socket.send(JSON.stringify(talkMsg));
@@ -86,36 +120,50 @@ function sendMsg() {
 socket.onmessage = function (e) {
     console.log('WebSocket 메시지 수신:', e);
 
-    let msgArea = document.getElementById('msgArea');
-    
+    let ul = document.getElementById('msgArea'); // 변경된 요소에 대한 참조를 가져옵니다.
+
     try {
         let message = JSON.parse(e.data);
         console.log('파싱된 메시지:', message);
 
-        //클라이언트에서 서버로부터 수신한 메시지 확인용
-        console.log('Received message from server:', message);
+        let chat = {}; // chat 객체를 생성 새로운 메시지 정보를 저장
+        let d = new Date(); // 현재 시간
+        let hour = d.getHours();
+        let minute = d.getMinutes();
 
         if (message.type === 'ENTER' || message.type === 'QUIT') {
-            let newMsg = document.createElement('div');
-            console.log(message);
-            newMsg.innerText = message.chatContent; // 간소화된 메시지 표시
-            msgArea.append(newMsg);
+            chat.senderNick = ''; // 채팅 닉네임
+            chat.chatContent = message.chatContent; // 채팅 내용
         } else if (message.type === 'TALK') {
-            let newMsg = document.createElement('div');
-            console.log(message);
-            newMsg.innerText = message.senderNick + ': ' + message.chatContent;
-            msgArea.append(newMsg);
+            chat.senderNick = message.senderNick; // 채팅 발신자의 닉네임
+            chat.chatContent = message.chatContent; // 채팅 내용
         }
+
+        let li = `
+            <div class="you1">
+                <br>
+                <img class="chat-img" src="/" />
+                <div class="you">
+                    ${chat.chatContent}
+                    <div class="you-time">${hour}:${minute}</div>
+                </div>   
+                <br> 
+            </div>
+        `;
+        ul.innerHTML += li; // 새로운 채팅 메시지를 목록에 추가합니다.
+
     } catch (error) {
         console.error('WebSocket 메시지 처리 중 오류 발생:', error);
     }
 };
 
+
 function quit() {
     let quitMsg = {
         type: "QUIT",
         chatBno: chatBno,
-        senderNick: userEmail,
+        senderEmail: userEmail,
+        senderNick: userNick,
         chatContent: ""
     };
     socket.send(JSON.stringify(quitMsg));

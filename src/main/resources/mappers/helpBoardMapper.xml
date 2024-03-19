@@ -34,15 +34,15 @@
   	</delete>
   	
   	<update id="updateHbno2">
-  		update help_board set hbno2=#{hbno}*2-1 where h_bno=#{hbno}
+  		update help_board set hbno2=#{hbno}*2 where h_bno=#{hbno}
   	</update>
 
   	<update id="setHbno2">
-  		update help_board set hbno2=#{hbno}+#{hbno}-1 where h_bno=#{hbno}
+  		update help_board set hbno2=#{hbno}+#{hbno} where h_bno=#{hbno}
   	</update>
   	
   	<insert id="answer">
-  		insert into help_board(title,email,content,hbno2) values(#{hbvo.title}, #{hbvo.email}, #{hbvo.content}, #{hbno}*2)
+  		insert into help_board(title,email,content,hbno2) values(#{hbvo.title}, #{hbvo.email}, #{hbvo.content}, #{hbno}*2-1)
   	</insert>
 	
 </mapper>

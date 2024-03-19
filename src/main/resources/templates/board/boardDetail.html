@@ -42,6 +42,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		  <input type="text" id="cmtText" class="form-control" placeholder="댓글 내용을 입력해주세요." aria-label="Recipient's username" aria-describedby="button-addon2">
 		  <input type="hidden" id="cmtNickName" th:value="${loginmvo.nickName}">
 		  <input type="hidden" id="cmtEmail" th:value="${loginmvo.email}">
+		  <input type="hidden" id="cmtIsProfile" th:value="${loginmvo.isProfile}">
+		  <input th:if="${fvo!=null}" type="hidden" id="cmtProfileImage" th:value="${fvo.fileName}">
 		  <button class="btn" id="cmtPostBtn" type="button">등록</button>
 		</div>
     </div>

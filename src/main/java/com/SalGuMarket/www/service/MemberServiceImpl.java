@@ -10,6 +10,7 @@ import com.SalGuMarket.www.domain.FileVO;
 import com.SalGuMarket.www.domain.HeartVO;
 import com.SalGuMarket.www.domain.PagingVO;
 import com.SalGuMarket.www.handler.PagingHandler;
+import com.SalGuMarket.www.repository.CommentMapper;
 import com.SalGuMarket.www.repository.FileMapper;
 import com.SalGuMarket.www.repository.MemberMapper;
 import com.SalGuMarket.www.security.MemberVO;
@@ -24,6 +25,7 @@ public class MemberServiceImpl implements MemberService{
 
 	private final MemberMapper memberMapper;
 	private final FileMapper fileMapper;
+	private final CommentMapper commentMapper;
 
 	@Override
 	public int insert(MemberVO mvo) {
@@ -66,11 +68,14 @@ public class MemberServiceImpl implements MemberService{
 			fvo.setEmail(email);
 			fileMapper.deleteFile(mvo.getEmail());
 			fileMapper.insertProfile(fvo);
+			commentMapper.updateProfile(mvo.getEmail(), fvo.getFileName());
+			commentMapper.yesProfile(mvo.getEmail());
 			memberMapper.yesProfile(mvo.getEmail());
 		}else {
 			//프사 미선택 삭제
 			fileMapper.deleteFile(mvo.getEmail());
 			memberMapper.noProfile(mvo.getEmail());
+			commentMapper.noProfile(mvo.getEmail());
 		}
 		int profile = memberMapper.getIsProfile(email);
 		mvo.setIsProfile(profile);

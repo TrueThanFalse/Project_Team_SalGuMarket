@@ -80,6 +80,8 @@ public class BoardController {
 		if(p != null) {
 			MemberVO mvo = memberService.selectEmail(p.getName());
 			m.addAttribute("loginmvo", mvo);
+			FileVO fvo = memberService.getFile(p.getName());
+			m.addAttribute("fvo", fvo);
 			int hasHeart = memberService.hasHeart(p.getName(), bno);
 			m.addAttribute("hasHeart", hasHeart);
 		}else {

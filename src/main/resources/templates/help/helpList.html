@@ -26,12 +26,12 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 							<th:block th:each="hbvo:${list}">
 								<tr th:if="${hbvo.hbno2 % 2 == 1}">
 									<!-- <th scope="row"><a th:href="@{/help/helpDetail(hbno=${hbvo.hbno})}">[[${hbvo.hbno}]]</a></th> -->
-								    <td><a th:href="@{/help/helpDetail(hbno=${hbvo.hbno})}"><span><i class="bi bi-file-lock2-fill"></i></span>[[${hbvo.title}]]  </a><span class="badge text-bg-danger">답변완료</span></td>
+								    <td><a th:href="@{/help/helpDetail(hbno=${hbvo.hbno})}"><span><i class="bi bi-file-lock2-fill"></i></span>↳[[${hbvo.title}]]  </a><span class="badge text-bg-danger">답변완료</span></td>
 									<td>[[${hbvo.regAt}]]</td>
 								</tr>
 								<tr th:if="${hbvo.hbno2 % 2 == 0}">
 									<!-- <th scope="row"><a th:href="@{/help/helpDetail(hbno=${hbvo.hbno})}">[[${hbvo.hbno}]]</a></th> -->
-								    <td><a th:href="@{/help/helpDetail(hbno=${hbvo.hbno})}"><span><i class="bi bi-file-lock2-fill"></i></span>↱ [[${hbvo.title}]]  </a><span class="badge text-bg-danger">답변완료</span></td>
+								    <td><a th:href="@{/help/helpDetail(hbno=${hbvo.hbno})}"><span><i class="bi bi-file-lock2-fill"></i></span>[[${hbvo.title}]]  </a><span class="badge text-bg-danger">답변완료</span></td>
 									<td>[[${hbvo.regAt}]]</td>
 								</tr>
 							</th:block>

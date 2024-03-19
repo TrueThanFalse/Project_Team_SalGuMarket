@@ -56,7 +56,6 @@ function spreadChatList(chatBno, page=1){
             </div>
 */
 
-
 async function getChatListFromServer(chatBno){
     try {
         const resp = await fetch("/chat/chatRoom/"+chatBno);
@@ -120,6 +119,7 @@ function sendMsg() {
 
 socket.onmessage = function (e) {
     console.log('WebSocket 메시지 수신:', e);
+
     let ul = document.getElementById('msgArea'); // 변경된 요소에 대한 참조를 가져옵니다.
 
     try {

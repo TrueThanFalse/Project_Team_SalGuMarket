@@ -2,7 +2,9 @@ package com.SalGuMarket.www.service;
 
 import java.util.List;
 
+import com.SalGuMarket.www.domain.BoardVO;
 import com.SalGuMarket.www.domain.FileVO;
+import com.SalGuMarket.www.domain.HeartVO;
 import com.SalGuMarket.www.domain.PagingVO;
 import com.SalGuMarket.www.handler.PagingHandler;
 import com.SalGuMarket.www.security.MemberVO;
@@ -35,6 +37,18 @@ public interface MemberService {
 	FileVO getFile(String email);
 
 	PagingHandler getBoardList(String email, PagingVO pgvo);
+
+	void insertHeart(HeartVO hvo);
+
+	List<HeartVO> getHeart(String email);
+
+	BoardVO getHeartBoard(long bno, PagingVO pgvo);
+
+	int selectBnoTotalCount(String email);
+
+	int hasHeart(String email, long bno);
+
+	void delHeart(HeartVO hvo);
 
 	
 }

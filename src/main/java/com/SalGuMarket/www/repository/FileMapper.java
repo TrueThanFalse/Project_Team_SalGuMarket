@@ -10,8 +10,6 @@ import com.SalGuMarket.www.domain.PagingVO;
 @Mapper
 public interface FileMapper {
 
-	List<FileVO> selectListAllFile(long bno);
-
 	int insertFile(FileVO fvo);
 
 	List<FileVO> getFileList(long bno);
@@ -39,4 +37,8 @@ public interface FileMapper {
 	List<FileVO> getHelpFileList(long hbno);
 
 	List<FileVO> getNoticeFileList(long noBno);
+
+	List<FileVO> selectListAllFile();
+
+	List<FileVO> selectBnoAllFile(long bno);
 }

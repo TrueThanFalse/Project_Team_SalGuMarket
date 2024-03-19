@@ -41,6 +41,7 @@
         <ul id="favoriteItems">
             <li class="favorite">찜 목록</li>
         </ul>
+        <!-- <button type="button" id="moreBtnH" data-page="1" class="btn btn-outline-secondary btn-block" style="visibility:hidden">more+</button> -->
     </section>
 
     <section id="myPosts">
@@ -57,8 +58,10 @@
 	</script>
 	<script src="/js/profile.js"></script>
 	<script src="/js/myPost.js"></script>
+	<script src="/js/heartList.js"></script>
 	<script th:inline="javascript">
 		spreadMyPostList(email);
+		spreadHeartList(email);
 	</script>
 
 </th:block>

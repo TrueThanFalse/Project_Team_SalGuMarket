@@ -1,36 +1,33 @@
 package com.SalGuMarket.www.controller;
 
-import java.io.IOException;
 import java.security.Principal;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.SalGuMarket.www.domain.BoardVO;
 import com.SalGuMarket.www.domain.FileVO;
+import com.SalGuMarket.www.domain.HeartVO;
 import com.SalGuMarket.www.domain.PagingVO;
 import com.SalGuMarket.www.handler.FileHandler;
 import com.SalGuMarket.www.handler.PagingHandler;
 import com.SalGuMarket.www.security.MemberVO;
+import com.SalGuMarket.www.service.BoardService;
 import com.SalGuMarket.www.service.MailService;
 import com.SalGuMarket.www.service.MemberService;
 
@@ -47,6 +44,7 @@ public class MemberController {
 
 	private final MemberService memberService;
 	private final MailService mailService;
+	private final BoardService boardService;
 
 	private final PasswordEncoder passwordEncoder;
 	private final FileHandler fileHandler;
@@ -111,6 +109,36 @@ public class MemberController {
 		m.addAttribute("mvo", mvo);
 		return "redirect:/member/mypage";
 	}
+	
+	@PostMapping("/heart")
+	public String heart(HeartVO hvo, Principal p, Model m) {
+		memberService.insertHeart(hvo);
+		
+		if(p != null) {
+			MemberVO mvo = memberService.selectEmail(p.getName());
+			m.addAttribute("loginmvo", mvo);
+			//List<HeartVO> isdel = memberService.isdel(hvo.getBno(), p.getName());
+		}else {
+			MemberVO mvo = new MemberVO();
+			m.addAttribute("loginmvo", mvo);
+		}
+		return "redirect:/board/boardDetail?bno="+hvo.getBno();
+	}
+	
+	@PostMapping("/delHeart")
+	public String delHeart(HeartVO hvo, Principal p, Model m) {
+		memberService.delHeart(hvo);
+		
+		if(p != null) {
+			MemberVO mvo = memberService.selectEmail(p.getName());
+			m.addAttribute("loginmvo", mvo);
+			//List<HeartVO> isdel = memberService.isdel(hvo.getBno(), p.getName());
+		}else {
+			MemberVO mvo = new MemberVO();
+			m.addAttribute("loginmvo", mvo);
+		}
+		return "redirect:/board/boardDetail?bno="+hvo.getBno();
+	}
 
 	@GetMapping("/otherspage")
 	public void otherspage(@RequestParam(name="email", required = false) String email, Model m) {
@@ -129,6 +157,22 @@ public class MemberController {
 		//비동기 => 한 객제만 전송 가능
 		PagingVO pgvo = new PagingVO(page, 5);
 		PagingHandler ph = memberService.getBoardList(email, pgvo);
+		return ph;
+	}
+	
+	@GetMapping("/heart/{email}/{page}")
+	@ResponseBody
+	public PagingHandler HeartList(@PathVariable("email")String email, @PathVariable("page")int page) {
+		log.info(">>>> email >> " +email+"/ page >>" + page);
+		//비동기 => 한 객제만 전송 가능
+		List<HeartVO> list = memberService.getHeart(email);
+		List<BoardVO> blist = new ArrayList<>();
+		PagingVO pgvo = new PagingVO(page, 5);
+		for(HeartVO hvo : list) {
+			blist.add(memberService.getHeartBoard(hvo.getBno(), pgvo));
+		}
+		int totalCount = memberService.selectBnoTotalCount(email);
+		PagingHandler ph = new PagingHandler(pgvo, totalCount, blist, 1);
 		return ph;
 	}
 	

@@ -87,7 +87,6 @@ socket.onmessage = function (e) {
     console.log('WebSocket 메시지 수신:', e);
 
     let msgArea = document.getElementById('msgArea');
-
     
     try {
         let message = JSON.parse(e.data);

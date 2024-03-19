@@ -9,14 +9,12 @@ function spreadChatList(chatBno, page=1){
 				ul.innerHTML=``;
             }
             for(let chat of result){
-
                 let li = `<li class="chat ch1">
                 <div class="icon"><i class="fa-solid fa-user"></i></div>
                 <span style="float: right;">${chat.senderNick}</span>
                 <div class="textbox">${chat.chatContent}</div>
                 </li>
                 `;
-
                 ul.innerHTML += li;
             }
         }else{

@@ -9,7 +9,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import com.SalGuMarket.www.security.CustomUserService;
 import com.SalGuMarket.www.security.MemberVO;
@@ -41,6 +46,7 @@ public class SecurityConfig {
 						.usernameParameter("email")
 						.passwordParameter("pwd")
 						.loginPage("/member/login")
+						.failureUrl("/member/login?error=true") 
 						.defaultSuccessUrl("/").permitAll())
 				.logout(logout -> logout
 						.logoutUrl("/member/logout")
@@ -48,6 +54,8 @@ public class SecurityConfig {
 						.deleteCookies("JSESSIONID")
 						.logoutSuccessUrl("/")).build();
 	}
+
+
 	//AuthenticationManager 객체로 설정
 	@Bean
 	AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
@@ -59,5 +67,5 @@ public class SecurityConfig {
 	UserDetailsService userDetailsService() {
 		return new CustomUserService();
 	}
-
+	
 }

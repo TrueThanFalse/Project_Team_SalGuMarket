@@ -1,5 +1,5 @@
 console.log("boardComment js");
-
+moreBtn.style.visibility=`hidden`;
 
 document.getElementById('cmtPostBtn').addEventListener('click',()=>{
     const cmtText=document.getElementById('cmtText');
@@ -92,7 +92,7 @@ function spreadCommentList(bno,page=1){
                 moreBtn.style.visibility=`hidden`;
             }
         } else {
-            let li=`<ul class="list-group list-group-numbered">Comment List</ul>`;
+            let li=`<ul class="list-group list-group-numbered"></ul>`;
             ul.innerHTML = li;
         }
     })

@@ -44,6 +44,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 		  <input type="hidden" id="cmtEmail" th:value="${loginmvo.email}">
 		  <input type="hidden" id="cmtIsProfile" th:value="${loginmvo.isProfile}">
 		  <input th:if="${fvo!=null}" type="hidden" id="cmtProfileImage" th:value="${fvo.fileName}">
+		  <input th:if="${fvo==null}" type="hidden" id="cmtProfileImage" th:value="1">
 		  <button class="btn" id="cmtPostBtn" type="button">등록</button>
 		</div>
     </div>

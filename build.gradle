@@ -68,6 +68,7 @@ dependencies {
 	// 6. 이메일 인증 필요 라이브러리
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	
+	
 }
 tasks.named('test') {
 	useJUnitPlatform()

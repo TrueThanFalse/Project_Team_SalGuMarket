@@ -12,12 +12,13 @@
 				  <span class="input-group-text" id="basic-addon1">제목</span>
 				  <input type="text" name="title" class="form-control" placeholder="제목을 입력해주세요.">
 				</div>
-
-				<!-- 작성자 -->
-				<input th:if="${loginmvo!=null}" type="hidden" name="email" class="form-control" placeholder="제목을 입력해주세요." th:value="${loginmvo.email}">
-
-				<!-- 닉네임 -->
-				<input th:if="${loginmvo!=null}" type="hidden" name="nickName" class="form-control" placeholder="제목을 입력해주세요." th:value="${loginmvo.nickName}">
+				<div>
+				  <!-- 작성자 -->
+				  <input th:if="${loginmvo!=null}" type="hidden" name="email" class="form-control" placeholder="제목을 입력해주세요." th:value="${loginmvo.email}">
+                  
+				  <!-- 닉네임 -->
+				  <input th:if="${loginmvo!=null}" type="hidden" name="nickName" class="form-control" placeholder="제목을 입력해주세요." th:value="${loginmvo.nickName}">
+				</div>
 
 				<div class="input-group">
 				  <span class="input-group-text">내용</span>

@@ -12,7 +12,9 @@ document.getElementById('cmtPostBtn').addEventListener('click',()=>{
             bno:bnoVal,
             email:document.getElementById('cmtEmail').value,
             nickName:document.getElementById('cmtNickName').value,
-            content:cmtText.value
+            content:cmtText.value,
+            isProfile:document.getElementById('cmtIsProfile').value,
+            fileName:document.getElementById('cmtProfileImage').value
         };
         console.log(cmtData);
         postCommentToServer(cmtData).then(result=>{
@@ -63,7 +65,13 @@ function spreadCommentList(bno,page=1){
             }
             for(let cvo of result.cmtList){
                 let li=`<li class="list-group-item d-flex justify-content-between align-items-start" data-cno="${cvo.cno}" data-writer="${cvo.nickName}">`;
+                li += `<img src="">`;
                 li += `<div class="ms-2 me-auto">`;
+                if(cvo.isProfile == 0){
+                li += `<img id="profile-image-display" class="profile-image-display" alt="" src="/img/salgu_profile.png"><br>`;
+				}else{
+                li += `<img id="profile-image-display" class="profile-image-display myProfile" alt="" src="/upload/profile/${cvo.nickName}_${cvo.fileName}">`;				
+				}
                 li += `<div id="cmtWriter" class="fw-bold">${cvo.nickName}<span style="float: right;">${cvo.regAt}</span></div>`;
                 li += `${cvo.content}`;
                 li += `</div>`;

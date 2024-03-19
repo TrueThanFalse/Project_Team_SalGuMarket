@@ -14,6 +14,5 @@ import lombok.ToString;
 public class CommentVO {
 	
 	private int cno, bno, isProfile;
-	private String nickName,content,regAt,modAt,email, fileName;
-	
+	private String nickName,content,regAt,modAt,email,fileName;
 }

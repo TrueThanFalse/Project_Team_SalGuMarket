@@ -3183,3 +3183,10 @@ a{
 .cmtBtn{
 	float: right;
 }
+.heart{
+	background-color: white;
+	color: red;
+	border: 1px solid red;
+	font-size: 24px;
+	height: 46px;
+}

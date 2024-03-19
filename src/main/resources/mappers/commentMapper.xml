@@ -6,8 +6,8 @@
 <mapper namespace="com.SalGuMarket.www.repository.CommentMapper">
 
 	<insert id="insert">
-		insert into comment(nick_name,content,reg_at,mod_at,bno,email)
-		value(#{nickName},#{content},now(),#{modAt},#{bno},#{email})
+		insert into comment(nick_name,content,reg_at,mod_at,bno,email,is_profile,file_name)
+		value(#{nickName},#{content},now(),#{modAt},#{bno},#{email},#{isProfile},#{fileName})
 	</insert>
 	
 	<select id="selectOneBnoTotalCount" resultType="int">
@@ -25,4 +25,16 @@
 	<delete id="delete">
 		delete from comment where cno=#{cno}
 	</delete>
+	
+	<update id="updateProfile">
+		update comment set file_name=#{fileName} where email=#{email}
+	</update>
+	
+	<update id="yesProfile">
+		update comment set is_profile='1' where email=#{email}
+	</update>
+	
+	<update id="noProfile">
+		update comment set is_profile='0' where email=#{email}
+	</update>
 </mapper>

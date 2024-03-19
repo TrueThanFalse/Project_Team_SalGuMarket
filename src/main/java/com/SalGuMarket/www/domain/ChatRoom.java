@@ -35,6 +35,4 @@ public class ChatRoom {
 	private long pno;
 	private long price;
 	
-	private Set<WebSocketSession> sessions = new HashSet<>();
-
 }

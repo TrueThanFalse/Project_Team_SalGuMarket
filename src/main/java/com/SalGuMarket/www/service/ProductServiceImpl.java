@@ -87,7 +87,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public String getSellerNickName(String sellerEmail) {
+	public MemberVO getSellerNickName(String sellerEmail) {
 		return memberMapper.selectEmail(sellerEmail);
 	}
 }

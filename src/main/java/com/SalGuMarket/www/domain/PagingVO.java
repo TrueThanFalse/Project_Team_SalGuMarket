@@ -14,6 +14,7 @@ public class PagingVO {
 	
 	private String type;
 	private String keyword;
+	private String category;
 	
 	public PagingVO() {
 		this.pageNo = 1;

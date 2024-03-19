@@ -17,7 +17,7 @@ public class memberTest {
 	
 	@Test
 	void contextLoads() {
-		for(int i=0; i<300; i++) {			
+		for(int i=0; i<15; i++) {			
 			MemberVO mvo= MemberVO.builder().email("tester"+i)
 					.pwd("a"+i)
 					.nickName("a"+i)

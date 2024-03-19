@@ -21,7 +21,9 @@
 	<select id="getCategoriesSliderImageList10Image" resultType="com.SalGuMarket.www.domain.FileVO">
 		SELECT f.uuid, f.save_dir, f.file_name, f.pno FROM file f
 		JOIN product p ON f.pno = p.pno
-		WHERE f.main_image = 1 <include refid="search"></include>
+		WHERE f.main_image = 1
+		<if test="category != null">AND p.category = #{category}</if>
+		<include refid="search"></include>
 		ORDER BY p.pno DESC
 		LIMIT 10
 	</select>
@@ -29,7 +31,9 @@
 	<select id="get8MainImage" resultType="com.SalGuMarket.www.domain.FileVO">
 		SELECT f.uuid, f.save_dir, f.file_name, f.pno, p.price, p.title as product_title FROM file f
 		JOIN product p ON f.pno = p.pno
-		WHERE f.main_image = 1 <include refid="search"></include>
+		WHERE f.main_image = 1
+		<if test="category != null">AND p.category = #{category}</if>
+		<include refid="search"></include>
 		ORDER BY p.pno DESC
 		LIMIT #{pageStart}, #{qty}
 	</select>
@@ -77,14 +81,16 @@
 	<!-- 검색 동적 SQL 쿼리문 -->
 	<sql id="search">
 		<if test="type != null">
-			<choose>
-				<when test="type == 't'.toString()">
-					AND p.title LIKE CONCAT('%', #{keyword}, '%')
-				</when>
-				<when test="type == 'w'.toString()">
-					AND p.seller_nick_name LIKE CONCAT('%', #{keyword}, '%')
-				</when>
-			</choose>
+			<foreach collection="typeToArray" item="type">
+				<choose>
+					<when test="type == 't'.toString()">
+						AND p.title LIKE CONCAT('%', #{keyword}, '%')
+					</when>
+					<when test="type == 'w'.toString()">
+						AND p.seller_nick_name LIKE CONCAT('%', #{keyword}, '%')
+					</when>
+				</choose>
+			</foreach>
 		</if>
 	</sql>
 

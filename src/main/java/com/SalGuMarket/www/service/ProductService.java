@@ -26,6 +26,6 @@ public interface ProductService {
 
 	List<FileVO> getMinorIamgeListByPno(Long pno);
 
-	String getSellerNickName(String sellerEmail);
+	MemberVO getSellerNickName(String sellerEmail);
 
 }

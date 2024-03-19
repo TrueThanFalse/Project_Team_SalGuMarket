@@ -62,17 +62,17 @@ public class ProductController {
 	public String saveProduct(ProductVO pvo, RedirectAttributes re, Authentication authentication,
 			@RequestParam(name="files1", required = false) MultipartFile[] fileMain,
 			@RequestParam(name="files2", required = false) MultipartFile[] filesMinor) {
-		log.info(">>> pvo >>> {}", pvo);
+		
 		if(pvo.getCategory().equals("free")) {
 			pvo.setSell("n");
 		}else {
 			pvo.setSell("y");
 		}
+		
 		String SellerEmail = authentication.getName();
 		pvo.setSellerEmail(SellerEmail);
 		MemberVO mvo = productService.getSellerNickName(SellerEmail);
-		pvo.setSellerNickName(SellerNickName);
-		
+		pvo.setSellerNickName(mvo.getNickName());
 		
 		List<FileVO> flistMain = null;
 		if(fileMain[0].getSize() > 0 || fileMain != null) {

@@ -36,6 +36,7 @@ mod_at datetime NOT NULL DEFAULT now(),
 seller_email varchar(200) NULL,
 seller_nick_name varchar(200) NULL,
 buyer_email varchar(200) NULL,
+buyer_nick_name varchar(200) NULL,
 PRIMARY KEY(pno)
 );
 

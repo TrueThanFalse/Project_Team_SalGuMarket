@@ -37,9 +37,9 @@ public class productCreateTest {
 		
 		for(int i=0; i<23; i++) {
 			ProductVO pvo = new ProductVO();
-			pvo.setTitle("TestTitle" + i);
+			pvo.setTitle("beautyTestTitle" + i);
 			pvo.setCategory("beauty");
-			pvo.setContent("TestContent" + i);
+			pvo.setContent("beautyTestContent" + i);
 			pvo.setPrice(price);
 			pvo.setSell("y");
 			
@@ -48,9 +48,9 @@ public class productCreateTest {
 		
 		for(int i=0; i<23; i++) {
 			ProductVO pvo = new ProductVO();
-			pvo.setTitle("TestTitle" + i);
+			pvo.setTitle("clothesTestTitle" + i);
 			pvo.setCategory("clothes");
-			pvo.setContent("TestContent" + i);
+			pvo.setContent("clothesTestContent" + i);
 			pvo.setPrice(price);
 			pvo.setSell("y");
 			
@@ -59,9 +59,9 @@ public class productCreateTest {
 		
 		for(int i=0; i<23; i++) {
 			ProductVO pvo = new ProductVO();
-			pvo.setTitle("TestTitle" + i);
+			pvo.setTitle("elecTestTitle" + i);
 			pvo.setCategory("elec");
-			pvo.setContent("TestContent" + i);
+			pvo.setContent("elecTestContent" + i);
 			pvo.setPrice(price);
 			pvo.setSell("y");
 			
@@ -70,9 +70,9 @@ public class productCreateTest {
 		
 		for(int i=0; i<23; i++) {
 			ProductVO pvo = new ProductVO();
-			pvo.setTitle("TestTitle" + i);
+			pvo.setTitle("ticketTestTitle" + i);
 			pvo.setCategory("ticket");
-			pvo.setContent("TestContent" + i);
+			pvo.setContent("ticketTestContent" + i);
 			pvo.setPrice(price);
 			pvo.setSell("y");
 			
@@ -81,9 +81,9 @@ public class productCreateTest {
 		
 		for(int i=0; i<23; i++) {
 			ProductVO pvo = new ProductVO();
-			pvo.setTitle("TestTitle" + i);
+			pvo.setTitle("animalTestTitle" + i);
 			pvo.setCategory("animal");
-			pvo.setContent("TestContent" + i);
+			pvo.setContent("animalTestContent" + i);
 			pvo.setPrice(price);
 			pvo.setSell("y");
 			
@@ -92,9 +92,9 @@ public class productCreateTest {
 		
 		for(int i=0; i<123; i++) {
 			ProductVO pvo = new ProductVO();
-			pvo.setTitle("TestTitle" + i);
+			pvo.setTitle("freeTestTitle" + i);
 			pvo.setCategory("free");
-			pvo.setContent("TestContent" + i);
+			pvo.setContent("freeTestContent" + i);
 			pvo.setPrice(price);
 			pvo.setSell("n");
 			

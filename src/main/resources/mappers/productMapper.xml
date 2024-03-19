@@ -26,9 +26,27 @@
 	
 	<select id="getTotalCount" resultType="int">
 		SELECT COUNT(pno) FROM product
-		<if test="type != null">
-			WHERE category = #{type}
+		<if test="category != null and type == null">
+			WHERE category = #{category}
+		</if>
+		<if test="category != null and type != null">
+			WHERE category = #{category}
+			<include refid="search"></include>
 		</if>
 	</select>
+	
+	<!-- 검색 동적 SQL 쿼리문 -->
+	<sql id="search">
+		<if test="type != null">
+			<choose>
+				<when test="type == 't'.toString()">
+					AND title LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="type == 'w'.toString()">
+					AND seller_nick_name LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+			</choose>
+		</if>
+	</sql>
 	
 </mapper>

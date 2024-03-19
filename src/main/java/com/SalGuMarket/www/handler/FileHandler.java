@@ -77,7 +77,6 @@ public class FileHandler {
 	}
 	
 	public FileVO uploadProfile(String nick, MultipartFile profile_image){
-		fileSweeper.fileSweeperProfile(nick);
 		String profile = "profile";
 		
 		File folders = new File(DIR, profile);
@@ -85,6 +84,7 @@ public class FileHandler {
 		if(!folders.exists()) {
 			folders.mkdirs();
 		}
+		fileSweeper.fileSweeperProfile(nick);
 		
 		FileVO fvo = new FileVO();
 		fvo.setSaveDir(profile);

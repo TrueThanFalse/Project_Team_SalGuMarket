@@ -8,9 +8,9 @@ import com.SalGuMarket.www.domain.PagingVO;
 
 public interface HelpBoardService {
 
-	List<HelpBoardVO> boardList(PagingVO pgvo);
+	List<HelpBoardVO> boardList(String email, PagingVO pgvo);
 
-	int getTotalCount(PagingVO pgvo);
+	int getTotalCount(String email, PagingVO pgvo);
 
 	HelpBoardDTO selectOne(long hbno);
 
@@ -21,5 +21,7 @@ public interface HelpBoardService {
 	void modify(HelpBoardDTO helpBoardDTO);
 
 	int remove(long hbno);
+
+	int answer(HelpBoardDTO hbdto, long hbno);
 
 }

@@ -59,18 +59,37 @@ public class HelpBoardController {
 	}
 	
 	@GetMapping("/helpList")
-	public void boardList(Model m,PagingVO pgvo) {
-		List<HelpBoardVO> list=helpBoardService.boardList(pgvo);
-		int totalCount=helpBoardService.getTotalCount(pgvo);
-		PagingHandler ph = new PagingHandler(pgvo, totalCount);
-		m.addAttribute("list",list);
-		m.addAttribute("ph",ph);
+	public void boardList(Principal p, Model m,PagingVO pgvo) {
+		if(p != null) {
+			MemberVO mvo = memberService.selectEmail(p.getName());
+			m.addAttribute("loginmvo", mvo);
+			List<HelpBoardVO> list=helpBoardService.boardList(p.getName(), pgvo);
+			int totalCount=helpBoardService.getTotalCount(p.getName(), pgvo);
+			PagingHandler ph = new PagingHandler(pgvo, totalCount);
+			m.addAttribute("list",list);
+			m.addAttribute("ph",ph);
+		}else {
+			MemberVO mvo = new MemberVO();
+			m.addAttribute("loginmvo", mvo);
+			List<HelpBoardVO> list=helpBoardService.boardList("null", pgvo);
+			int totalCount=helpBoardService.getTotalCount("null", pgvo);
+			PagingHandler ph = new PagingHandler(pgvo, totalCount);
+			m.addAttribute("list",list);
+			m.addAttribute("ph",ph);
+		}
 	}
 	
 	@GetMapping({"/helpDetail","/helpModify"})
-	public void helpDetail(@RequestParam("hbno") long hbno, Model m) {
+	public void helpDetail(Principal p, @RequestParam("hbno") long hbno, Model m) {
 		HelpBoardDTO hbdto=helpBoardService.selectOne(hbno);
 		m.addAttribute("hbdto",hbdto);
+		if(p != null) {
+			MemberVO mvo = memberService.selectEmail(p.getName());
+			m.addAttribute("loginmvo", mvo);
+		}else {
+			MemberVO mvo = new MemberVO();
+			m.addAttribute("loginmvo", mvo);
+		}
 	}
 	
 	@PostMapping("/helpModify")
@@ -80,13 +99,37 @@ public class HelpBoardController {
 			flist=fileHandler.uploadFile(files);
 		}
 		helpBoardService.modify(new HelpBoardDTO(hbvo,flist));
-		long hbno=helpBoardService.getHbno();
+		long hbno=
+				helpBoardService.getHbno();
 		return "redirect:/help/helpDetail?hbno="+hbno;
 	}
 	
 	@GetMapping("/helpRemove")
 	public String remove(@RequestParam("hbno") long hbno) {
 		int isOk=helpBoardService.remove(hbno);
+		return "redirect:/help/helpList";
+	}
+	
+	@GetMapping("/helpAnswer")
+	public void answer(Principal p, @RequestParam("hbno") long hbno, Model m) {
+		m.addAttribute("hbno", hbno);
+		if(p != null) {
+			MemberVO mvo = memberService.selectEmail(p.getName());
+			m.addAttribute("loginmvo", mvo);
+		}else {
+			MemberVO mvo = new MemberVO();
+			m.addAttribute("loginmvo", mvo);
+		}
+	}
+
+	
+	@PostMapping("/helpAnswer")
+	public String answer(HelpBoardVO hbvo, @RequestParam("hbno") long hbno, @RequestParam(name="files", required=false)MultipartFile[] files) {
+		List<FileVO> flist = null;
+		if(files[0].getSize()>0||files!=null) {
+			flist=fileHandler.uploadFile(files);
+		}
+		int isOk=helpBoardService.answer(new HelpBoardDTO(hbvo, flist), hbno);
 		return "redirect:/help/helpList";
 	}
 	

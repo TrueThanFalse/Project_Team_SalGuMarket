@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:replace="~{/layout :: setFragment(~{this::content})}">
 <th:block th:fragment="content">
 <link rel="stylesheet" type="text/css" href="/css/help.css">
@@ -36,8 +37,11 @@
 	    <div class="container">
 		    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
 			  <a href="/help/helpList"><button class="btn" type="button">목록</button></a>
-			  <a th:href="@{/help/helpModify(hbno=${hbdto.hbvo.hbno})}"><button class="btn" type="button">수정</button></a>
-			  <a th:href="@{/help/helpRemove(hbno=${hbdto.hbvo.hbno})}"><button class="btn" type="button">삭제</button></a>
+			  <a th:href="@{/help/helpAnswer(hbno=${hbdto.hbvo.hbno})}"><button class="btn" type="button">답변</button></a>
+			  <!-- sec:authorize="hasAnyAuthority('ROLE_ADMIN')" -->
+			  <a th:if="${loginmvo.email==hbdto.hbvo.email}" th:href="@{/help/helpModify(hbno=${hbdto.hbvo.hbno})}"><button class="btn" type="button">수정</button></a>
+			  <a sec:authorize="hasAnyAuthority('ROLE_ADMIN')" th:href="@{/help/helpRemove(hbno=${hbdto.hbvo.hbno})}"><button class="btn" type="button">삭제</button></a>
+			  <a th:if="${loginmvo.email==hbdto.hbvo.email}" th:href="@{/help/helpRemove(hbno=${hbdto.hbvo.hbno})}"><button class="btn" type="button">삭제</button></a>
 			  
 			</div>
 	    </div>

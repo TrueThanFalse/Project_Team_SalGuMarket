@@ -21,4 +21,10 @@ public interface CommentMapper {
 
 	int delete(long cno);
 
+	void updateProfile(@Param("email")String email, @Param("fileName")String fileName);
+
+	void yesProfile(String email);
+
+	void noProfile(String email);
+
 }

@@ -3,6 +3,7 @@ package com.SalGuMarket.www.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.SalGuMarket.www.domain.FileVO;
 import com.SalGuMarket.www.domain.HelpBoardDTO;
@@ -24,15 +25,15 @@ public class HelpBoardServiceImpl implements HelpBoardService{
 	private final FileMapper fileMapper;
 
 	@Override
-	public List<HelpBoardVO> boardList(PagingVO pgvo) {
+	public List<HelpBoardVO> boardList(String email, PagingVO pgvo) {
 		// TODO Auto-generated method stub
-		return helpBoardMapper.list(pgvo);
+		return helpBoardMapper.list(email, pgvo);
 	}
 
 	@Override
-	public int getTotalCount(PagingVO pgvo) {
+	public int getTotalCount(String email, PagingVO pgvo) {
 		// TODO Auto-generated method stub
-		return helpBoardMapper.getTotalCount(pgvo);
+		return helpBoardMapper.getTotalCount(email, pgvo);
 	}
 
 	@Override
@@ -44,6 +45,7 @@ public class HelpBoardServiceImpl implements HelpBoardService{
 		return hbdto;
 	}
 
+	@Transactional
 	@Override
 	public void helpBoardRegister(HelpBoardDTO helpBoardDTO) {
 		// TODO Auto-generated method stub
@@ -55,6 +57,8 @@ public class HelpBoardServiceImpl implements HelpBoardService{
 				isOk *= fileMapper.insertFile(fvo);
 			}
 		}
+		long hbno = helpBoardMapper.getHbno();
+		helpBoardMapper.updateHbno2(hbno);
 	}
 
 	@Override
@@ -78,6 +82,19 @@ public class HelpBoardServiceImpl implements HelpBoardService{
 	@Override
 	public int remove(long hbno) {
 		return helpBoardMapper.remove(hbno);
+	}
+
+	@Override
+	public int answer(HelpBoardDTO hbdto, long hbno) {
+		int isOk = helpBoardMapper.answer(hbdto.getHbvo(), hbno);
+		if(isOk>0&&hbdto.getFlist().size()>0) {
+			long bno=helpBoardMapper.getHbno();
+			for(FileVO fvo : hbdto.getFlist()) {
+				fvo.setBno(bno);
+				isOk *= fileMapper.insertFile(fvo);
+			}
+		}
+		return isOk;
 	}
 
 }

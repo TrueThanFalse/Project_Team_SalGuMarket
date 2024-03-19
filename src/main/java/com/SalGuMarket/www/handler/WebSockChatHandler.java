@@ -2,6 +2,7 @@ package com.SalGuMarket.www.handler;
 
 import java.io.IOException;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
@@ -25,11 +26,12 @@ public class WebSockChatHandler extends TextWebSocketHandler {
     private final ObjectMapper objectMapper;
     private final ChatService chatService;
     private final ChattingLogService chattingLog;
-
+    private final Set<WebSocketSession> sessions = new CopyOnWriteArraySet<>();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
             log.info("WebSocket 연결이 확립되었습니다. Session ID: {}", session.getId());
+            sessions.add(session);
     }
 
 
@@ -40,7 +42,6 @@ public class WebSockChatHandler extends TextWebSocketHandler {
         ChatMessage chatMessage = objectMapper.readValue(payload, ChatMessage.class);
         ChatRoom room = chatService.findRoomByBno(chatMessage.getChatBno());
         log.info("room 객체확인 : "+ room);
-        Set<WebSocketSession> sessions=room.getSessions();   //방에 있는 현재 사용자 한명이 WebsocketSession
         log.info("WebSocket Handler 부분 =======");
         log.info("><><><"+chatMessage);
         log.info("chatMessage type : "+chatMessage.getType());
@@ -96,6 +97,7 @@ public class WebSockChatHandler extends TextWebSocketHandler {
        //javascript에서  session.close해서 연결 끊음. 그리고 이 메소드 실행.
         //session은 연결 끊긴 session을 매개변수로 이거갖고 뭐 하세요.... 하고 제공해주는 것 뿐
     	log.info("WebSocket 연결을 끊었습니다. Session ID: {}", session.getId());
+    	sessions.remove(session);
     }
 
 

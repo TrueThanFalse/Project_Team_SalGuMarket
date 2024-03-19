@@ -1,13 +1,10 @@
 package com.SalGuMarket.www.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.SalGuMarket.www.domain.ChatMessage;
 import com.SalGuMarket.www.domain.ChatRoom;
+import com.SalGuMarket.www.security.AuthMember;
 import com.SalGuMarket.www.service.ChatService;
 
 import jakarta.websocket.Session;
@@ -53,18 +51,23 @@ public class ChatController {
     	chatService.createRoom(chatRoom);
     	
         log.info("chatBno 확인: "+chatRoom.getChatBno());
-        return "index";
+		return "redirect:/";
     }
 
     // 방 들어가기
     @GetMapping("/chatRoom")
     public String chatRoom(Model model,
-    		@RequestParam("chatBno") long chatBno) {
+    		@RequestParam("chatBno") long chatBno
+    		) {
+    	// @AuthenticationPrincipal AuthMember authMember
     	log.info("chatName : "+chatBno);
         // 채팅방 정보 가져오기
         ChatRoom room = chatService.findRoomById(chatBno);
-
+     // 사용자 이메일 가져오기
+     //   String email = authMember.getEmail();
+        
         model.addAttribute("room", room);
+     //   model.addAttribute("email",email);
         return "chat/chatRoom";
     }
     

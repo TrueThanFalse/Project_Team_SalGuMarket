@@ -3,7 +3,8 @@
 <th:block th:replace="~{/layout :: setFragment(~{this::content})}">
 <th:block th:fragment="content">
 	
-	<link rel="stylesheet" href="/css/layout.css" type="text/css" >
+	<link rel="stylesheet" href="/css/index.css" type="text/css" >
+	<link rel="stylesheet" href="/css/pagenation.css" type="text/css" >
     <!-- Hero Section Begin -->
     <section class="hero">
         <div class="container">
@@ -16,12 +17,12 @@
                         </div>
                         <ul>
                             <li><a href="/">전체(최신순)</a></li>
-                            <li><a href="/?type=beauty">뷰티/미용</a></li>
-                            <li><a href="/?type=clothes">의류/잡화</a></li>
-                            <li><a href="/?type=elec">전자/생활가전</a></li>
-                            <li><a href="/?type=ticket">티켓/교환권</a></li>
-                            <li><a href="/?type=animal">반려동물</a></li>
-                            <li><a href="/?type=free">나눔</a></li>
+                            <li><a href="/?category=beauty">뷰티/미용</a></li>
+                            <li><a href="/?category=clothes">의류/잡화</a></li>
+                            <li><a href="/?category=elec">전자/생활가전</a></li>
+                            <li><a href="/?category=ticket">티켓/교환권</a></li>
+                            <li><a href="/?category=animal">반려동물</a></li>
+                            <li><a href="/?category=free">나눔</a></li>
                             <li><a href="/chat/chatList">채팅방</a></li>
                         </ul>
                     </div>
@@ -30,12 +31,14 @@
                     <div class="hero__search">
                     	<!-- 검색창 -->
                         <div class="hero__search__form">
-                            <form action="#">
-                                <div class="hero__search__categories">
-                                    All Categories
-                                    <span class="arrow_carrot-down"></span>
-                                </div>
-                                <input type="text" placeholder="What do yo u need?">
+                            <form th:action="@{/}" method="get">
+	                            <select name="type" class="form-select" aria-label="Default select example">
+								  <option th:value="t" th:selected="${ph.pgvo.type == null || ph.pgvo.type == 't'}">제목</option>
+								  <option th:value="w" th:selected="${ph.pgvo.type == 'w'}">작성자</option>
+								</select>
+                                <input type="text" name="keyword" th:value="${ph.pgvo.keyword}" placeholder="What do you need?">
+                                <input type="hidden" name="pageNo" th:value="1">
+                                <input type="hidden" name="qty" th:value="${ph.pgvo.qty}">
                                 <button type="submit" class="site-btn">검색</button>
                             </form>
                         </div>
@@ -118,16 +121,16 @@
 			    <ul class="pagination justify-content-center">
 				    <!-- 이전페이지 -->
 				    <li class="page-item " th:if="${ph.prev}">
-				    	<a class="page-link" th:href="@{/(pageNo=${ph.startPage-1},qty=${ph.pgvo.qty},type=${ph.pgvo.type})}" aria-label="Previous">&lt;&lt;</a>
+				    	<a class="page-link" th:href="@{/(pageNo=${ph.startPage-1},qty=${ph.pgvo.qty},type=${ph.pgvo.type},keyword=${ph.pgvo.keyword})}" aria-label="Previous">&lt;&lt;</a>
 				    </li>
 				            
 				    <li class="page-item ${ph.pgvo.pageNo == i ? 'active':''}" th:each="i:${#numbers.sequence(ph.startPage,ph.endPage)}" aria-current="page">
-				    	<a class="page-link" th:href="@{/(pageNo=${i},qty=${ph.pgvo.qty},type=${ph.pgvo.type})}">[[${i}]]</a>
+				    	<a class="page-link" th:href="@{/(pageNo=${i},qty=${ph.pgvo.qty},type=${ph.pgvo.type},keyword=${ph.pgvo.keyword})}">[[${i}]]</a>
 				    </li>
 				             
 				    <!-- 다음페이지 -->
 				    <li class="page-item" th:if="${ph.next}">
-				    	<a class="page-link" th:href="@{/(pageNo=${ph.endPage+1},qty=${ph.pgvo.qty},type=${ph.pgvo.type})}" aria-label="Next">&gt;&gt;</a>
+				    	<a class="page-link" th:href="@{/(pageNo=${ph.endPage+1},qty=${ph.pgvo.qty},type=${ph.pgvo.type},keyword=${ph.pgvo.keyword})}" aria-label="Next">&gt;&gt;</a>
 				    </li>
 			    </ul>
 		    </nav>

@@ -14,5 +14,5 @@ import lombok.ToString;
 public class ProductVO {
 
 	private Long pno, price;
-	private String title, category, sell, state, content, regAt, modAt, sellerEmail, buyerEmail;
+	private String title, category, sell, state, content, regAt, modAt, sellerEmail, sellerNickName, buyerEmail, buyerNickName;
 }

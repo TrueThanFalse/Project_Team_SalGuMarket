@@ -30,9 +30,12 @@ public class IndexController {
 		// categoryImageList의 개수는 8개
 		pgvo.setQty(8);
 		
-		// 첫 화면 뿌릴때, 페이지네이션의 type은 공백값을 가짐
+		// 첫 화면 뿌릴때, 페이지네이션의 type과 keyword는 공백
 		if(pgvo.getType() == "") {
 			pgvo.setType(null);
+		}
+		if(pgvo.getKeyword() == "") {
+			pgvo.setKeyword(null);
 		}
 		
 		List<FileVO> categoriesSliderImageList = productService.getCategoriesSliderImageList10Image();
@@ -46,6 +49,9 @@ public class IndexController {
 	    }
 	    
 	    int totalCount = productService.getTotalCount(pgvo);
+	    if(totalCount == 0) {
+	    	totalCount = 1;
+	    }
 	    
 	    PagingHandler ph = new PagingHandler(pgvo, totalCount);
 		

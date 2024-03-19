@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="~{/layout :: setFragment(~{this::content})}">
 <th:block th:fragment="content">
+<link rel="stylesheet" type="text/css" href="/css/chatList.css">
 
 <div class="container">
 
@@ -14,30 +15,25 @@
             <button type="submit">방 만들기</button>
         </form>
         
-		<table>
-		    <tr th:each="room : ${roomList}">
-		        <td>
-		        <a th:href="@{/chat/chatRoom(chatBno=${room.chatBno})}" 
-		        th:text="${room.chatName}"></a>
-		        </td>
-		    </tr>
-		</table>
-
-
-<!-- 모달 -->
-<div id="myModal" class="modal">
-    <span th:onclick="closeModal()" style="cursor: pointer;">&times;</span>
-    <div id="modalContentContainer" class="container">
-    
-        <input type="text" id="content" placeholder="보낼 메세지를 입력하세요.">
-        <button type="button" value="전송" class="sendBtn" onclick="sendMsg()">전송</button>
-        <button type="button" value="방나가기" class="quit" onclick="quit()">방 나가기</button>
-        <div>
-            <span>메세지</span>
-            <div class="msgArea"></div>
+	
+<div class="kakaotalk">
+  <div class="chat-list">
+          <div class="list">
+            <div class="list-left">
+                <div class="profile-name">채팅</div>
+            </div>
+            <div class="list-right">
+            	<button type="button" class="iconBtn"><i class="bi bi-search"></i></button>
+            	<button type="button" class="iconBtn"><i class="bi bi-chat"></i></button>
+            </div>
         </div>
-        
+    <div th:each="room : ${roomList}" class="chat-room">
+      <div class="info">
+        <img src="/" alt="상품이미지" class="chat-icon">
+        <a th:href="@{/chat/chatRoom(chatBno=${room.chatBno})}" th:text="${room.chatName}" class="chat-name"></a>
+      </div>
     </div>
+  </div>
 </div>
 
 

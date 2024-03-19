@@ -195,7 +195,7 @@ public class MemberController {
 	@GetMapping("/findId")
 	public void findID() {}
 	
-	@GetMapping(value = "/{name}/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/findid/{name}/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, String>> userdata(@PathVariable("name") String name, @PathVariable("email") String email) {
         MemberVO mvo = new MemberVO();
         mvo.setName(name);

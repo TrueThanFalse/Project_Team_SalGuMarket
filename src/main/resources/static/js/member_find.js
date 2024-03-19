@@ -1,14 +1,14 @@
+console.log("member find in");
 document.getElementById("FID").addEventListener('click', () => {
 
 	let name= document.getElementById("Fname").value;
 	let	email= document.getElementById("Femail").value;
-	
+		console.log(name,email);
 	if (name == null || name == '' || email == null || email == '') {
 		alert("모두 입력해주세요.")
 		name.focus();
 		return false;
 	}
-	console.log(name,email);
 	
 	FindUser(name, email).then(result => {
 		if (result.status === "0") {
@@ -41,7 +41,7 @@ document.getElementById("FID").addEventListener('click', () => {
 
 async function FindUser(name, email) {
 	try {
-		const url = "/member/" + name + "/" + email;
+		const url = "/member/findid/" + name + "/" + email;
 		const resp = await fetch(url);
 		const result = await resp.json();
 		return result;
